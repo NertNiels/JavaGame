@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.Vector3f;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import inputManager.ControllerManager;
 import models.Model;
 import models.RawModel;
 import models.io.ModelLoader;
@@ -39,6 +40,8 @@ public class MainGameLoop {
 
 		MasterRenderer renderer = new MasterRenderer(loader);
 
+		ControllerManager controllerManager = new ControllerManager();
+
 		RawModel rawModel = null;
 		try {
 			rawModel = ModelLoader.loadModel("dragon", loader);
@@ -46,9 +49,10 @@ public class MainGameLoop {
 			e.printStackTrace();
 		}
 		Model model = new Model(rawModel);
-		for(int i = 0; i < 1; i++) {
-		Entity plant = new Entity(model, world, new Vector2f((float)Math.random() * Configs.SIZE, (float)Math.random() * Configs.SIZE), 1f);
-		world.addEntity(plant);
+		for (int i = 0; i < 1; i++) {
+			Entity plant = new Entity(model, world,
+					new Vector2f((float) Math.random() * Configs.SIZE, (float) Math.random() * Configs.SIZE), 1f);
+			world.addEntity(plant);
 		}
 
 		while (!Display.isCloseRequested()) {
@@ -59,7 +63,7 @@ public class MainGameLoop {
 			renderer.render(light, camera);
 
 			DisplayManager.updateDisplay();
-			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 				break;
 			}
 		}
