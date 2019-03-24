@@ -1,8 +1,8 @@
 package shaders;
  
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import entities.Camera;
  
@@ -31,13 +31,12 @@ public class SkyboxShader extends ShaderProgram {
  
     public void loadViewMatrix(Camera camera, float SIZE){
         Matrix4f matrix = new Matrix4f();
-		matrix.setIdentity();
+		matrix.identity();
 		
-		Matrix4f.rotate((float)Math.toRadians(camera.getPitch()), new Vector3f(1, 0, 0), matrix, matrix);
-//		Matrix4f.rotate((float)Math.toRadians(camera.getYaw()), new Vector3f(0, 1, 0), matrix, matrix);
+		matrix.rotate((float)Math.toRadians(camera.getPitch()), new Vector3f(1, 0, 0), matrix);
 		
 		Vector3f negCamPos = new Vector3f(0, -camera.getPosition().y, 0);
-		Matrix4f.translate(negCamPos, matrix, matrix);
+		matrix.translate(negCamPos, matrix);
 		
 		super.loadFloat(location_SIZE, SIZE);
         super.loadMatrix(location_viewMatrix, matrix);

@@ -1,6 +1,6 @@
 package terrain;
 
-import org.lwjgl.util.vector.Vector3f;
+import org.joml.Vector3f;
 
 public class IndexCalculator {
 
@@ -65,11 +65,13 @@ public class IndexCalculator {
 		}
 		if (i == 0)
 			vertex1 = gridSquare.getVertexAtPosition(currentIndex.getVertex1());
+		Vector3f U = new Vector3f();
+		vertex2.getPosition().sub(vertex1.getPosition(), U);
+		Vector3f V = new Vector3f();
+		vertex3.getPosition().sub(vertex1.getPosition(), V);
 
-		Vector3f U = Vector3f.sub(vertex2.getPosition(), vertex1.getPosition(), null);
-		Vector3f V = Vector3f.sub(vertex3.getPosition(), vertex1.getPosition(), null);
-
-		Vector3f normal = Vector3f.cross(U, V, null);
+		Vector3f normal = new Vector3f();
+		U.cross(V, normal);
 		vertex1.setNormal(normal);
 		return normal;
 	}
@@ -79,12 +81,15 @@ public class IndexCalculator {
 		Vertex vertex2 = gridSquare.getVertexAtPosition(currentIndex.getVertex2());
 		Vertex vertex3 = gridSquare.getVertexAtPosition(currentIndex.getVertex3());
 
-		Vector3f U = Vector3f.sub(vertex2.getPosition(), vertex1.getPosition(), null);
-		Vector3f V = Vector3f.sub(vertex3.getPosition(), vertex1.getPosition(), null);
+		Vector3f U = new Vector3f();
+		vertex2.getPosition().sub(vertex1.getPosition(), U);
+		Vector3f V = new Vector3f();
+		vertex3.getPosition().sub(vertex1.getPosition(), V);
 		
 		if(i == indexCount) System.out.println("i: " + i + ", j: " + j);
 
-		Vector3f normal = Vector3f.cross(U, V, null);
+		Vector3f normal = new Vector3f();
+		U.cross(V, normal);
 		vertex1.setNormal(normal);
 		return normal;
 	}

@@ -31,5 +31,7 @@
 	<classpathentry kind="lib" path="lib/jars/lwjgl-stb-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jars/lwjgl-stb.jar"/>
 	<classpathentry kind="lib" path="lib/jars/lwjgl.jar"/>
+	<classpathentry kind="lib" path="lib/jars/PNGDecoder.jar"/>
+	<classpathentry kind="lib" path="lib/jars/slick-util.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,9 +1,11 @@
 package entities;
 
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import inputManager.Keyboard;
+
+import org.lwjgl.glfw.GLFW;
+import inputManager.Mouse;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 import main.Configs;
 import toolbox.Maths;
@@ -47,7 +49,7 @@ public class Camera {
 		float mouseDX = Mouse.getDX();
 		float mouseDY = Mouse.getDY();
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+		if(Keyboard.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
 			zoomFactor = 0.01f;
 		}
 		zoom(Mouse.getDWheel());
@@ -62,7 +64,7 @@ public class Camera {
 		pitch -= velPitch;
 		yaw += velYaw;
 		zoom -= velZoom;
-		target = Vector3f.add(target, targetVel, null);
+		target.add(targetVel);
 		if(zoom < Configs.MIN_ZOOM) zoom = Configs.MIN_ZOOM;
 		if(zoom > Configs.MAX_ZOOM) zoom = Configs.MAX_ZOOM;
 		if(pitch < 0) pitch = 0;
@@ -159,10 +161,10 @@ public class Camera {
 		float dX = 0;
 		float dY = 0;
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_W)) dY = -1;
-		if(Keyboard.isKeyDown(Keyboard.KEY_A)) dX = 1;
-		if(Keyboard.isKeyDown(Keyboard.KEY_S)) dY = 1;
-		if(Keyboard.isKeyDown(Keyboard.KEY_D)) dX = -1;
+		if(Keyboard.isKeyDown(GLFW.GLFW_KEY_W)) dY = -1;
+		if(Keyboard.isKeyDown(GLFW.GLFW_KEY_A)) dX = 1;
+		if(Keyboard.isKeyDown(GLFW.GLFW_KEY_S)) dY = 1;
+		if(Keyboard.isKeyDown(GLFW.GLFW_KEY_D)) dX = -1;
 		calculateMovementWASD(dX, dY, 0.5f);
 		
 	}

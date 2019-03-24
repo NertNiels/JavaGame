@@ -1,8 +1,8 @@
 package terrain;
 
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 import main.Configs;
 import models.RawModel;
@@ -86,8 +86,7 @@ public class Terrain {
 
 			Vector3f U = new Vector3f(0, vertex2 - vertex1, 1);
 			Vector3f V = new Vector3f(1, vertex3 - vertex1, 0);
-
-			return Vector3f.cross(U, V, null);
+			return U.cross(V);
 		}
 
 		float vertex1 = heightMap[(int) squareX + 1][(int) squareZ];
@@ -96,8 +95,7 @@ public class Terrain {
 
 		Vector3f U = new Vector3f(-1, vertex2 - vertex1, 1);
 		Vector3f V = new Vector3f(0, vertex3 - vertex1, 1);
-
-		return Vector3f.cross(U, V, null);
+		return U.cross(V);
 	}
 
 	public float getHeightAt(float x, float z) {

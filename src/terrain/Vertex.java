@@ -1,6 +1,6 @@
 package terrain;
 
-import org.lwjgl.util.vector.Vector3f;
+import org.joml.Vector3f;
 
 public class Vertex {
 
@@ -43,7 +43,7 @@ public class Vertex {
 	}
 	public void setNormal(Vector3f normal) {
 		this.normal = normal;
-		this.normal.normalise();
+		this.normal.normalize();
 	}
 	public Vector3f getColor() {
 		return color;

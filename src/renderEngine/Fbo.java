@@ -2,11 +2,12 @@ package renderEngine;
  
 import java.nio.ByteBuffer;
  
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
+
+import main.Configs;
  
 public class Fbo {
  
@@ -70,7 +71,7 @@ public class Fbo {
      */
     public void unbindFrameBuffer() {
         GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
-        GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+        GL11.glViewport(0, 0, Configs.SCREEN_WIDTH, Configs.SCREEN_HEIGHT);
     }
  
     /**

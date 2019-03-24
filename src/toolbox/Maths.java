@@ -1,8 +1,8 @@
 package toolbox;
 
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import org.joml.Matrix4f;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 import entities.Camera;
 
@@ -10,25 +10,25 @@ public class Maths {
 
 	public static Matrix4f createTransformationmatrix(Vector3f translation, float rx, float ry, float rz, float scale) {
 		Matrix4f matrix = new Matrix4f();
-		matrix.setIdentity();
-		Matrix4f.translate(translation, matrix, matrix);
-		Matrix4f.rotate((float)Math.toRadians(rx), new Vector3f(1, 0, 0), matrix, matrix);
-		Matrix4f.rotate((float)Math.toRadians(ry), new Vector3f(0, 1, 0), matrix, matrix);
-		Matrix4f.rotate((float)Math.toRadians(rz), new Vector3f(0, 0, 1), matrix, matrix);
-		Matrix4f.scale(new Vector3f(scale, scale, scale), matrix, matrix);
+		matrix.identity();
+		matrix.translate(translation, matrix);
+		matrix.rotate((float)Math.toRadians(rx), new Vector3f(1, 0, 0), matrix);
+		matrix.rotate((float)Math.toRadians(ry), new Vector3f(0, 1, 0), matrix);
+		matrix.rotate((float)Math.toRadians(rz), new Vector3f(0, 0, 1), matrix);
+		matrix.scale(new Vector3f(scale, scale, scale), matrix);
 		
 		return matrix;
 	}
 	
 	public static Matrix4f createViewMatrix(Camera camera) {
 		Matrix4f matrix = new Matrix4f();
-		matrix.setIdentity();
+		matrix.identity();
 		
-		Matrix4f.rotate((float)Math.toRadians(camera.getPitch()), new Vector3f(1, 0, 0), matrix, matrix);
-		Matrix4f.rotate((float)Math.toRadians(camera.getYaw()), new Vector3f(0, 1, 0), matrix, matrix);
+		matrix.rotate((float)Math.toRadians(camera.getPitch()), new Vector3f(1, 0, 0), matrix);
+		matrix.rotate((float)Math.toRadians(camera.getYaw()), new Vector3f(0, 1, 0), matrix);
 		
 		Vector3f negCamPos = new Vector3f(-camera.getPosition().x, -camera.getPosition().y, -camera.getPosition().z);
-		Matrix4f.translate(negCamPos, matrix, matrix);
+		matrix.translate(negCamPos, matrix);
 		return matrix;
 	}
 	
@@ -42,9 +42,9 @@ public class Maths {
 	
 	public static Vector3f interpolateColor(Vector3f color1, Vector3f color2, float blend) {
 		float colour1Weight = 1 - blend;
-		float r = (colour1Weight * color1.getX()) + (blend * color2.getX());
-		float g = (colour1Weight * color1.getY()) + (blend * color2.getY());
-		float b = (colour1Weight * color1.getZ()) + (blend * color2.getZ());
+		float r = (colour1Weight * color1.x) + (blend * color2.x);
+		float g = (colour1Weight * color1.y) + (blend * color2.y);
+		float b = (colour1Weight * color1.z) + (blend * color2.z);
 		return new Vector3f(r, g, b);
 	}
 	

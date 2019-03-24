@@ -2,20 +2,19 @@ package main;
 
 import java.io.IOException;
 
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
+import org.lwjgl.glfw.GLFW;
 
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
-import inputManager.ControllerManager;
+import inputManager.Keyboard;
 import models.Model;
 import models.RawModel;
 import models.io.ModelLoader;
 import renderEngine.CustomFileLoader;
-import renderEngine.DisplayManager;
+import renderEngine.DisplayManager2;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import world.HeightGenerator;
@@ -24,7 +23,7 @@ import world.World;
 public class MainGameLoop {
 
 	public static void main(String[] args) {
-		DisplayManager.createDisplay();
+		DisplayManager2.createDisplay();
 
 		Loader loader = new Loader();
 
@@ -40,7 +39,6 @@ public class MainGameLoop {
 
 		MasterRenderer renderer = new MasterRenderer(loader);
 
-		ControllerManager controllerManager = new ControllerManager();
 
 		RawModel rawModel = null;
 		try {
@@ -55,22 +53,22 @@ public class MainGameLoop {
 			world.addEntity(plant);
 		}
 
-		while (!Display.isCloseRequested()) {
+		while (!GLFW.glfwWindowShouldClose(DisplayManager2.getWindow())) {
 
 			world.update(loader);
 			camera.update(world);
 			world.prepareWorld(renderer, loader);
 			renderer.render(light, camera);
 
-			DisplayManager.updateDisplay();
-			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+			DisplayManager2.updateDisplay();
+			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_ESCAPE)) {
 				break;
 			}
 		}
 
 		loader.cleanUp();
-
-		DisplayManager.closeDisplay();
+		
+		DisplayManager2.closeDisplay();
 	}
 
 }

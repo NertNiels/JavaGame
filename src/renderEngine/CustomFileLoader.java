@@ -7,8 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 import models.RawModel;
 
@@ -61,7 +61,7 @@ public class CustomFileLoader {
 				} else if (line.startsWith("vn ")) {
 					Vector3f normal = new Vector3f(Float.parseFloat(currentLine[1]), Float.parseFloat(currentLine[2]),
 							Float.parseFloat(currentLine[3]));
-					normal.normalise();
+					normal.normalize();
 					normals.add(normal);
 				} else if (line.startsWith("vc ")) {
 					Vector3f color = new Vector3f(Float.parseFloat(currentLine[1]), Float.parseFloat(currentLine[2]),

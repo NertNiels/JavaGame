@@ -1,6 +1,6 @@
 package terrain;
 
-import org.lwjgl.util.vector.Vector3f;
+import org.joml.Vector3f;
 
 public class GridSquare {
 
@@ -108,13 +108,13 @@ public class GridSquare {
 						(float) j / ((float) vertexCount - 1) * size);
 
 				Vector3f normal = new Vector3f(0, 1, 1);
-				normal.normalise();
+				normal.normalize();
 
 				Vector3f color = new Vector3f((float)i / (float)vertexCount, 1, (float)j / (float)vertexCount);
 
 				if (i != 0 && i != vertexCount - 1 && !(j >= vertexCount - 2)) {
 					Vector3f normal2 = new Vector3f(0, 1, 1);
-					normal2.normalise();
+					normal2.normalize();
 					
 					vertices[i][j] = new Vertex(vertex, normal, normal2, color);
 				} else {

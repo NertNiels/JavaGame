@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
+import inputManager.Keyboard;
+
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL32;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Matrix4f;
+import org.joml.Vector4f;
 
 import entities.Camera;
 import entities.Entity;
@@ -80,7 +81,7 @@ public class MasterRenderer {
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		renderScene(sun, camera, new Vector4f(0, -1, 0, 10000000));
 		
-		if (Keyboard.isKeyDown(Keyboard.KEY_TAB))
+		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_TAB))
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 		waterShader.start();
 		waterShader.loadViewMatrix(camera);
@@ -150,17 +151,17 @@ public class MasterRenderer {
 	}
 
 	private void createProjectionMatrix() {
-		float aspect_ratio = (float) Display.getWidth() / (float) Display.getHeight();
+		float aspect_ratio = (float) Configs.SCREEN_WIDTH / (float) Configs.SCREEN_HEIGHT;
 		float y_scale = (1f / (float) Math.tan(Math.toRadians(Configs.FOV / 2f))) * aspect_ratio;
 		float x_scale = y_scale / aspect_ratio;
 		float frustum_length = Configs.FAR_PLANE - Configs.NEAR_PLANE;
 
 		projectionMatrix = new Matrix4f();
-		projectionMatrix.m00 = x_scale;
-		projectionMatrix.m11 = y_scale;
-		projectionMatrix.m22 = -((Configs.FAR_PLANE + Configs.NEAR_PLANE) / frustum_length);
-		projectionMatrix.m23 = -1;
-		projectionMatrix.m32 = -((2 * Configs.NEAR_PLANE * Configs.FAR_PLANE) / frustum_length);
-		projectionMatrix.m33 = 0;
+		projectionMatrix._m00(x_scale);
+		projectionMatrix._m11(y_scale);
+		projectionMatrix._m22(-((Configs.FAR_PLANE + Configs.NEAR_PLANE) / frustum_length));
+		projectionMatrix._m23(-1);
+		projectionMatrix._m32(-((2 * Configs.NEAR_PLANE * Configs.FAR_PLANE) / frustum_length));
+		projectionMatrix._m33(0);
 	}
 }

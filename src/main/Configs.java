@@ -1,7 +1,7 @@
 package main;
 
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 public class Configs {
 
@@ -21,6 +21,7 @@ public class Configs {
 			1f,
 	};
 	
+	public static final String TITLE = "New Game";
 	public static final int SCREEN_WIDTH = 1280;
 	public static final int SCREEN_HEIGHT = 720;
 	public static final boolean FULL_SCREEN = false;
