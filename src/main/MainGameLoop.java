@@ -56,6 +56,7 @@ public class MainGameLoop {
 
 		while (!Display.isCloseRequested()) {
 
+			ControllerManager.update();
 			world.update(loader);
 			camera.update(world);
 			world.prepareWorld(renderer, loader);

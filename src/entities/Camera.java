@@ -5,7 +5,9 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import input.ControllerManager;
 import main.Configs;
+import net.java.games.input.Controller;
 import toolbox.Maths;
 import world.World;
 
@@ -51,13 +53,17 @@ public class Camera {
 			zoomFactor = 0.01f;
 		}
 		zoom(Mouse.getDWheel());
+		zoom(-ControllerManager.getTrigger() * 20);
 		if (Mouse.isButtonDown(1)) {
 			calculateTargetPitch(mouseDY);
 			calculateTargetYaw(mouseDX);
 		}
+		calculateTargetPitch(ControllerManager.getRightJoystickY() * 3);
+		calculateTargetYaw(-ControllerManager.getRightJoystickX() * 3);
 		if(Mouse.isButtonDown(0)) {
 			calculateMovement(mouseDX, mouseDY, 0.1f);
 		}
+		calculateMovementWASD(-ControllerManager.getLeftJoystickX(), ControllerManager.getLeftJoystickY(), 0.4f);
 
 		pitch -= velPitch;
 		yaw += velYaw;
@@ -98,7 +104,7 @@ public class Camera {
 	}
 
 	private void zoom(float delta) {
-		velZoom += delta * zoomFactor * (zoom/ Configs.MAX_ZOOM);
+		velZoom += delta * zoomFactor * (zoom / Configs.MAX_ZOOM);
 	}
 
 	private void calculateTargetPitch(float delta) {
@@ -151,7 +157,7 @@ public class Camera {
 	private Vector3f rotateMovementXYZ(float dX, float dZ) {
 		float x = dX * (float)Math.cos(Math.toRadians(-yaw)) + dZ * (float)Math.sin(Math.toRadians(yaw)) * (float)Math.sin(Math.toRadians(pitch));
 		float y = dZ * (float)Math.cos(Math.toRadians(pitch));
-		float z = dZ * (float)Math.cos(Math.toRadians(yaw))  * (float)Math.sin(pitch) + dX * (float)Math.sin(Math.toRadians(-yaw));
+		float z = dZ * (float)Math.cos(Math.toRadians(yaw))  * (float)Math.sin(Math.toRadians(pitch)) + dX * (float)Math.sin(Math.toRadians(-yaw));
 		return new Vector3f(x, y, z);
 	}
 	
