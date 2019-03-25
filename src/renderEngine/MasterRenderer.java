@@ -15,8 +15,10 @@ import org.lwjgl.util.vector.Vector4f;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import gui.GuiTexture;
 import main.Configs;
 import models.Model;
+import shaders.GuiShader;
 import shaders.StaticShader;
 import shaders.TerrainShader;
 import shaders.WaterShader;
@@ -37,11 +39,15 @@ public class MasterRenderer {
 	private WaterShader waterShader = new WaterShader();
 	private WaterRenderer waterRenderer;
 	
+	private GuiShader guiShader = new GuiShader();
+	private GuiRenderer guiRenderer;
+	
 	private SkyboxRenderer skyboxRenderer;
 
 	private Map<Model, ArrayList<Entity>> entities = new HashMap<Model, ArrayList<Entity>>();
 	private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
 	private ArrayList<WaterTile> waters = new ArrayList<WaterTile>();
+	private ArrayList<GuiTexture> guis = new ArrayList<GuiTexture>();
 	
 	WaterFrameBuffers fbos = new WaterFrameBuffers();
 	Fbo skyBoxFbo = new Fbo(Configs.SCREEN_WIDTH, Configs.SCREEN_HEIGHT, Fbo.NONE);
@@ -53,6 +59,7 @@ public class MasterRenderer {
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix, skyBoxFbo);
 		waterRenderer = new WaterRenderer(waterShader, projectionMatrix, loader, fbos, skyBoxFbo);
 		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
+		guiRenderer = new GuiRenderer(loader, guiShader);
 		
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glCullFace(GL11.GL_BACK);
@@ -85,13 +92,17 @@ public class MasterRenderer {
 		waterShader.start();
 		waterShader.loadViewMatrix(camera);
 		waterRenderer.render(waters);
-		
 		waterShader.stop();
 		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+		
+		guiShader.start();
+		guiRenderer.render(guis);
+		guiShader.stop();
 		
 		terrains.clear();
 		entities.clear();
 		waters.clear();
+		guis.clear();
 	}
 	
 	public void renderScene(Light sun, Camera camera, Vector4f clipPlane) {
@@ -131,10 +142,15 @@ public class MasterRenderer {
 			entities.put(entityModel, newBatch);
 		}
 	}
+	
+	public void processGui(GuiTexture gui) {
+		guis.add(gui);
+	}
 
 	public void cleanUp() {
 		fbos.cleanUp();
 		skyBoxFbo.cleanUp();
+		guiShader.cleanUp();
 		waterShader.cleanUp();
 		entityShader.cleanUp();
 		terrainShader.cleanUp();
@@ -162,5 +178,9 @@ public class MasterRenderer {
 		projectionMatrix.m23 = -1;
 		projectionMatrix.m32 = -((2 * Configs.NEAR_PLANE * Configs.FAR_PLANE) / frustum_length);
 		projectionMatrix.m33 = 0;
+	}
+	
+	public WaterFrameBuffers getWaterFrameBuffers() {
+		return fbos;
 	}
 }

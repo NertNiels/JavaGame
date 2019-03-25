@@ -29,6 +29,9 @@ public class DisplayManager {
 			if(Configs.FULL_SCREEN) {
 				displayMode = null;
 		        DisplayMode[] modes = Display.getAvailableDisplayModes();
+		        Configs.SCREEN_WIDTH = Display.getDesktopDisplayMode().getWidth();
+		        Configs.SCREEN_HEIGHT = Display.getDesktopDisplayMode().getHeight();
+
 
 		         for (int i = 0; i < modes.length; i++)
 		         {

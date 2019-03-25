@@ -21,9 +21,9 @@ public class Configs {
 			1f,
 	};
 	
-	public static final int SCREEN_WIDTH = 1280;
-	public static final int SCREEN_HEIGHT = 720;
-	public static final boolean FULL_SCREEN = false;
+	public static int SCREEN_WIDTH = 1;
+	public static int SCREEN_HEIGHT = 1;
+	public static final boolean FULL_SCREEN = true;
 	public static final int FPS_CAP = 120;
 	
 	

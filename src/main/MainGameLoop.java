@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.Vector3f;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import gui.GuiTexture;
 import input.ControllerManager;
 import models.Model;
 import models.RawModel;
@@ -39,7 +40,7 @@ public class MainGameLoop {
 		World world = World.generateWorld(heightGenerator, Configs.SIZE, Configs.SIZE, loader);
 
 		MasterRenderer renderer = new MasterRenderer(loader);
-
+		
 		ControllerManager.initControllers();
 		
 		RawModel rawModel = null;
@@ -53,13 +54,15 @@ public class MainGameLoop {
 		Entity plant = new Entity(model, world, new Vector2f((float)Math.random() * Configs.SIZE, (float)Math.random() * Configs.SIZE), 1f);
 		world.addEntity(plant);
 		}
+		
+		GuiTexture guiTest = new GuiTexture(renderer.getWaterFrameBuffers().getRefractionTexture(), new Vector2f(-0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
 
 		while (!Display.isCloseRequested()) {
-
 			ControllerManager.update();
 			world.update(loader);
 			camera.update(world);
 			world.prepareWorld(renderer, loader);
+			renderer.processGui(guiTest);
 			renderer.render(light, camera);
 
 			DisplayManager.updateDisplay();
