@@ -16,6 +16,7 @@ import entities.Camera;
 import entities.Entity;
 import entities.Light;
 import gui.GuiTexture;
+import gui.View;
 import main.Configs;
 import models.Model;
 import shaders.GuiShader;
@@ -47,7 +48,7 @@ public class MasterRenderer {
 	private Map<Model, ArrayList<Entity>> entities = new HashMap<Model, ArrayList<Entity>>();
 	private ArrayList<Terrain> terrains = new ArrayList<Terrain>();
 	private ArrayList<WaterTile> waters = new ArrayList<WaterTile>();
-	private ArrayList<GuiTexture> guis = new ArrayList<GuiTexture>();
+	private ArrayList<View> guis = new ArrayList<View>();
 	
 	WaterFrameBuffers fbos = new WaterFrameBuffers();
 	Fbo skyBoxFbo = new Fbo(Configs.SCREEN_WIDTH, Configs.SCREEN_HEIGHT, Fbo.NONE);
@@ -143,7 +144,7 @@ public class MasterRenderer {
 		}
 	}
 	
-	public void processGui(GuiTexture gui) {
+	public void processGui(View gui) {
 		guis.add(gui);
 	}
 
