@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.Vector3f;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import input.ControllerManager;
 import models.Model;
 import models.RawModel;
 import models.io.ModelLoader;
@@ -39,6 +40,8 @@ public class MainGameLoop {
 
 		MasterRenderer renderer = new MasterRenderer(loader);
 
+		ControllerManager.initControllers();
+		
 		RawModel rawModel = null;
 		try {
 			rawModel = ModelLoader.loadModel("dragon", loader);
