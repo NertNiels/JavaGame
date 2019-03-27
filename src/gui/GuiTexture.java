@@ -60,10 +60,10 @@ public class GuiTexture {
 	}
 	
 	public Vector2f getTopLeft() {
-		return Vector2f.sub(position, new Vector2f(scale.x/2, scale.y/2), null);
+		return Vector2f.sub(position, new Vector2f(scale.x, scale.y), null);
 	}
 	
 	public Vector2f getBottomRight() {
-		return Vector2f.add(position, new Vector2f(scale.x/2, scale.y/2), null);
+		return Vector2f.add(position, new Vector2f(scale.x, scale.y), null);
 	}
 }

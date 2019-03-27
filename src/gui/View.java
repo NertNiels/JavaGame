@@ -15,7 +15,7 @@ public class View {
 		onClickListener = new OnClickListener() {
 			
 			@Override
-			public void onHover(View view, Vector2f mousePos) {
+			public void onHover(View view, Vector2f mousePos, boolean hovering) {
 				
 			}
 			
@@ -36,7 +36,7 @@ public class View {
 		onClickListener = new OnClickListener() {
 			
 			@Override
-			public void onHover(View view, Vector2f mousePos) {
+			public void onHover(View view, Vector2f mousePos, boolean hovering) {
 				
 			}
 			
@@ -53,7 +53,7 @@ public class View {
 	}
 	
 	public void mouse(Vector2f mousePos, boolean mouseIsDown) {
-		System.out.println(mousePos.x + ", " + mousePos.y);
+		boolean nowHovering = false;
 		if(		mousePos.x >= texture.getTopLeft().x &&
 				mousePos.y >= texture.getTopLeft().y &&
 				mousePos.x <= texture.getBottomRight().x &&
@@ -65,12 +65,13 @@ public class View {
 				isSelected = false;
 				onClickListener.onClick(this, mousePos);
 			} else {
-				if(isHovering == false) onClickListener.onHover(this, mousePos);
-				isHovering = true;
+				nowHovering = true;
 			}
 		} else {
-			isHovering = false;
+			nowHovering = false;
 		}
+		if(isHovering != nowHovering) onClickListener.onHover(this, mousePos, nowHovering);
+		isHovering = nowHovering;
 	}
 	
 	public OnClickListener getOnClickListener() {

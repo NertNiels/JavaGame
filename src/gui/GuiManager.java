@@ -26,8 +26,9 @@ public class GuiManager {
 			}
 			
 			@Override
-			public void onHover(View view, Vector2f mousePos) {
-				view.getTexture().setOpacity(1);
+			public void onHover(View view, Vector2f mousePos, boolean hovering) {
+				if(hovering) view.getTexture().setOpacity(0.9f);
+				else view.getTexture().setOpacity(0.7f);
 			}
 			
 			@Override
