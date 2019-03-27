@@ -20,7 +20,6 @@ public class ControllerManager {
 	public static void initControllers() {
 		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
 		for (int i = 0; i < controllers.length; i++) {
-			;
 			Controller c = controllers[i];
 			System.out.println(c.getName());
 			if (c.getType() == Controller.Type.GAMEPAD)
@@ -38,6 +37,7 @@ public class ControllerManager {
 	}
 
 	public static void update() {
+		if(controller == null) return;
 		controller.poll();
 
 		while (eventQueue.getNextEvent(event)) {

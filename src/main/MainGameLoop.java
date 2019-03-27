@@ -11,9 +11,11 @@ import org.lwjgl.util.vector.Vector4f;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import gui.GuiManager;
 import gui.GuiTexture;
 import gui.View;
 import input.ControllerManager;
+import input.MouseManager;
 import models.Model;
 import models.RawModel;
 import models.io.ModelLoader;
@@ -42,9 +44,12 @@ public class MainGameLoop {
 		World world = World.generateWorld(heightGenerator, Configs.SIZE, Configs.SIZE, loader);
 
 		MasterRenderer renderer = new MasterRenderer(loader);
-		
+
+		GuiManager guiManager = new GuiManager(loader);
+
 		ControllerManager.initControllers();
-		
+		MouseManager.init();
+
 		RawModel rawModel = null;
 		try {
 			rawModel = ModelLoader.loadModel("dragon", loader);
@@ -52,23 +57,23 @@ public class MainGameLoop {
 			e.printStackTrace();
 		}
 		Model model = new Model(rawModel);
-		for(int i = 0; i < 1; i++) {
-		Entity plant = new Entity(model, world, new Vector2f((float)Math.random() * Configs.SIZE, (float)Math.random() * Configs.SIZE), 1f);
-		world.addEntity(plant);
+		for (int i = 0; i < 1; i++) {
+			Entity plant = new Entity(model, world,
+					new Vector2f((float) Math.random() * Configs.SIZE, (float) Math.random() * Configs.SIZE), 1f);
+			world.addEntity(plant);
 		}
-		
-		View guiTest = new View(loader.loadTexture("white"), new Vector2f(-0.5f, 0.5f), new Vector2f(0.25f, 0.25f), new Vector4f(0.15f, 0.15f, 0.15f, 1), 0.7f);
-		
 		while (!Display.isCloseRequested()) {
 			ControllerManager.update();
+			MouseManager.update();
 			world.update(loader);
 			camera.update(world);
 			world.prepareWorld(renderer, loader);
-			renderer.processGui(guiTest);
+			guiManager.update(renderer);
 			renderer.render(light, camera);
 
 			DisplayManager.updateDisplay();
-			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || ControllerManager.getB()) break;
+			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || ControllerManager.getB())
+				break;
 		}
 
 		loader.cleanUp();
