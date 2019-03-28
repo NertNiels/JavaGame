@@ -16,27 +16,7 @@ public class GuiManager {
 	
 	public GuiManager(Loader loader) {
 		views = new ArrayList<View>();
-		View guiTest = new View(loader.loadTexture("white"), new Vector2f(-0.5f, 0.5f), new Vector2f(0.25f, 0.25f), new Vector4f(0.15f, 0.15f, 0.15f, 1), 0.7f);
-		guiTest.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onSelected(View view, Vector2f mousePos) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onHover(View view, Vector2f mousePos, boolean hovering) {
-				if(hovering) view.getTexture().setOpacity(0.9f);
-				else view.getTexture().setOpacity(0.7f);
-			}
-			
-			@Override
-			public void onClick(View view, Vector2f mousePos) {
-				view.getTexture().setOpacity(1);
-			}
-		});
-		views.add(guiTest);
+		
 	}
 	
 	public void update(MasterRenderer renderer) {

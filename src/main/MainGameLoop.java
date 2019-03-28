@@ -52,12 +52,14 @@ public class MainGameLoop {
 
 		RawModel rawModel = null;
 		try {
-			rawModel = ModelLoader.loadModel("dragon", loader);
+			rawModel = ModelLoader.loadModel("tree", loader);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		Model model = new Model(rawModel);
-		for (int i = 0; i < 1; i++) {
+		model.setReflectivity(0.2f);
+		model.setShineDamper(10);
+		for (int i = 0; i < 200; i++) {
 			Entity plant = new Entity(model, world,
 					new Vector2f((float) Math.random() * Configs.SIZE, (float) Math.random() * Configs.SIZE), 1f);
 			world.addEntity(plant);

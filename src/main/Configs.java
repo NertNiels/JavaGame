@@ -42,7 +42,7 @@ public class Configs {
 	public static final int VERTEX_COUNT = 100;			// DEFAULT: 100
 	public static final int SIZE = 800;
 	
-	public static final float MIN_ZOOM = 100;
+	public static final float MIN_ZOOM = 25;
 	public static final float MAX_ZOOM = 400;
 	
 	public static final float SCALE = 20;				// DEFAULT: 20

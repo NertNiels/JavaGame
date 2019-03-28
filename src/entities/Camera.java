@@ -6,6 +6,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import input.ControllerManager;
+import input.MouseManager;
 import main.Configs;
 import net.java.games.input.Controller;
 import toolbox.Maths;
@@ -46,8 +47,8 @@ public class Camera {
 	}
 
 	public void update(World world) {
-		float mouseDX = Mouse.getDX();
-		float mouseDY = Mouse.getDY();
+		float mouseDX = MouseManager.getDelta().x;
+		float mouseDY = MouseManager.getDelta().y;
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
 			zoomFactor = 0.01f;
