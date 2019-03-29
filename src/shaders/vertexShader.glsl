@@ -24,14 +24,17 @@ uniform float density;
 const float gradient = 15;
 
 vec4 applyDistortion(vec4 position) {
-	vec4 output = vec4(position);
+	vec4 distorted = vec4(position);
+	float heightFactor = max(position.y, 0);
 
-	return output;
+	distorted.x += heightFactor * sin(distortionTime) + heightFactor * +0.5;
+
+	return distorted;
 }
 
 void main(void) {
-	vec4 worldPosition = transformationMatrix * vec4(position, 1.0);
-	worldPosition = applyDistortion(worldPosition);
+	vec4 vertexPos = applyDistortion(vec4(position, 1.0));
+	vec4 worldPosition = transformationMatrix * vertexPos;
 	vec4 positionRelativeToCamera = viewMatrix * worldPosition;
 	gl_Position = projectionMatrix * positionRelativeToCamera;
 	gl_ClipDistance[0] = dot(worldPosition, plane);
