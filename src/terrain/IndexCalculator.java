@@ -74,15 +74,17 @@ public class IndexCalculator {
 		return normal;
 	}
 
-	private static Vector3f calculateNormalAtOddPosition(Index currentIndex, GridSquare gridSquare, int indexCount, int i, int j) {
+	private static Vector3f calculateNormalAtOddPosition(Index currentIndex, GridSquare gridSquare, int indexCount,
+			int i, int j) {
 		Vertex vertex1 = gridSquare.getVertexAtPosition(currentIndex.getVertex1());
 		Vertex vertex2 = gridSquare.getVertexAtPosition(currentIndex.getVertex2());
 		Vertex vertex3 = gridSquare.getVertexAtPosition(currentIndex.getVertex3());
 
 		Vector3f U = Vector3f.sub(vertex2.getPosition(), vertex1.getPosition(), null);
 		Vector3f V = Vector3f.sub(vertex3.getPosition(), vertex1.getPosition(), null);
-		
-		if(i == indexCount) System.out.println("i: " + i + ", j: " + j);
+
+		if (i == indexCount)
+			System.out.println("i: " + i + ", j: " + j);
 
 		Vector3f normal = Vector3f.cross(U, V, null);
 		vertex1.setNormal(normal);

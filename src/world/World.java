@@ -43,6 +43,9 @@ public class World {
 		loadTerrains(gridX, gridZ, loader);
 		currentGridX = gridX;
 		currentGridZ = gridZ;
+		for(Entity entity : entities) {
+			entity.update();
+		}
 	}
 	
 	public void prepareWorld(MasterRenderer renderer, Loader loader) {

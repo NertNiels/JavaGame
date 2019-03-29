@@ -93,7 +93,7 @@ public class GridSquare {
 	}
 
 	/**
-	 * @param size Total size over over x and z;
+	 * @param size        Total size over over x and z;
 	 * @param vertexCount The width and height, for a square map.
 	 * @return
 	 */
@@ -110,12 +110,12 @@ public class GridSquare {
 				Vector3f normal = new Vector3f(0, 1, 1);
 				normal.normalise();
 
-				Vector3f color = new Vector3f((float)i / (float)vertexCount, 1, (float)j / (float)vertexCount);
+				Vector3f color = new Vector3f((float) i / (float) vertexCount, 1, (float) j / (float) vertexCount);
 
 				if (i != 0 && i != vertexCount - 1 && !(j >= vertexCount - 2)) {
 					Vector3f normal2 = new Vector3f(0, 1, 1);
 					normal2.normalise();
-					
+
 					vertices[i][j] = new Vertex(vertex, normal, normal2, color);
 				} else {
 					vertices[i][j] = new Vertex(vertex, normal, color);
@@ -131,8 +131,15 @@ public class GridSquare {
 				int bottomLeft = ((j + 1) * vertexCount) + i;
 				int bottomRight = bottomLeft + 1;
 
-				Index index1 = new Index(topLeft, bottomLeft, topRight);
-				Index index2 = new Index(topRight, bottomLeft, bottomRight);
+				Index index1;
+				Index index2;
+				if (((i % 2) + (j % 2)) % 2 == 0) {
+					index1 = new Index(topLeft, bottomLeft, topRight);
+					index2 = new Index(topRight, bottomLeft, bottomRight);
+				} else {
+					index1 = new Index(topLeft, bottomLeft, bottomRight);
+					index2 = new Index(topRight, topLeft, bottomRight);
+				}
 
 				indices[indexPointer++] = index1;
 				indices[indexPointer++] = index2;
@@ -169,7 +176,7 @@ public class GridSquare {
 			}
 		}
 	}
-	
+
 	public void applyHeightMap(float[][] heightMap, float scaleFactor) {
 		if (heightMap.length != vertexCount || heightMap[0].length != vertexCount) {
 			System.err.println("heightMap and vertexCount don't correspond.");
@@ -181,7 +188,7 @@ public class GridSquare {
 			}
 		}
 	}
-	
+
 	public void applyColorMap(Vector3f[][] colors) {
 		if (colors.length != vertexCount || colors[0].length != vertexCount) {
 			System.err.println("colors and vertexCount don't correspond.");

@@ -20,7 +20,7 @@ void main(void) {
 	vec3 unitLightVector = normalize(toLightVector);
 	
 	float nDot1 = dot(unitNormal, unitLightVector);
-	float brightness = max(nDot1, 0.7);
+	float brightness = max(nDot1, 0.5);
 	vec3 diffuse = brightness * lightColor;
 	
 	vec3 unitVectorToCamera = normalize(toCameraVector);
@@ -28,7 +28,7 @@ void main(void) {
 	vec3 reflectedLightDirection = reflect(lightDirection, unitNormal);
 	
 	float specularVector = dot(reflectedLightDirection, unitVectorToCamera);
-	specularVector = max(specularVector, 0.0);
+	specularVector = max(specularVector, 0.2);
 	float dampedVector = pow(specularVector, shineDamper);
 	vec3 finalSpecular = dampedVector * reflectivity * lightColor;
 

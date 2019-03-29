@@ -11,6 +11,8 @@ import org.lwjgl.util.vector.Vector4f;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import entities.behaviour.BehaviourBlueprint;
+import entities.behaviour.BehaviourTest;
 import gui.GuiManager;
 import gui.GuiTexture;
 import gui.View;
@@ -62,6 +64,7 @@ public class MainGameLoop {
 		for (int i = 0; i < 200; i++) {
 			Entity plant = new Entity(model, world,
 					new Vector2f((float) Math.random() * Configs.SIZE, (float) Math.random() * Configs.SIZE), 1f);
+			plant.addBehaviour(new BehaviourTest(plant));
 			world.addEntity(plant);
 		}
 		while (!Display.isCloseRequested()) {

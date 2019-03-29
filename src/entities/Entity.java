@@ -1,8 +1,11 @@
 package entities;
 
+import java.util.ArrayList;
+
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import entities.behaviour.BehaviourBlueprint;
 import main.Configs;
 import models.Model;
 import models.RawModel;
@@ -15,6 +18,8 @@ public class Entity {
 	private Vector3f position;
 	private float rotX, rotY, rotZ;
 	private float scale;
+	private float distortionFactor = 0;
+	private ArrayList<BehaviourBlueprint> behaviours = new ArrayList<BehaviourBlueprint>();
 
 	public Entity(Model model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
 		this.model = model;
@@ -36,6 +41,10 @@ public class Entity {
 		float height = world.getHeightAt(position.x, position.y) * Configs.HEIGHT_SCALE_FACTOR;
 		this.increasePosition(0, height, 0);
 	}
+	
+	public void addBehaviour(BehaviourBlueprint behaviour) {
+		behaviours.add(behaviour);
+	}
 
 	public void increasePosition(float dx, float dy, float dz) {
 		this.position.x += dx;
@@ -50,7 +59,9 @@ public class Entity {
 	}
 	
 	public void update() {
-		
+		for(BehaviourBlueprint b : behaviours) {
+			b.update();
+		}
 	}
 
 	public Model getModel() {
@@ -83,6 +94,14 @@ public class Entity {
 	
 	public TexturedModel getTexturedModel() {
 		return model.getTexturedModel();
+	}
+	
+	public float getDistortionFactor() {
+		return distortionFactor;
+	}
+	
+	public void setDistortionFactor(float distortionFactor) {
+		this.distortionFactor = distortionFactor;
 	}
 
 }

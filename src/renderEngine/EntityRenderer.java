@@ -31,6 +31,7 @@ public class EntityRenderer {
 	public void render(Map<Model, ArrayList<Entity>> entities) {
 		shader.loadSkyColor(Configs.SKY_COLOR_BOTTOM.x, Configs.SKY_COLOR_BOTTOM.y, Configs.SKY_COLOR_BOTTOM.z);
 		shader.loadDensity(Configs.FOG_DENSITY);
+		shader.loadDistortionTime(DisplayManager.getTime()/1000f);
 		
 		for (Model model : entities.keySet()) {
 			prepareModel(model);
@@ -72,6 +73,7 @@ public class EntityRenderer {
 		Matrix4f transformationMatrix = Maths.createTransformationmatrix(entity.getPosition(), entity.getRotX(),
 				entity.getRotY(), entity.getRotZ(), entity.getScale());
 		shader.loadTransformationMatrix(transformationMatrix);
+		shader.loadDistortionFactor(entity.getDistortionFactor());
 	}
 
 }

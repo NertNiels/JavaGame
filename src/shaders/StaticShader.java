@@ -23,6 +23,8 @@ public class StaticShader extends ShaderProgram {
 	private int location_plane;
 	private int location_density;
 	private int location_skyColor;
+	private int location_distortionTime;
+	private int location_distortionFactor;
 	
 	
 	public StaticShader() {
@@ -49,6 +51,17 @@ public class StaticShader extends ShaderProgram {
 		location_plane = super.getUniformLocation("plane");
 		location_density = super.getUniformLocation("density");
 		location_skyColor = super.getUniformLocation("skyColor");
+
+		location_distortionTime = super.getUniformLocation("distortionTime");
+		location_distortionFactor = super.getUniformLocation("distortionFactor");
+	}
+	
+	public void loadDistortionTime(float time) {
+		super.loadFloat(location_distortionTime, time);
+	}
+	
+	public void loadDistortionFactor(float factor) {
+		super.loadFloat(location_distortionFactor, factor);
 	}
 	
 	public void loadDensity(float density) {

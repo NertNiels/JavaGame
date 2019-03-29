@@ -17,13 +17,21 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform vec4 plane;
 uniform vec3 lightPosition;
+uniform float distortionTime;
+uniform float distortionFactor;
 
 uniform float density;
 const float gradient = 15;
 
-void main(void) {
+vec4 applyDistortion(vec4 position) {
+	vec4 output = vec4(position);
 
+	return output;
+}
+
+void main(void) {
 	vec4 worldPosition = transformationMatrix * vec4(position, 1.0);
+	worldPosition = applyDistortion(worldPosition);
 	vec4 positionRelativeToCamera = viewMatrix * worldPosition;
 	gl_Position = projectionMatrix * positionRelativeToCamera;
 	gl_ClipDistance[0] = dot(worldPosition, plane);
