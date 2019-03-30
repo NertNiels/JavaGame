@@ -1,5 +1,7 @@
 package input;
 
+import java.util.ArrayList;
+
 import net.java.games.input.Component;
 import net.java.games.input.Component.Identifier;
 import net.java.games.input.Controller;
@@ -14,6 +16,12 @@ public class ControllerManager {
 
 	private static EventQueue eventQueue;
 	private static Event event;
+	
+	private static ArrayList<ControllerButtonListener> buttonAListeners = new ArrayList<ControllerButtonListener>();
+	private static ArrayList<ControllerButtonListener> buttonBListeners = new ArrayList<ControllerButtonListener>();
+	private static ArrayList<ControllerButtonListener> buttonXListeners = new ArrayList<ControllerButtonListener>();
+	private static ArrayList<ControllerButtonListener> buttonYListeners = new ArrayList<ControllerButtonListener>();
+	
 	
 	private static float leftX = 0, leftY = 0, rightX = 0, rightY = 0, a = 0, b = 0, x = 0, y = 0, trigger = 0;
 
@@ -47,10 +55,10 @@ public class ControllerManager {
 				Component.Identifier id = component.getIdentifier();
 				float data = component.getPollData();
 				if(data >= -0.1f && data <= 0.1f) data = 0;
-				if (id == Identifier.Button._0) a = data;
-				else if(id == Identifier.Button._1) b = data;
-				else if(id == Identifier.Button._2) x = data;
-				else if(id == Identifier.Button._3) y = data;
+				if (id == Identifier.Button._0) onChangeA(data);
+				else if(id == Identifier.Button._1) onChangeB(data);
+				else if(id == Identifier.Button._2) onChangeX(data);
+				else if(id == Identifier.Button._3) onChangeY(data);
 				else if(id == Identifier.Axis.X) leftX = data;
 				else if(id == Identifier.Axis.Y) leftY = data;
 				else if(id == Identifier.Axis.RX) rightX = data;
@@ -106,6 +114,78 @@ public class ControllerManager {
 	
 	public static float getTrigger() {
 		return trigger;
+	}
+	
+	private static void onChangeA(float data) {
+		if(a == data) return;
+		a = data;
+		if(getA()) {
+			for(ControllerButtonListener b : buttonAListeners) {
+				b.onButtonPressed();
+			}
+		} else {
+			for(ControllerButtonListener b : buttonAListeners) {
+				b.onButtonReleased();
+			}
+		}
+	}
+	
+	private static void onChangeB(float data) {
+		if(b == data) return;
+		b = data;
+		if(getB()) {
+			for(ControllerButtonListener b : buttonBListeners) {
+				b.onButtonPressed();
+			}
+		} else {
+			for(ControllerButtonListener b : buttonBListeners) {
+				b.onButtonReleased();
+			}
+		}
+	}
+	
+	private static void onChangeX(float data) {
+		if(x == data) return;
+		x = data;
+		if(getX()) {
+			for(ControllerButtonListener b : buttonXListeners) {
+				b.onButtonPressed();
+			}
+		} else {
+			for(ControllerButtonListener b : buttonXListeners) {
+				b.onButtonReleased();
+			}
+		}
+	}
+
+	private static void onChangeY(float data) {
+		if(y == data) return;
+		y = data;
+		if(getY()) {
+			for(ControllerButtonListener b : buttonYListeners) {
+				b.onButtonPressed();
+			}
+		} else {
+			for(ControllerButtonListener b : buttonYListeners) {
+				b.onButtonReleased();
+			}
+		}
+	}
+	
+	public static void addListenerA(ControllerButtonListener b) {
+		buttonAListeners.add(b);
+	}
+	
+	public static void addListenerB(ControllerButtonListener b) {
+		buttonBListeners.add(b);
+	}
+	
+	public static void addListenerX(ControllerButtonListener b) {
+		buttonXListeners.add(b);
+	}
+	
+	public static void addListenerY(ControllerButtonListener b) {
+		buttonYListeners.add(b);
 	}
 	
 	

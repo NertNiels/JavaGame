@@ -159,6 +159,14 @@ public class World {
 		return getTerrainAt(currentGridX, currentGridZ);
 	}
 	
+	public Terrain getTerrainAt(float x, float z) {
+		int gridX = (int)(x / (float)Configs.SIZE);
+		if(x < 0) gridX--;
+		int gridZ = (int)(z / (float)Configs.SIZE);
+		if(z < 0) gridZ--;
+		return getTerrainAt(gridX, gridZ);
+	}
+	
 	public float getHeightAt(float x, float z) {
 		int gridX = (int)(x / (float)Configs.SIZE);
 		if(x < 0) gridX--;

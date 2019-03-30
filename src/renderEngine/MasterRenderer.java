@@ -184,4 +184,8 @@ public class MasterRenderer {
 	public WaterFrameBuffers getWaterFrameBuffers() {
 		return fbos;
 	}
+	
+	public Matrix4f getProjectionMatrix() {
+		return projectionMatrix;
+	}
 }

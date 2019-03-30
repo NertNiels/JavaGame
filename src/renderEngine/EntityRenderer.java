@@ -31,7 +31,7 @@ public class EntityRenderer {
 	public void render(Map<Model, ArrayList<Entity>> entities) {
 		shader.loadSkyColor(Configs.SKY_COLOR_BOTTOM.x, Configs.SKY_COLOR_BOTTOM.y, Configs.SKY_COLOR_BOTTOM.z);
 		shader.loadDensity(Configs.FOG_DENSITY);
-		shader.loadDistortionTime((float)Math.toRadians(DisplayManager.getTime()/10));
+		shader.loadDistortionTime((float)(DisplayManager.getTime() / 1000f) % (float)(Math.PI * 2));
 		
 		for (Model model : entities.keySet()) {
 			prepareModel(model);

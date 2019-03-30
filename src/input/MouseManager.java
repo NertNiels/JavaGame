@@ -2,8 +2,13 @@ package input;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 
+import entities.Camera;
 import main.Configs;
+import renderEngine.MasterRenderer;
+import toolbox.MousePicker;
+import world.World;
 
 public class MouseManager {
 
@@ -14,9 +19,12 @@ public class MouseManager {
 	private static boolean right = false;
 	private static boolean middle = false;
 
-	public static void init() {
+	private static MousePicker mousePicker;
+	
+	public static void init(MasterRenderer renderer, Camera camera, World world) {
 		mousePos = new Vector2f();
 		mousePosScaled = new Vector2f();
+		mousePicker = new MousePicker(camera, renderer.getProjectionMatrix(), world);
 	}
 
 	public static void update() {
@@ -27,6 +35,8 @@ public class MouseManager {
 		left = Mouse.isButtonDown(0);
 		right = Mouse.isButtonDown(1);
 		middle = Mouse.isButtonDown(2);
+		
+		mousePicker.update();
 	}
 
 	public static Vector2f getPosition() {
@@ -53,4 +63,12 @@ public class MouseManager {
 		return middle;
 	}
 
+	public static Vector3f getMouseRay() {
+		return mousePicker.getCurrentRay();
+	}
+	
+	public static Vector3f getPointOnTerrain() {
+		return mousePicker.getPointOnTerrain();
+	}
+	
 }

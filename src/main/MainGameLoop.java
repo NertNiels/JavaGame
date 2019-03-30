@@ -16,6 +16,7 @@ import entities.behaviour.BehaviourTest;
 import gui.GuiManager;
 import gui.GuiTexture;
 import gui.View;
+import input.ControllerButtonListener;
 import input.ControllerManager;
 import input.MouseManager;
 import models.Model;
@@ -50,7 +51,7 @@ public class MainGameLoop {
 		GuiManager guiManager = new GuiManager(loader);
 
 		ControllerManager.initControllers();
-		MouseManager.init();
+		MouseManager.init(renderer, camera, world);
 
 		RawModel rawModel = null;
 		try {
@@ -61,12 +62,30 @@ public class MainGameLoop {
 		Model model = new Model(rawModel);
 		model.setReflectivity(0.2f);
 		model.setShineDamper(10);
-		for (int i = 0; i < 200; i++) {
+		for (int i = 0; i < 100; i++) {
 			Entity plant = new Entity(model, world,
 					new Vector2f((float) Math.random() * Configs.SIZE, (float) Math.random() * Configs.SIZE), 1f);
 			plant.addBehaviour(new BehaviourTest(plant));
 			world.addEntity(plant);
 		}
+		ControllerManager.addListenerA(new ControllerButtonListener() {
+			
+			@Override
+			public void onButtonReleased() {
+			}
+			
+			@Override
+			public void onButtonPressed() {
+				Vector3f newPos = MouseManager.getPointOnTerrain();
+				if (newPos != null) {
+					Entity newEntity = new Entity(model, world,
+							new Vector2f(newPos.x, newPos.z), 1f);
+					newEntity.addBehaviour(new BehaviourTest(newEntity));
+					world.addEntity(newEntity);
+				}
+			}
+		});
+		
 		while (!Display.isCloseRequested()) {
 			ControllerManager.update();
 			MouseManager.update();
@@ -75,7 +94,6 @@ public class MainGameLoop {
 			world.prepareWorld(renderer, loader);
 			guiManager.update(renderer);
 			renderer.render(light, camera);
-
 			DisplayManager.updateDisplay();
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || ControllerManager.getB())
 				break;
