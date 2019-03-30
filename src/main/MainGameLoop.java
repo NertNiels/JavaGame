@@ -26,6 +26,7 @@ import renderEngine.CustomFileLoader;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
+import toolbox.ScreenPicker;
 import world.HeightGenerator;
 import world.World;
 
@@ -52,7 +53,8 @@ public class MainGameLoop {
 
 		ControllerManager.initControllers();
 		MouseManager.init(renderer, camera, world);
-
+		ScreenPicker screenPicker = new ScreenPicker(camera,renderer.getProjectionMatrix(), world);
+		
 		RawModel rawModel = null;
 		try {
 			rawModel = ModelLoader.loadModel("tree", loader);
@@ -76,7 +78,7 @@ public class MainGameLoop {
 			
 			@Override
 			public void onButtonPressed() {
-				Vector3f newPos = MouseManager.getPointOnTerrain();
+				Vector3f newPos = screenPicker.getMiddleOnTerrain();
 				if (newPos != null) {
 					Entity newEntity = new Entity(model, world,
 							new Vector2f(newPos.x, newPos.z), 1f);
@@ -89,6 +91,7 @@ public class MainGameLoop {
 		while (!Display.isCloseRequested()) {
 			ControllerManager.update();
 			MouseManager.update();
+			screenPicker.update();
 			world.update(loader);
 			camera.update(world);
 			world.prepareWorld(renderer, loader);

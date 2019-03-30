@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
 import input.MouseManager;
+import main.Configs;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 
@@ -16,7 +17,8 @@ public class GuiManager {
 	
 	public GuiManager(Loader loader) {
 		views = new ArrayList<View>();
-		
+		View view = new View(loader.loadTexture("cross"), new Vector2f(0, 0), new Vector2f(10f / Configs.SCREEN_WIDTH, 10f / Configs.SCREEN_HEIGHT));
+		views.add(view);
 	}
 	
 	public void update(MasterRenderer renderer) {

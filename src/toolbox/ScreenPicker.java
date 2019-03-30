@@ -12,9 +12,10 @@ import main.Configs;
 import terrain.Terrain;
 import world.World;
 
-public class MousePicker {
+public class ScreenPicker {
 
-	private Vector3f currentRay;
+	private Vector3f currentMouseRay;
+	private Vector3f currentMiddleRay;
 	private Matrix4f projectionMatrix;
 	private Matrix4f viewMatrix;
 	private Camera camera;
@@ -22,33 +23,51 @@ public class MousePicker {
 	private World world;
 	private static final int RECURSION_COUNT = 200;
 	private static final int RAY_RANGE = 600;
-	private Vector3f currentTerrainPoint;
+	private Vector3f currentTerrainPointMouse;
+	private Vector3f currentTerrainPointMiddle;
 	
-	public MousePicker(Camera camera, Matrix4f projectionMatrix, World world) {
+	public ScreenPicker(Camera camera, Matrix4f projectionMatrix, World world) {
 		this.camera = camera;
 		this.projectionMatrix = projectionMatrix;
 		this.viewMatrix = Maths.createViewMatrix(camera);
 		this.world = world;
-		currentTerrainPoint = new Vector3f();
+		currentTerrainPointMouse = new Vector3f();
+		currentTerrainPointMiddle = new Vector3f();
 	}
 	
-	public Vector3f getCurrentRay() {
-		return currentRay;
+	public Vector3f getCurrentMouseRay() {
+		return currentMouseRay;
 	}
 	
+	public Vector3f getCurrentMiddleRay() {
+		return currentMiddleRay;
+	}
 	public void update() {
 		viewMatrix = Maths.createViewMatrix(camera);
-		currentRay = calculateMouseRay();
-		if (intersectionInRange(0, RAY_RANGE, currentRay)) {
-			currentTerrainPoint = binarySearch(0, 0, RAY_RANGE, currentRay);
+		currentMouseRay = calculateMouseRay();
+		currentMiddleRay = calculateMiddleRay();
+		if (intersectionInRange(0, RAY_RANGE, currentMouseRay)) {
+			currentTerrainPointMouse = binarySearch(0, 0, RAY_RANGE, currentMouseRay);
 		} else {
-			currentTerrainPoint = null;
+			currentTerrainPointMouse = null;
+		}
+		if (intersectionInRange(0, RAY_RANGE, currentMiddleRay)) {
+			currentTerrainPointMiddle = binarySearch(0, 0, RAY_RANGE, currentMiddleRay);
+		} else {
+			currentTerrainPointMiddle = null;
 		}
 	}
 	
 	private Vector3f calculateMouseRay() {
 		Vector2f normalizedCoords = MouseManager.getPositionScaled();
 		Vector4f clipCoords = new Vector4f(normalizedCoords.x, normalizedCoords.y, -1, 1);
+		Vector4f eyeCoords = toEyeCoords(clipCoords);
+		Vector3f worldRay = toWorldCoords(eyeCoords);
+		return worldRay;
+	}
+	
+	private Vector3f calculateMiddleRay() {
+		Vector4f clipCoords = new Vector4f(0, 0, -1, 1);
 		Vector4f eyeCoords = toEyeCoords(clipCoords);
 		Vector3f worldRay = toWorldCoords(eyeCoords);
 		return worldRay;
@@ -116,8 +135,12 @@ public class MousePicker {
 		}
 	}
 	
-	public Vector3f getPointOnTerrain() {
-		return currentTerrainPoint;
+	public Vector3f getMiddleOnTerrain() {
+		return currentTerrainPointMiddle;
+	}
+	
+	public Vector3f getMouseOnTerrain() {
+		return currentTerrainPointMouse;
 	}
 	
 }

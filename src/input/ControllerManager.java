@@ -9,6 +9,7 @@ import net.java.games.input.ControllerEnvironment;
 import net.java.games.input.Event;
 import net.java.games.input.EventQueue;
 import net.java.games.input.Rumbler;
+import toolbox.ScreenPicker;
 
 public class ControllerManager {
 
@@ -22,9 +23,8 @@ public class ControllerManager {
 	private static ArrayList<ControllerButtonListener> buttonXListeners = new ArrayList<ControllerButtonListener>();
 	private static ArrayList<ControllerButtonListener> buttonYListeners = new ArrayList<ControllerButtonListener>();
 	
-	
 	private static float leftX = 0, leftY = 0, rightX = 0, rightY = 0, a = 0, b = 0, x = 0, y = 0, trigger = 0;
-
+	
 	public static void initControllers() {
 		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
 		for (int i = 0; i < controllers.length; i++) {
@@ -39,7 +39,7 @@ public class ControllerManager {
 			return;
 		}
 		System.out.println("Controller chosen: " + controller.getName());
-
+		
 		eventQueue = controller.getEventQueue();
 		event = new Event();
 	}
