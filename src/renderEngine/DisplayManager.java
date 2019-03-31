@@ -59,10 +59,10 @@ public class DisplayManager {
 		Display.sync(Configs.FPS_CAP);
 		Display.update();
 		long d = getDeltaTime();
-		averageFrameRate = (float)1000 / (float)d;
+		averageFrameRate = 1000f / (float)d;
 		timer += getFrameTimeSeconds();
 		if(timer >= 1f) {
-			System.out.println("Average FPS: " + averageFrameRate);
+			Display.setTitle("Average FPS: " + averageFrameRate);
 			timer = 0;
 		}
 	}

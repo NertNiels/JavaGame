@@ -39,6 +39,7 @@ vec4 applyDistortion(vec4 position, float heightFactor) {
 	return distorted;
 }
 
+
 void main(void) {
 	vec4 worldPosition = transformationMatrix * vec4(position, 1.0);
 	worldPosition = applyDistortion(worldPosition, max(position.y, 0));

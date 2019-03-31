@@ -18,10 +18,10 @@ public class ControllerManager {
 	private static EventQueue eventQueue;
 	private static Event event;
 	
-	private static ArrayList<ControllerButtonListener> buttonAListeners = new ArrayList<ControllerButtonListener>();
-	private static ArrayList<ControllerButtonListener> buttonBListeners = new ArrayList<ControllerButtonListener>();
-	private static ArrayList<ControllerButtonListener> buttonXListeners = new ArrayList<ControllerButtonListener>();
-	private static ArrayList<ControllerButtonListener> buttonYListeners = new ArrayList<ControllerButtonListener>();
+	private static ArrayList<ButtonListener> buttonAListeners = new ArrayList<ButtonListener>();
+	private static ArrayList<ButtonListener> buttonBListeners = new ArrayList<ButtonListener>();
+	private static ArrayList<ButtonListener> buttonXListeners = new ArrayList<ButtonListener>();
+	private static ArrayList<ButtonListener> buttonYListeners = new ArrayList<ButtonListener>();
 	
 	private static float leftX = 0, leftY = 0, rightX = 0, rightY = 0, a = 0, b = 0, x = 0, y = 0, trigger = 0;
 	
@@ -120,11 +120,11 @@ public class ControllerManager {
 		if(a == data) return;
 		a = data;
 		if(getA()) {
-			for(ControllerButtonListener b : buttonAListeners) {
-				b.onButtonPressed();
+			for(ButtonListener b : buttonAListeners) {
+				b.onButtonDown();
 			}
 		} else {
-			for(ControllerButtonListener b : buttonAListeners) {
+			for(ButtonListener b : buttonAListeners) {
 				b.onButtonReleased();
 			}
 		}
@@ -134,11 +134,11 @@ public class ControllerManager {
 		if(b == data) return;
 		b = data;
 		if(getB()) {
-			for(ControllerButtonListener b : buttonBListeners) {
-				b.onButtonPressed();
+			for(ButtonListener b : buttonBListeners) {
+				b.onButtonDown();
 			}
 		} else {
-			for(ControllerButtonListener b : buttonBListeners) {
+			for(ButtonListener b : buttonBListeners) {
 				b.onButtonReleased();
 			}
 		}
@@ -148,11 +148,11 @@ public class ControllerManager {
 		if(x == data) return;
 		x = data;
 		if(getX()) {
-			for(ControllerButtonListener b : buttonXListeners) {
-				b.onButtonPressed();
+			for(ButtonListener b : buttonXListeners) {
+				b.onButtonDown();
 			}
 		} else {
-			for(ControllerButtonListener b : buttonXListeners) {
+			for(ButtonListener b : buttonXListeners) {
 				b.onButtonReleased();
 			}
 		}
@@ -162,29 +162,29 @@ public class ControllerManager {
 		if(y == data) return;
 		y = data;
 		if(getY()) {
-			for(ControllerButtonListener b : buttonYListeners) {
-				b.onButtonPressed();
+			for(ButtonListener b : buttonYListeners) {
+				b.onButtonDown();
 			}
 		} else {
-			for(ControllerButtonListener b : buttonYListeners) {
+			for(ButtonListener b : buttonYListeners) {
 				b.onButtonReleased();
 			}
 		}
 	}
 	
-	public static void addListenerA(ControllerButtonListener b) {
+	public static void addListenerA(ButtonListener b) {
 		buttonAListeners.add(b);
 	}
 	
-	public static void addListenerB(ControllerButtonListener b) {
+	public static void addListenerB(ButtonListener b) {
 		buttonBListeners.add(b);
 	}
 	
-	public static void addListenerX(ControllerButtonListener b) {
+	public static void addListenerX(ButtonListener b) {
 		buttonXListeners.add(b);
 	}
 	
-	public static void addListenerY(ControllerButtonListener b) {
+	public static void addListenerY(ButtonListener b) {
 		buttonYListeners.add(b);
 	}
 	

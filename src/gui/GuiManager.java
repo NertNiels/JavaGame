@@ -13,12 +13,14 @@ import renderEngine.MasterRenderer;
 
 public class GuiManager {
 
-	ArrayList<View> views;
+	private ArrayList<View> views;
+	private View cross;
 	
 	public GuiManager(Loader loader) {
 		views = new ArrayList<View>();
-		View view = new View(loader.loadTexture("cross"), new Vector2f(0, 0), new Vector2f(10f / Configs.SCREEN_WIDTH, 10f / Configs.SCREEN_HEIGHT));
-		views.add(view);
+		cross = new View(loader.loadTexture("cross"), new Vector2f(0, 0), new Vector2f(10f / Configs.SCREEN_WIDTH, 10f / Configs.SCREEN_HEIGHT));
+		cross.getTexture().setOpacity(0);
+		views.add(cross);
 	}
 	
 	public void update(MasterRenderer renderer) {
@@ -26,5 +28,9 @@ public class GuiManager {
 			view.mouse(MouseManager.getPositionScaled(), MouseManager.getMouseLeft());
 			renderer.processGui(view);
 		}
+	}
+	
+	public View getCross() {
+		return cross;
 	}
 }

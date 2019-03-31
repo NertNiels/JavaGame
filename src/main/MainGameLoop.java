@@ -16,7 +16,7 @@ import entities.behaviour.BehaviourTest;
 import gui.GuiManager;
 import gui.GuiTexture;
 import gui.View;
-import input.ControllerButtonListener;
+import input.ButtonListener;
 import input.ControllerManager;
 import input.MouseManager;
 import models.Model;
@@ -70,15 +70,44 @@ public class MainGameLoop {
 			plant.addBehaviour(new BehaviourTest(plant));
 			world.addEntity(plant);
 		}
-		ControllerManager.addListenerA(new ControllerButtonListener() {
+		ControllerManager.addListenerA(new ButtonListener() {
 			
 			@Override
 			public void onButtonReleased() {
 			}
 			
 			@Override
-			public void onButtonPressed() {
+			public void onButtonDown() {
 				Vector3f newPos = screenPicker.getMiddleOnTerrain();
+				if (newPos != null) {
+					Entity newEntity = new Entity(model, world,
+							new Vector2f(newPos.x, newPos.z), 1f);
+					newEntity.addBehaviour(new BehaviourTest(newEntity));
+					world.addEntity(newEntity);
+				}
+			}
+
+			@Override
+			public void onButtonClicked() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		MouseManager.addLeftButtonListener(new ButtonListener() {
+			@Override
+			public void onButtonReleased() {
+				
+			}
+			
+			@Override
+			public void onButtonDown() {
+				
+			}
+
+			@Override
+			public void onButtonClicked() {
+				Vector3f newPos = screenPicker.getMouseOnTerrain();
 				if (newPos != null) {
 					Entity newEntity = new Entity(model, world,
 							new Vector2f(newPos.x, newPos.z), 1f);

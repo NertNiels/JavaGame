@@ -10,5 +10,5 @@ uniform float opacity;
 void main(void) {
 	out_Color = texture(tex, out_textureCoords);
 	out_Color = vec4(out_Color * blend_color);
-	out_Color.a = opacity;
+	out_Color.a = out_Color.a * opacity;
 }
