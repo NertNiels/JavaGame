@@ -40,14 +40,14 @@ public class Loader {
 		unbindVAO();
 		return new RawModel(vaoID, indices.length);
 	}
-	
+
 	public RawModel loadToVAO(float[] positions, int dimensions) {
 		int vaoID = createVAO();
 		storeDataInAttributeList(0, dimensions, positions);
 		unbindVAO();
 		return new RawModel(vaoID, positions.length / dimensions);
 	}
-	
+
 	public RawModel loadToVAO(float[] positions, float[] colors, int dimensions) {
 		int vaoID = createVAO();
 		storeDataInAttributeList(0, dimensions, positions);
@@ -56,13 +56,13 @@ public class Loader {
 		return new RawModel(vaoID, positions.length / dimensions);
 	}
 
-	public RawModel loadToVAO(float[] positions)  {
+	public RawModel loadToVAO(float[] positions) {
 		int vaoID = createVAO();
 		storeDataInAttributeList(0, 2, positions);
 		unbindVAO();
 		return new RawModel(vaoID, positions.length / 2);
 	}
-	
+
 	public RawModel loadToVAO(float[] positions, float[] textureCoords, float[] normals, int[] indices,
 			float[] colors) {
 
@@ -134,6 +134,34 @@ public class Loader {
 		return textureID;
 	}
 
+	public int loadTexture(float[] pixels, int width, int height) {
+		int texID = GL11.glGenTextures();
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texID);
+		FloatBuffer buffer = storeDataInFloatBuffer(pixels);
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, width, height, 0, GL11.GL_RGB, GL11.GL_FLOAT, buffer);
+
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+		textures.add(texID);
+		return texID;
+	}
+	
+	public int loadTexture(int texID, float[] pixels, int width, int height) {
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texID);
+		FloatBuffer buffer = storeDataInFloatBuffer(pixels);
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA, GL11.GL_FLOAT, buffer);
+
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+		return texID;
+	}
+	
+	public int loadTexture() {
+		return GL11.glGenTextures();
+	}
+
 	public void cleanUp() {
 		for (int vao : vaos) {
 			GL30.glDeleteVertexArrays(vao);
@@ -169,13 +197,16 @@ public class Loader {
 		int texID = GL11.glGenTextures();
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, texID);
-		
-		for(int i=0; i < textureFiles.length; i++) {
+
+		for (int i = 0; i < textureFiles.length; i++) {
 			TextureData data = decodeTextureFile("res/" + textureFiles[i] + ".png");
-			GL11.glTexImage2D(GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL11.GL_RGBA, data.getWidth(), data.getHeight(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, data.getBuffer());
+			GL11.glTexImage2D(GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL11.GL_RGBA, data.getWidth(),
+					data.getHeight(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, data.getBuffer());
 		}
+
 		
-		GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+		
+		GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
 		GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
 		textures.add(texID);
 		return texID;

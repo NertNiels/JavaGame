@@ -14,6 +14,7 @@ import models.RawModel;
 import shaders.TerrainShader;
 import terrain.Terrain;
 import toolbox.Maths;
+import world.World;
 
 public class TerrainRenderer {
 
@@ -29,26 +30,29 @@ public class TerrainRenderer {
 		shader.stop();
 	}
 
-	public void render(ArrayList<Terrain> terrains) {
+	public void render(ArrayList<Terrain> terrains, World world) {
 
 		shader.loadSkyColor(Configs.SKY_COLOR_BOTTOM.x, Configs.SKY_COLOR_BOTTOM.y, Configs.SKY_COLOR_BOTTOM.z);
 		shader.loadDensity(Configs.FOG_DENSITY);
-
+		shader.loadSize();
+		
 		for (Terrain terrain : terrains) {
-			prepareTerrain(terrain);
+			prepareTerrain(terrain, world);
 			loadModelMatrix(terrain);
 			GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getRawModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			unbindTerrain();
 		}
 	}
 
-	private void prepareTerrain(Terrain terrain) {
+	private void prepareTerrain(Terrain terrain, World world) {
 		RawModel rawModel = terrain.getRawModel();
 		GL30.glBindVertexArray(rawModel.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);
 		GL20.glEnableVertexAttribArray(2);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, world.getBiomeTexture());
+		GL13.glActiveTexture(GL13.GL_TEXTURE1);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, skyBoxFbo.getColourTexture());
 	}
 

@@ -2,6 +2,7 @@ package input;
 
 import java.util.ArrayList;
 
+import gui.GuiManager;
 import net.java.games.input.Component;
 import net.java.games.input.Component.Identifier;
 import net.java.games.input.Controller;
@@ -25,7 +26,7 @@ public class ControllerManager {
 	
 	private static float leftX = 0, leftY = 0, rightX = 0, rightY = 0, a = 0, b = 0, x = 0, y = 0, trigger = 0;
 	
-	public static void initControllers() {
+	public static void initControllers(GuiManager guiManager) {
 		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
 		for (int i = 0; i < controllers.length; i++) {
 			Controller c = controllers[i];
@@ -42,6 +43,7 @@ public class ControllerManager {
 		
 		eventQueue = controller.getEventQueue();
 		event = new Event();
+		guiManager.getCross().getTexture().setOpacity(1);
 	}
 
 	public static void update() {

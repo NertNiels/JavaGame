@@ -6,6 +6,7 @@ import org.lwjgl.util.vector.Vector4f;
 
 import entities.Camera;
 import entities.Light;
+import main.Configs;
 import toolbox.Maths;
 
 public class TerrainShader extends ShaderProgram {
@@ -23,8 +24,9 @@ public class TerrainShader extends ShaderProgram {
 	private int location_skyColor;
 	private int location_density;
 	private int location_plane;
+	private int location_biomeTexture;
+	private int location_size;
 	private int location_skyBoxTexture;
-	
 	
 	public TerrainShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -50,6 +52,8 @@ public class TerrainShader extends ShaderProgram {
 		location_density = super.getUniformLocation("density");
 		location_plane = super.getUniformLocation("plane");
 		location_skyBoxTexture = super.getUniformLocation("skyBoxTexture");
+		location_biomeTexture = super.getUniformLocation("biomeTexture");
+		location_size = super.getUniformLocation("size");
 	}
 	
 	public void loadClipPlane(Vector4f plane) {
@@ -87,9 +91,14 @@ public class TerrainShader extends ShaderProgram {
 		Matrix4f viewMatrix4f = Maths.createViewMatrix(camera);
 		super.loadMatrix(location_viewMatrix, viewMatrix4f);
 	}
+	
+	public void loadSize() {
+		super.loadFloat(location_size, (float)Configs.SIZE);
+	}
 
 	public void connectTextureUnits() {
-		super.loadInt(location_skyBoxTexture, 0);
+		super.loadInt(location_biomeTexture, 0);
+		super.loadInt(location_skyBoxTexture, 1);
 	}
 
 }

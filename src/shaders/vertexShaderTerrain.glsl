@@ -7,7 +7,7 @@ in vec3 normal;
 flat out vec3 surfaceNormal;
 out vec3 toLightVector;
 out vec3 toCameraVector;
-flat out vec3 pass_color;
+flat out vec4 pass_color;
 out float visibility;
 out vec4 clipSpaceCoords;
 
@@ -22,10 +22,11 @@ uniform float density;
 const float gradient = 15;
 
 uniform vec4 plane;
+uniform sampler2D biomeTexture;
+uniform float size;
 
 
 void main(void) {
-
 	vec4 worldPosition = transformationMatrix * vec4(position, 1.0);
 
 	gl_ClipDistance[0] = dot(worldPosition, plane);
@@ -38,10 +39,9 @@ void main(void) {
 	toLightVector = lightPosition - worldPosition.xyz;
 	toCameraVector = (inverse(viewMatrix) * vec4(0.0,0.0,0.0,1.0)).xyz - worldPosition.xyz;
 	
-	pass_color = color;
+	pass_color = texture(biomeTexture, position.xz/size);
 
 	float distance = length(positionRelativeToCamera.xyz);
 	visibility = exp(-pow((distance * density), gradient));
 	visibility = clamp(visibility, 0.0, 1.0);
-
 }

@@ -51,7 +51,7 @@ public class MainGameLoop {
 
 		GuiManager guiManager = new GuiManager(loader);
 
-		ControllerManager.initControllers();
+		ControllerManager.initControllers(guiManager);
 		MouseManager.init(renderer, camera, world);
 		ScreenPicker screenPicker = new ScreenPicker(camera,renderer.getProjectionMatrix(), world);
 		
@@ -64,12 +64,6 @@ public class MainGameLoop {
 		Model model = new Model(rawModel);
 		model.setReflectivity(0.2f);
 		model.setShineDamper(10);
-		for (int i = 0; i < 100; i++) {
-			Entity plant = new Entity(model, world,
-					new Vector2f((float) Math.random() * Configs.SIZE, (float) Math.random() * Configs.SIZE), 1f);
-			plant.addBehaviour(new BehaviourTest(plant));
-			world.addEntity(plant);
-		}
 		ControllerManager.addListenerA(new ButtonListener() {
 			
 			@Override
@@ -125,7 +119,7 @@ public class MainGameLoop {
 			camera.update(world);
 			world.prepareWorld(renderer, loader);
 			guiManager.update(renderer);
-			renderer.render(light, camera);
+			renderer.render(light, camera, world);
 			DisplayManager.updateDisplay();
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || ControllerManager.getB())
 				break;

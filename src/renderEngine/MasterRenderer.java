@@ -26,6 +26,7 @@ import shaders.WaterShader;
 import terrain.Terrain;
 import water.WaterFrameBuffers;
 import water.WaterTile;
+import world.World;
 
 public class MasterRenderer {
 
@@ -66,7 +67,7 @@ public class MasterRenderer {
 		GL11.glCullFace(GL11.GL_BACK);
 	}
 
-	public void render(Light sun, Camera camera) {
+	public void render(Light sun, Camera camera, World world) {
 		prepare();
 		GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 		
@@ -77,16 +78,16 @@ public class MasterRenderer {
 		fbos.bindReflectionFrameBuffer();
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		camera.applyWater(Configs.WATER_HEIGHT);
-		renderScene(sun, camera, new Vector4f(0, 1, 0, -Configs.WATER_HEIGHT + 0.1f));
+		renderScene(sun, camera, new Vector4f(0, 1, 0, -Configs.WATER_HEIGHT + 0.1f), world);
 		camera.applyWater(Configs.WATER_HEIGHT);
 		
 		fbos.bindRefractionFrameBuffer();
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		renderScene(sun, camera, new Vector4f(0, -1, 0, Configs.WATER_HEIGHT + 2));
+		renderScene(sun, camera, new Vector4f(0, -1, 0, Configs.WATER_HEIGHT + 2), world);
 		fbos.unbindCurrentFrameBuffer();
 		
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
-		renderScene(sun, camera, new Vector4f(0, -1, 0, 10000000));
+		renderScene(sun, camera, new Vector4f(0, -1, 0, 10000000), world);
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_TAB))
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
@@ -106,7 +107,7 @@ public class MasterRenderer {
 		guis.clear();
 	}
 	
-	public void renderScene(Light sun, Camera camera, Vector4f clipPlane) {
+	public void renderScene(Light sun, Camera camera, Vector4f clipPlane, World world) {
 		entityShader.start();
 		entityShader.loadClipPlane(clipPlane);
 		entityShader.loadLight(sun);
@@ -118,7 +119,7 @@ public class MasterRenderer {
 		terrainShader.loadClipPlane(clipPlane);
 		terrainShader.loadLight(sun);
 		terrainShader.loadViewMatrix(camera);
-		terrainRenderer.render(terrains);
+		terrainRenderer.render(terrains, world);
 		terrainShader.stop();
 		skyboxRenderer.render(camera, clipPlane);
 

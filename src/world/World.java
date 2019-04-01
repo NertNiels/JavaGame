@@ -19,6 +19,8 @@ import water.WaterTile;
 public class World {
 
 	private HeightGenerator heightGenerator;
+	private BiomeManager biomeManager;
+	private int biomeTexture;
 	private ArrayList<Terrain> loadedTerrains;
 	private ArrayList<WaterTile> waterTiles; 
 	private ArrayList<Entity> entities;
@@ -27,8 +29,9 @@ public class World {
 	private float planeWidth, planeHeight;
 	private int currentGridX, currentGridZ;
 
-	private World(HeightGenerator heightGenerator) {
+	private World(HeightGenerator heightGenerator, Loader loader) {
 		this.heightGenerator = heightGenerator;
+		biomeManager = new BiomeManager(loader);
 		loadedTerrains = new ArrayList<Terrain>();
 		waterTiles = new ArrayList<WaterTile>();
 		entities = new ArrayList<Entity>();
@@ -46,6 +49,7 @@ public class World {
 		for(Entity entity : entities) {
 			entity.update();
 		}
+		biomeTexture = biomeManager.getTexture(loader);
 	}
 	
 	public void prepareWorld(MasterRenderer renderer, Loader loader) {
@@ -136,7 +140,7 @@ public class World {
 
 	public static World generateWorld(HeightGenerator heightGenerator,
 			int planeWidth, int planeHeight, Loader loader) {
-		World world = new World(heightGenerator);
+		World world = new World(heightGenerator, loader);
 		world.planeWidth = planeWidth;
 		world.planeHeight = planeHeight;
 		world.initialLoad(0, 0, loader);
@@ -191,6 +195,10 @@ public class World {
 	
 	public void addEntity(Entity entity) {
 		entities.add(entity);
+	}
+	
+	public int getBiomeTexture() {
+		return biomeTexture;
 	}
 
 }
