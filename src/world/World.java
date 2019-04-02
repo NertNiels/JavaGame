@@ -200,5 +200,9 @@ public class World {
 	public int getBiomeTexture() {
 		return biomeTexture;
 	}
+	
+	public BiomeManager getBiomeManager() {
+		return biomeManager;
+	}
 
 }

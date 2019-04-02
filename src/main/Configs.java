@@ -21,6 +21,11 @@ public class Configs {
 			1f,
 	};
 	
+	public static final Vector3f BIOME_COLOR_DEFAULT = new Vector3f(0.47058823529f,0.28235294117f,0);
+	public static final Vector3f BIOME_COLOR_GRASSLAND = new Vector3f(0.33333333333f,0.6f,0);
+	public static final float BIOME_MAX_RANGE = 30f;
+
+	
 	public static int SCREEN_WIDTH = 1280;
 	public static int SCREEN_HEIGHT = 720;
 	public static final boolean FULL_SCREEN = false;

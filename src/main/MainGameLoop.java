@@ -11,8 +11,9 @@ import org.lwjgl.util.vector.Vector4f;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import entities.behaviour.BehaviourBiomeSpreader;
 import entities.behaviour.BehaviourBlueprint;
-import entities.behaviour.BehaviourTest;
+import entities.behaviour.BehaviourEntityWind;
 import gui.GuiManager;
 import gui.GuiTexture;
 import gui.View;
@@ -76,7 +77,8 @@ public class MainGameLoop {
 				if (newPos != null) {
 					Entity newEntity = new Entity(model, world,
 							new Vector2f(newPos.x, newPos.z), 1f);
-					newEntity.addBehaviour(new BehaviourTest(newEntity));
+					newEntity.addBehaviour(new BehaviourEntityWind(newEntity));
+					newEntity.addBehaviour(new BehaviourBiomeSpreader(newEntity, world.getBiomeManager(), 1, 0.1f));
 					world.addEntity(newEntity);
 				}
 			}
@@ -105,7 +107,8 @@ public class MainGameLoop {
 				if (newPos != null) {
 					Entity newEntity = new Entity(model, world,
 							new Vector2f(newPos.x, newPos.z), 1f);
-					newEntity.addBehaviour(new BehaviourTest(newEntity));
+					newEntity.addBehaviour(new BehaviourEntityWind(newEntity));
+					newEntity.addBehaviour(new BehaviourBiomeSpreader(newEntity, world.getBiomeManager(), 1, 0.5f));
 					world.addEntity(newEntity);
 				}
 			}

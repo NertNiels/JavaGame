@@ -10,6 +10,7 @@ import main.Configs;
 import models.Model;
 import models.RawModel;
 import models.TexturedModel;
+import renderEngine.DisplayManager;
 import world.World;
 
 public class Entity {

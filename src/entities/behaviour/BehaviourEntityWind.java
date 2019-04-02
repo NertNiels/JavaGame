@@ -2,9 +2,9 @@ package entities.behaviour;
 
 import entities.Entity;
 
-public class BehaviourTest extends BehaviourBlueprint {
+public class BehaviourEntityWind extends BehaviourBlueprint {
 
-	public BehaviourTest(Entity baseEntity) {
+	public BehaviourEntityWind(Entity baseEntity) {
 		super(baseEntity);
 		baseEntity.setDistortionFactor(1);
 	}
