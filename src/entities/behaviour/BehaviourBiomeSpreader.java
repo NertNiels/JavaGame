@@ -14,9 +14,9 @@ public class BehaviourBiomeSpreader extends BehaviourBlueprint {
 	float fade;
 	boolean fading = true;
 	
-	public BehaviourBiomeSpreader(Entity baseEntity, BiomeManager biomeManager, float strength, float fade) {
+	public BehaviourBiomeSpreader(Entity baseEntity, BiomeManager biomeManager, float strength, float fade, BiomeType type) {
 		super(baseEntity);
-		spreader = new BiomeSpreader(baseEntity.getPosition().x, baseEntity.getPosition().z, BiomeType.Grassland, 0);
+		spreader = new BiomeSpreader(baseEntity.getPosition().x, baseEntity.getPosition().z, type, 0);
 		this.strength = strength;
 		this.fade = fade;
 		this.biomeManager = biomeManager;

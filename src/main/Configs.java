@@ -23,6 +23,10 @@ public class Configs {
 	
 	public static final Vector3f BIOME_COLOR_DEFAULT = new Vector3f(0.47058823529f,0.28235294117f,0);
 	public static final Vector3f BIOME_COLOR_GRASSLAND = new Vector3f(0.33333333333f,0.6f,0);
+	public static final Vector3f BIOME_COLOR_FOREST = new Vector3f(0.13333333333f, 0.54509803921f, 0.13333333333f);
+	public static final Vector3f BIOME_COLOR_BEACH = new Vector3f(0.95686274509f, 0.88235294117f, 0.70980392156f);
+	
+
 	public static final float BIOME_MAX_RANGE = 30f;
 
 	

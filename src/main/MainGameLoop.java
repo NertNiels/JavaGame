@@ -28,6 +28,7 @@ import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import toolbox.ScreenPicker;
+import world.BiomeType;
 import world.HeightGenerator;
 import world.World;
 
@@ -56,15 +57,16 @@ public class MainGameLoop {
 		MouseManager.init(renderer, camera, world);
 		ScreenPicker screenPicker = new ScreenPicker(camera,renderer.getProjectionMatrix(), world);
 		
-		RawModel rawModel = null;
+		RawModel treeModel = null;
+		RawModel grassModel = null;
 		try {
-			rawModel = ModelLoader.loadModel("tree", loader);
+			treeModel = ModelLoader.loadModel("tree", loader);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Model model = new Model(rawModel);
-		model.setReflectivity(0.2f);
-		model.setShineDamper(10);
+		Model modelTree = new Model(treeModel);
+		modelTree.setReflectivity(0.2f);
+		modelTree.setShineDamper(10);
 		ControllerManager.addListenerA(new ButtonListener() {
 			
 			@Override
@@ -75,10 +77,10 @@ public class MainGameLoop {
 			public void onButtonDown() {
 				Vector3f newPos = screenPicker.getMiddleOnTerrain();
 				if (newPos != null) {
-					Entity newEntity = new Entity(model, world,
+					Entity newEntity = new Entity(modelTree, world,
 							new Vector2f(newPos.x, newPos.z), 1f);
 					newEntity.addBehaviour(new BehaviourEntityWind(newEntity));
-					newEntity.addBehaviour(new BehaviourBiomeSpreader(newEntity, world.getBiomeManager(), 1, 0.1f));
+					newEntity.addBehaviour(new BehaviourBiomeSpreader(newEntity, world.getBiomeManager(), 1, 0.1f, BiomeType.Grassland));
 					world.addEntity(newEntity);
 				}
 			}
@@ -105,10 +107,34 @@ public class MainGameLoop {
 			public void onButtonClicked() {
 				Vector3f newPos = screenPicker.getMouseOnTerrain();
 				if (newPos != null) {
-					Entity newEntity = new Entity(model, world,
+					Entity newEntity = new Entity(modelTree, world,
 							new Vector2f(newPos.x, newPos.z), 1f);
 					newEntity.addBehaviour(new BehaviourEntityWind(newEntity));
-					newEntity.addBehaviour(new BehaviourBiomeSpreader(newEntity, world.getBiomeManager(), 1, 0.5f));
+					newEntity.addBehaviour(new BehaviourBiomeSpreader(newEntity, world.getBiomeManager(), 1, 0.5f, BiomeType.Grassland));
+					world.addEntity(newEntity);
+				}
+			}
+		});
+		
+		MouseManager.addRightButtonListener(new ButtonListener() {
+			@Override
+			public void onButtonReleased() {
+				
+			}
+			
+			@Override
+			public void onButtonDown() {
+				
+			}
+
+			@Override
+			public void onButtonClicked() {
+				Vector3f newPos = screenPicker.getMouseOnTerrain();
+				if (newPos != null) {
+					Entity newEntity = new Entity(modelTree, world,
+							new Vector2f(newPos.x, newPos.z), 1f);
+					newEntity.addBehaviour(new BehaviourEntityWind(newEntity));
+					newEntity.addBehaviour(new BehaviourBiomeSpreader(newEntity, world.getBiomeManager(), 1, 0.5f, BiomeType.Beach));
 					world.addEntity(newEntity);
 				}
 			}
