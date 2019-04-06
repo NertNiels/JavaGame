@@ -60,7 +60,7 @@ public class MainGameLoop {
 		RawModel treeModel = null;
 		RawModel grassModel = null;
 		try {
-			treeModel = ModelLoader.loadModel("tree", loader);
+			treeModel = ModelLoader.loadModel("grass", loader);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

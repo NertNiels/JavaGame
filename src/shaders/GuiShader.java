@@ -5,8 +5,8 @@ import org.lwjgl.util.vector.Vector4f;
   
 public class GuiShader extends ShaderProgram{
      
-    private static final String VERTEX_FILE = "src/shaders/vertexShaderGui.glsl";
-    private static final String FRAGMENT_FILE = "src/shaders/fragmentShaderGui.glsl";
+    private static final String VERTEX_FILE = "/shaders/vertexShaderGui.glsl";
+    private static final String FRAGMENT_FILE = "/shaders/fragmentShaderGui.glsl";
      
     private int location_transformationMatrix;
     private int location_blend_color;

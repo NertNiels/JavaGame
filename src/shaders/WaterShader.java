@@ -9,9 +9,9 @@ import toolbox.Maths;
 
 public class WaterShader extends ShaderProgram {
 
-	private static final String VERTEX_FILE = "src/shaders/vertexShaderWater.glsl";
-	private static final String FRAGMENT_FILE = "src/shaders/fragmentShaderWater.glsl";
-	private static final String GEOMETRY_FILE = "src/shaders/geometryShaderWater.glsl";
+	private static final String VERTEX_FILE = "/shaders/vertexShaderWater.glsl";
+	private static final String FRAGMENT_FILE = "/shaders/fragmentShaderWater.glsl";
+	private static final String GEOMETRY_FILE = "/shaders/geometryShaderWater.glsl";
 
 	private int location_transformationMatrix;
 	private int location_projectionMatrix;

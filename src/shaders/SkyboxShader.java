@@ -11,8 +11,8 @@ import toolbox.Maths;
  
 public class SkyboxShader extends ShaderProgram {
  
-    private static final String VERTEX_FILE = "src/shaders/vertexShaderSkybox.glsl";
-    private static final String FRAGMENT_FILE = "src/shaders/fragmentShaderSkybox.glsl";
+    private static final String VERTEX_FILE = "/shaders/vertexShaderSkybox.glsl";
+    private static final String FRAGMENT_FILE = "/shaders/fragmentShaderSkybox.glsl";
      
     private int location_projectionMatrix;
     private int location_viewMatrix;
