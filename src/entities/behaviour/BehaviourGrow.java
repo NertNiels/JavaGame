@@ -14,12 +14,14 @@ public class BehaviourGrow extends BehaviourBlueprint {
 		super(baseEntity, BehaviourType.Grow);
 		this.maxGrowState = maxGrowState;
 		this.growSpeed = growSpeed;
+		baseEntity.setScale(0);
 	}
 
 	@Override
 	public void update() {
 		if(grow >= 1 && !adult) {
 			growState++;
+			baseEntity.setScale((float)growState / (float)maxGrowState);
 			if(growState >= maxGrowState) {
 				growState = maxGrowState;
 				adult = true;
