@@ -25,7 +25,7 @@ public class HeightGenerator {
 		this.persistance = persistance;
 		this.lacunarity = lacunarity;
 		
-		Random random = new Random(seed);
+		Random random = Configs.RANDOM;
 
 		octaveOffsets = new Vector2f[octaves];
 		for (int i = 0; i < octaves; i++) {

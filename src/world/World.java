@@ -28,6 +28,8 @@ public class World {
 
 	private float planeWidth, planeHeight;
 	private int currentGridX, currentGridZ;
+	
+	public static World world;
 
 	private World(HeightGenerator heightGenerator, Loader loader) {
 		this.heightGenerator = heightGenerator;
@@ -36,6 +38,7 @@ public class World {
 		waterTiles = new ArrayList<WaterTile>();
 		entities = new ArrayList<Entity>();
 		playerPosition = new Vector3f();
+		world = this;
 	}
 
 	public void update(Loader loader) {
@@ -46,8 +49,8 @@ public class World {
 		loadTerrains(gridX, gridZ, loader);
 		currentGridX = gridX;
 		currentGridZ = gridZ;
-		for(Entity entity : entities) {
-			entity.update();
+		for(int i = 0; i < entities.size(); i++) {
+			entities.get(i).update();
 		}
 		biomeTexture = biomeManager.getTexture(loader);
 	}
@@ -195,6 +198,7 @@ public class World {
 	
 	public void addEntity(Entity entity) {
 		entities.add(entity);
+		System.out.println("A new entity has been added.");
 	}
 	
 	public int getBiomeTexture() {
@@ -204,5 +208,17 @@ public class World {
 	public BiomeManager getBiomeManager() {
 		return biomeManager;
 	}
+
+	public int getNumberOfEntitiesInRange(Vector2f origin, float range) {
+		range *= range;
+		int sum = 0;
+		for(Entity entity:entities) {
+			Vector2f position = new Vector2f(entity.getPosition().x, entity.getPosition().z);
+			float distance = Vector2f.sub(position, origin, null).lengthSquared();
+			if(distance < range) sum++;
+		}
+		return sum;
+	}
+	
 
 }

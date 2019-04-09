@@ -8,23 +8,29 @@ public class BehaviourGrow extends BehaviourBlueprint {
 	private int maxGrowState = 0;
 	private float grow = 0;
 	private float growSpeed = 0;
+	private boolean adult = false;
 	
 	public BehaviourGrow(Entity baseEntity, int maxGrowState, float growSpeed) {
-		super(baseEntity);
+		super(baseEntity, BehaviourType.Grow);
 		this.maxGrowState = maxGrowState;
 		this.growSpeed = growSpeed;
 	}
 
 	@Override
 	public void update() {
-		if(growSpeed >= 1) {
+		if(grow >= 1 && !adult) {
 			growState++;
-			if(growState > maxGrowState) {
+			if(growState >= maxGrowState) {
 				growState = maxGrowState;
+				adult = true;
 			}
 			grow = 0;
 		}
 		grow += growSpeed;
+	}
+	
+	public boolean isAdult() {
+		return adult;
 	}
 
 }

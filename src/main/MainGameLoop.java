@@ -13,7 +13,9 @@ import entities.Entity;
 import entities.Light;
 import entities.behaviour.BehaviourBiomeSpreader;
 import entities.behaviour.BehaviourBlueprint;
+import entities.behaviour.BehaviourBreath;
 import entities.behaviour.BehaviourEntityWind;
+import entities.behaviour.BehaviourGrow;
 import gui.GuiManager;
 import gui.GuiTexture;
 import gui.View;
@@ -60,7 +62,7 @@ public class MainGameLoop {
 		RawModel treeModel = null;
 		RawModel grassModel = null;
 		try {
-			treeModel = ModelLoader.loadModel("grass", loader);
+			treeModel = ModelLoader.loadModel("tree", loader);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -81,6 +83,8 @@ public class MainGameLoop {
 							new Vector2f(newPos.x, newPos.z), 1f);
 					newEntity.addBehaviour(new BehaviourEntityWind(newEntity));
 					newEntity.addBehaviour(new BehaviourBiomeSpreader(newEntity, world.getBiomeManager(), 1, 0.1f, BiomeType.Grassland));
+					newEntity.addBehaviour(new BehaviourGrow(newEntity, 2, 0.01f));
+					newEntity.addBehaviour(new BehaviourBreath(newEntity, false, 0.5f, Configs.BIOME_MAX_RANGE, 5));
 					world.addEntity(newEntity);
 				}
 			}
@@ -112,6 +116,10 @@ public class MainGameLoop {
 					newEntity.addBehaviour(new BehaviourEntityWind(newEntity));
 					newEntity.addBehaviour(new BehaviourBiomeSpreader(newEntity, world.getBiomeManager(), 1, 0.5f, BiomeType.Grassland));
 					world.addEntity(newEntity);
+					newEntity.addBehaviour(new BehaviourGrow(newEntity, 2, 0.01f));
+					newEntity.addBehaviour(new BehaviourBreath(newEntity, false, 0.5f, Configs.BIOME_MAX_RANGE, 5));
+
+
 				}
 			}
 		});
@@ -136,6 +144,10 @@ public class MainGameLoop {
 					newEntity.addBehaviour(new BehaviourEntityWind(newEntity));
 					newEntity.addBehaviour(new BehaviourBiomeSpreader(newEntity, world.getBiomeManager(), 1, 0.5f, BiomeType.Beach));
 					world.addEntity(newEntity);
+					newEntity.addBehaviour(new BehaviourGrow(newEntity, 2, 0.01f));
+					newEntity.addBehaviour(new BehaviourBreath(newEntity, false, 0.5f, Configs.BIOME_MAX_RANGE, 10));
+
+
 				}
 			}
 		});

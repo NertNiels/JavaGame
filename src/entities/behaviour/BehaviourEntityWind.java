@@ -5,7 +5,7 @@ import entities.Entity;
 public class BehaviourEntityWind extends BehaviourBlueprint {
 
 	public BehaviourEntityWind(Entity baseEntity) {
-		super(baseEntity);
+		super(baseEntity, BehaviourType.EntityWind);
 		baseEntity.setDistortionFactor(1);
 	}
 

@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Random;
+
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -67,10 +69,13 @@ public class Configs {
 	
 	public static final float WATER_HEIGHT = 15f;		// DEFAULT: 15
 	
+	public static Random RANDOM;
+	
 	static {
 		if(BIOME_COLORS.length != BIOME_HEIGHTS.length) {
 			throw new IllegalArgumentException("BIOME_COLORS and BIOME_HEIGHTS aren't the same length.");
 		}
 		if(SEED == 0) SEED = (long)(Math.random() * 2000000);
+		RANDOM = new Random(SEED);
 	}
 }

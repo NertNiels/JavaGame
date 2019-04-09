@@ -6,10 +6,12 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.behaviour.BehaviourBlueprint;
+import entities.behaviour.BehaviourType;
 import main.Configs;
 import models.Model;
 import models.RawModel;
 import models.TexturedModel;
+import net.java.games.input.Controller.Type;
 import renderEngine.DisplayManager;
 import world.World;
 
@@ -107,6 +109,13 @@ public class Entity {
 	
 	public void setDistortionFactor(float distortionFactor) {
 		this.distortionFactor = distortionFactor;
+	}
+	
+	public BehaviourBlueprint getBehaviour(BehaviourType type) {
+		for(BehaviourBlueprint b:behaviours) {
+			if(b.getType() == type) return b;
+		}
+		return null;
 	}
 
 }
