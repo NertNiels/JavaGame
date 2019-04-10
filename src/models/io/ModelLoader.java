@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.lwjgl.util.vector.Vector3f;
 
@@ -12,6 +14,8 @@ import renderEngine.Loader;
 
 public class ModelLoader {
 
+	private static Map<Integer, RawModel> loadedModels = new HashMap<Integer, RawModel>();
+	
 	public static RawModel loadModel(String fileName, Loader loader) throws IOException {
 		FileReader fr = new FileReader("res/" + fileName + ".txt");
 		BufferedReader reader = new BufferedReader(fr);
@@ -82,6 +86,23 @@ public class ModelLoader {
 		}
 		
 		return loader.loadToVAO(verticesArray, normalsArray, indicesArray, colorsArray);
+	}
+	
+	private static RawModel loadModel(int modelIndex, Loader loader) throws IOException {
+		RawModel rawModel = loadModel("models/"+modelIndex, loader);
+		loadedModels.put(modelIndex, rawModel);
+		return rawModel;
+	}
+	
+	public static RawModel getModel(int modelIndex, Loader loader) {
+		RawModel rawModel = loadedModels.get(modelIndex);
+		if(rawModel != null) return rawModel;
+		try {
+			return loadModel(modelIndex, loader);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	private static void processVertex(ArrayList<Vertex> vertices, ArrayList<Vector3f> normals, ArrayList<Vector3f> colors, float[] verticesArray, float[] normalsArray, float[] colorsArray, int i) {

@@ -1,0 +1,4 @@
+GROW max_grow grow_speed model_index[]
+BREATH chance range max_entities time
+BIOME strength fade type
+WIND strength
