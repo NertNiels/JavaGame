@@ -144,8 +144,8 @@ public class Camera {
 		rotated.x *= (zoom/Configs.MAX_ZOOM);
 		rotated.z *= (zoom/Configs.MAX_ZOOM);
 
-		targetVel.x -= rotated.x * multiplier;
-		targetVel.z += rotated.z * multiplier;
+		targetVel.x -= rotated.x * multiplier * 125 * DisplayManager.getFrameTimeSeconds();
+		targetVel.z += rotated.z * multiplier * 125 * DisplayManager.getFrameTimeSeconds();
 	}
 	
 	private Vector3f rotateMovementXZ(float dX, float dZ) {

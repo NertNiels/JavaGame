@@ -34,7 +34,7 @@ public class Configs {
 	
 	public static int SCREEN_WIDTH = 1280;
 	public static int SCREEN_HEIGHT = 720;
-	public static final boolean FULL_SCREEN = false;
+	public static final boolean FULL_SCREEN = true;
 	public static final int FPS_CAP = 120;
 	
 	
