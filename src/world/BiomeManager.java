@@ -12,7 +12,6 @@ import toolbox.Maths;
 public class BiomeManager {
 
 	private ArrayList<BiomeSpreader> spreaders = new ArrayList<BiomeSpreader>();
-	private BiomeType[][] biomeMap;
 	private int texture;
 	private boolean updated = true;
 

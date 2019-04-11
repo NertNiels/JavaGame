@@ -11,8 +11,6 @@ import main.Configs;
 import models.Model;
 import models.RawModel;
 import models.TexturedModel;
-import net.java.games.input.Controller.Type;
-import renderEngine.DisplayManager;
 import world.World;
 
 public class Entity {
@@ -22,24 +20,24 @@ public class Entity {
 	private float rotX, rotY, rotZ;
 	private float scale;
 	private float distortionFactor = 0;
+	public final EntityType type;
 	private ArrayList<BehaviourBlueprint> behaviours = new ArrayList<BehaviourBlueprint>();
 
-	public Entity(Model model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
+	public Entity(Model model, Vector3f position, float rotX, float rotY, float rotZ, float scale, EntityType type) {
 		this.model = model;
 		this.position = position;
 		this.rotX = rotX;
 		this.rotY = rotY;
 		this.rotZ = rotZ;
 		this.scale = scale;
+		this.type = type;
 	}
 	
-	public Entity(Model model, World world, Vector2f position, float scale) {
+	public Entity(Model model, World world, Vector2f position, float scale, EntityType type) {
 		this.model = model;
 		this.position = new Vector3f(position.x, 0, position.y);
-		this.rotX = rotX;
-		this.rotY = rotY;
-		this.rotZ = rotZ;
 		this.scale = scale;
+		this.type = type;
 		
 		float height = world.getHeightAt(position.x, position.y) * Configs.HEIGHT_SCALE_FACTOR;
 		this.increasePosition(0, height, 0);
@@ -47,6 +45,12 @@ public class Entity {
 	
 	public void addBehaviour(BehaviourBlueprint behaviour) {
 		behaviours.add(behaviour);
+	}
+	
+	public void addBehaviours(BehaviourBlueprint[] behaviourArray) {
+		for(BehaviourBlueprint b : behaviourArray) {
+			behaviours.add(b);
+		}
 	}
 
 	public void increasePosition(float dx, float dy, float dz) {

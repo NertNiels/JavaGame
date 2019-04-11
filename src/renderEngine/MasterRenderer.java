@@ -15,7 +15,6 @@ import org.lwjgl.util.vector.Vector4f;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
-import gui.GuiTexture;
 import gui.View;
 import main.Configs;
 import models.Model;

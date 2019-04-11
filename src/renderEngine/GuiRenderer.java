@@ -8,7 +8,6 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 
-import gui.GuiTexture;
 import gui.View;
 import models.RawModel;
 import shaders.GuiShader;

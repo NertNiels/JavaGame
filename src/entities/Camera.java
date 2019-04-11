@@ -2,13 +2,12 @@ package entities;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import input.ControllerManager;
 import input.MouseManager;
 import main.Configs;
-import net.java.games.input.Controller;
+import renderEngine.DisplayManager;
 import toolbox.Maths;
 import world.World;
 
@@ -109,11 +108,11 @@ public class Camera {
 	}
 
 	private void calculateTargetPitch(float delta) {
-		velPitch += delta * 0.05f;
+		velPitch += delta * 6.25f * DisplayManager.getFrameTimeSeconds();
 	}
 
 	private void calculateTargetYaw(float delta) {
-		velYaw += delta * 0.075f;
+		velYaw += delta * 9.375f * DisplayManager.getFrameTimeSeconds();
 	}
 
 	private void calculatePosition() {

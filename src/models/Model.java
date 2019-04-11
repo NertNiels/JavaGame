@@ -22,6 +22,10 @@ public class Model {
 		return texturedModel == null ? rawModel : texturedModel.getRawModel();
 	}
 	
+	public void setRawModel(RawModel model) {
+		this.rawModel = model;
+	}
+	
 	public ModelTexture getTexture() {
 		return texturedModel == null ? null : texturedModel.getTexture();
 	}

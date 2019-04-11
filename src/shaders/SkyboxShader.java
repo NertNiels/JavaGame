@@ -7,7 +7,6 @@ import org.lwjgl.util.vector.Vector4f;
 import entities.Camera;
  
 import shaders.ShaderProgram;
-import toolbox.Maths;
  
 public class SkyboxShader extends ShaderProgram {
  

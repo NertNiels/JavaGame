@@ -1,6 +1,5 @@
 package world;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.lwjgl.util.vector.Vector2f;
@@ -8,9 +7,6 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Entity;
 import main.Configs;
-import models.Model;
-import models.RawModel;
-import renderEngine.CustomFileLoader;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import terrain.Terrain;
@@ -198,7 +194,6 @@ public class World {
 	
 	public void addEntity(Entity entity) {
 		entities.add(entity);
-		System.out.println("A new entity has been added.");
 	}
 	
 	public int getBiomeTexture() {

@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 import main.Configs;
 import renderEngine.DisplayManager;
 import renderEngine.MasterRenderer;
-import toolbox.ScreenPicker;
 import world.World;
 
 public class MouseManager {

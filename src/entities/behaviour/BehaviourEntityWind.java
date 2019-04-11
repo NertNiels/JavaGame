@@ -8,10 +8,15 @@ public class BehaviourEntityWind extends BehaviourBlueprint {
 		super(baseEntity, BehaviourType.EntityWind);
 		baseEntity.setDistortionFactor(1);
 	}
+	
+	public BehaviourEntityWind(Entity baseEntity, String line) {
+		super(baseEntity, BehaviourType.EntityWind);
+		baseEntity.setDistortionFactor(Float.parseFloat(line.split(" ")[1]));
+	}
 
 	@Override
 	public void update() {
-//		baseEntity.increaseRotation(0, 1, 0);
+		
 	}
 
 }

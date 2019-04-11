@@ -2,9 +2,7 @@ package gui;
 
 import java.util.ArrayList;
 
-import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector4f;
 
 import input.MouseManager;
 import main.Configs;

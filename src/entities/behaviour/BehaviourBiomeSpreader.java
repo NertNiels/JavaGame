@@ -22,6 +22,20 @@ public class BehaviourBiomeSpreader extends BehaviourBlueprint {
 		this.biomeManager = biomeManager;
 		biomeManager.addSpreader(spreader);
 	}
+	
+	public BehaviourBiomeSpreader(Entity baseEntity, String line, BiomeManager biomeManager) {
+		super(baseEntity, BehaviourType.BiomeSpreader);
+		this.biomeManager = biomeManager;
+//		BIOME strength fade type
+		String[] data = line.split(" ");
+		this.strength = Float.parseFloat(data[1]);
+		this.fade = Float.parseFloat(data[2]);
+		BiomeType type = BiomeType.Default;
+		if(data[3].equalsIgnoreCase("forest")) type = BiomeType.Forest;
+		else if(data[3].equalsIgnoreCase("grassland")) type = BiomeType.Grassland;
+		spreader = new BiomeSpreader(baseEntity.getPosition().x, baseEntity.getPosition().z, type, 0);
+		biomeManager.addSpreader(spreader);
+	}
 
 	@Override
 	public void update() {

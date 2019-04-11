@@ -3,8 +3,8 @@ package entities.behaviour;
 import org.lwjgl.util.vector.Vector2f;
 
 import entities.Entity;
+import entities.EntityLoader;
 import main.Configs;
-import world.BiomeType;
 import world.World;
 
 public class BehaviourBreath extends BehaviourBlueprint {
@@ -24,6 +24,16 @@ public class BehaviourBreath extends BehaviourBlueprint {
 		this.breathRange = breathRange;
 		this.maxEntitiesInRange = maxEntitiesInRange;
 		this.breathTime = 600;
+	}
+	
+	public BehaviourBreath(Entity baseEntity, String line) {
+		super(baseEntity, BehaviourType.Breath);
+//		BREATH chance range max_entities time
+		String[] data = line.split(" ");
+		this.breathChance = Float.parseFloat(data[1]);
+		this.breathRange = Float.parseFloat(data[2]);
+		this.maxEntitiesInRange = Integer.parseInt(data[3]);
+		this.breathTime = Long.parseLong(data[4]);
 	}
 
 	@Override
@@ -58,12 +68,8 @@ public class BehaviourBreath extends BehaviourBlueprint {
 			if(World.world.getNumberOfEntitiesInRange(position, breathRange*0.2f) == 0) breakOut = true;
 			i++;
 		}
-		Entity newEntity = new Entity(baseEntity.getModel(), World.world, position, 1);
-		newEntity.addBehaviour(new BehaviourEntityWind(newEntity));
-		newEntity.addBehaviour(
-				new BehaviourBiomeSpreader(newEntity, World.world.getBiomeManager(), 1, 0.1f, BiomeType.Grassland));
-		newEntity.addBehaviour(new BehaviourGrow(newEntity, 1, 0.01f));
-		newEntity.addBehaviour(new BehaviourBreath(newEntity, false, 0.2f, Configs.BIOME_MAX_RANGE, 5));
+		Entity newEntity = EntityLoader.loadEntity(baseEntity.type, position, baseEntity.getScale());
+		newEntity.increaseRotation(0, Configs.RANDOM.nextFloat() * 360, 0);
 		World.world.addEntity(newEntity);
 		timer = breathTime;
 	}
