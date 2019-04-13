@@ -2,6 +2,7 @@ package entities.behaviour;
 
 import entities.Entity;
 import renderEngine.DisplayManager;
+import timing.Timing;
 import world.BiomeManager;
 import world.BiomeSpreader;
 import world.BiomeType;
@@ -40,7 +41,7 @@ public class BehaviourBiomeSpreader extends BehaviourBlueprint {
 	@Override
 	public void update() {
 		if(!fading)return;
-		spreader.strength += fade * DisplayManager.getFrameTimeSeconds();
+		spreader.strength += fade * Timing.getInGameHoursPast() * 0.1f;
 		if(spreader.strength >= strength) {spreader.strength = strength;
 		fading = false;
 		}

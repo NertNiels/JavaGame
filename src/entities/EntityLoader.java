@@ -36,6 +36,7 @@ public class EntityLoader {
 		
 		String line;
 		while((line = reader.readLine()) != null) {
+			if(line.startsWith("MODEL")) entity.getModel().setRawModel(ModelLoader.getModel(Integer.parseInt(line.split(" ")[1]), loader));
 			if(line.startsWith("GROW")) entity.addBehaviour(new BehaviourGrow(entity, line, loader));
 			else if(line.startsWith("BREATH")) entity.addBehaviour(new BehaviourBreath(entity, line));
 			else if(line.startsWith("BIOME")) entity.addBehaviour(new BehaviourBiomeSpreader(entity, line, World.world.getBiomeManager()));

@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 
 import main.Configs;
+import timing.Timing;
 
 public class DisplayManager {
 	
@@ -60,6 +61,7 @@ public class DisplayManager {
 		long d = getDeltaTime();
 		averageFrameRate = 1000f / (float)d;
 		timer += getFrameTimeSeconds();
+		Timing.updateTimer(deltaTime);
 		if(timer >= 1f) {
 			Display.setTitle("Average FPS: " + averageFrameRate);
 			timer = 0;

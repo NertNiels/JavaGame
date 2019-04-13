@@ -1,0 +1,4 @@
+MODEL 1
+BREATH 0.2 10 5 150
+BIOME 1 0.1 grassland
+WIND 1

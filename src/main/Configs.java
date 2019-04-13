@@ -34,7 +34,7 @@ public class Configs {
 	
 	public static int SCREEN_WIDTH = 1280;
 	public static int SCREEN_HEIGHT = 720;
-	public static final boolean FULL_SCREEN = true;
+	public static final boolean FULL_SCREEN = false;
 	public static final int FPS_CAP = 120;
 	
 	
@@ -70,6 +70,7 @@ public class Configs {
 	public static final float WATER_HEIGHT = 15f;		// DEFAULT: 15
 	
 	public static Random RANDOM;
+	public static final float MIN_TIME_SCALE = 0.05f;
 	
 	static {
 		if(BIOME_COLORS.length != BIOME_HEIGHTS.length) {

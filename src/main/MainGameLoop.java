@@ -107,6 +107,27 @@ public class MainGameLoop {
 			}
 		});
 		
+		MouseManager.addRightButtonListener(new ButtonListener() {
+			@Override
+			public void onButtonReleased() {
+				
+			}
+			
+			@Override
+			public void onButtonDown() {
+				
+			}
+
+			@Override
+			public void onButtonClicked() {
+				Vector3f newPos = screenPicker.getMouseOnTerrain();
+				if (newPos != null) {
+					Entity newEntity = EntityLoader.loadEntity(EntityType.GrassGrassland, new Vector2f(newPos.x, newPos.z), 1f);
+					world.addEntity(newEntity);
+				}
+			}
+		});
+		
 		while (!Display.isCloseRequested()) {
 			ControllerManager.update();
 			MouseManager.update();

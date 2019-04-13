@@ -58,8 +58,8 @@ public class Camera {
 			calculateTargetPitch(mouseDY);
 			calculateTargetYaw(mouseDX);
 		}
-		calculateTargetPitch(ControllerManager.getRightJoystickY() * 3);
-		calculateTargetYaw(-ControllerManager.getRightJoystickX() * 3);
+		calculateTargetPitch(ControllerManager.getRightJoystickY() * 375 * DisplayManager.getFrameTimeSeconds());
+		calculateTargetYaw(-ControllerManager.getRightJoystickX() * 375 * DisplayManager.getFrameTimeSeconds());
 		if(Mouse.isButtonDown(0)) {
 			calculateMovement(mouseDX, mouseDY, 0.1f);
 		}
@@ -108,11 +108,11 @@ public class Camera {
 	}
 
 	private void calculateTargetPitch(float delta) {
-		velPitch += delta * 6.25f * DisplayManager.getFrameTimeSeconds();
+		velPitch += delta * 0.05f;
 	}
 
 	private void calculateTargetYaw(float delta) {
-		velYaw += delta * 9.375f * DisplayManager.getFrameTimeSeconds();
+		velYaw += delta * 0.075f;
 	}
 
 	private void calculatePosition() {

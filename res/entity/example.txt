@@ -1,4 +1,5 @@
-GROW max_grow grow_speed model_index[]
+MODEL model_index
+GROW max_grow hours_per_grow model_index[]
 BREATH chance range max_entities time
 BIOME strength fade type
 WIND strength

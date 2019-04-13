@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
+import timing.Timing;
 import toolbox.Maths;
 
 public class WaterShader extends ShaderProgram {
@@ -74,7 +75,7 @@ public class WaterShader extends ShaderProgram {
 	}
 
 	public void loadFlowRate() {
-		this.waveTime += 0.001f;
+		this.waveTime += Timing.getInGameHoursPast() * 0.01f;
 		super.loadFloat(location_waveTime, waveTime);
 	}
 

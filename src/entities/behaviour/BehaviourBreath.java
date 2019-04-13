@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector2f;
 import entities.Entity;
 import entities.EntityLoader;
 import main.Configs;
+import timing.Timing;
 import world.World;
 
 public class BehaviourBreath extends BehaviourBlueprint {
@@ -13,7 +14,7 @@ public class BehaviourBreath extends BehaviourBlueprint {
 	private float breathChance = 0f;
 	private float breathRange = 1f;
 	private int maxEntitiesInRange = 0;
-	private long timer = 0;
+	private float timer = 0;
 	private long breathTime = 0;
 
 	public BehaviourBreath(Entity baseEntity, boolean canBreath, float breathChance, float breathRange,
@@ -38,18 +39,23 @@ public class BehaviourBreath extends BehaviourBlueprint {
 
 	@Override
 	public void update() {
-		timer--;
+		timer -= Timing.getInGameHoursPast();
 		if (timer < 0) {
 			if (!canBreath) {
 				BehaviourGrow grow = (BehaviourGrow) baseEntity.getBehaviour(BehaviourType.Grow);
-				if (grow == null)
+				if (grow == null) {
+					canBreath = true;
+					timer = breathTime + (Configs.RANDOM.nextFloat() * 2 - 1) * breathTime * 0.01f;
 					return;
+				}
 				canBreath = grow.isAdult();
+				if(canBreath) timer = breathTime + (Configs.RANDOM.nextFloat() * 2 - 1) * breathTime * 0.01f;
 				return;
 			}
 			if (Configs.RANDOM.nextFloat() < breathChance) {
 				breath();
 			}
+			timer = 48;
 		}
 
 	}
@@ -70,8 +76,9 @@ public class BehaviourBreath extends BehaviourBlueprint {
 		}
 		Entity newEntity = EntityLoader.loadEntity(baseEntity.type, position, baseEntity.getScale());
 		newEntity.increaseRotation(0, Configs.RANDOM.nextFloat() * 360, 0);
+
+		timer = breathTime + (Configs.RANDOM.nextFloat() * 2 - 1) * breathTime * 0.01f;
 		World.world.addEntity(newEntity);
-		timer = breathTime;
 	}
 
 }
