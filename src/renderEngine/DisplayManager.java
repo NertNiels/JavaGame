@@ -2,6 +2,7 @@ package renderEngine;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -53,6 +54,7 @@ public class DisplayManager {
 		}
 		
 		GL11.glViewport(0, 0, Configs.SCREEN_WIDTH, Configs.SCREEN_HEIGHT);
+		lastFrame = getTime();
 	}
 	
 	public static void updateDisplay() {
@@ -65,6 +67,9 @@ public class DisplayManager {
 		if(timer >= 1f) {
 			Display.setTitle("Average FPS: " + averageFrameRate);
 			timer = 0;
+		}
+		if(!Keyboard.isKeyDown(Keyboard.KEY_TAB)) {
+			Display.setTitle("Day " + (int)(Timing.getInGameHours()/24f) + " Hour " + (int)(Timing.getInGameHours()%24) + " Second " + (int)(Timing.getInGameSeconds()%3600));
 		}
 	}
 	

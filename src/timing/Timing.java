@@ -6,23 +6,23 @@ import main.Configs;
 
 public class Timing {
 
-	private static long inGameSeconds = 0;
+	private static float inGameSeconds = 0;
 	private static float inGameSecondsPast = 0;
 	private static float inGameHours = 0;
 	private static float inGameHoursPast = 0;
-	private static float timeScaler = 0.5f;
+	private static float timeScaler = 3600f/60000f;
 	
 	public static void updateTimer(long millisPast) {
 		inGameSecondsPast = millisPast * timeScaler;
-		inGameSeconds += Math.round(inGameSecondsPast);
-		inGameHoursPast = inGameSecondsPast / 60f;
+		inGameSeconds += inGameSecondsPast;
+		inGameHoursPast = inGameSecondsPast / 3600f;
 		inGameHours += inGameHoursPast;
 		if(Keyboard.isKeyDown(Keyboard.KEY_ADD)) timeScaler += 0.01f;
 		if(Keyboard.isKeyDown(Keyboard.KEY_SUBTRACT)) timeScaler -= 0.01f;
 		if(timeScaler < Configs.MIN_TIME_SCALE) timeScaler = Configs.MIN_TIME_SCALE;
 	}
 
-	public static long getInGameSeconds() {
+	public static float getInGameSeconds() {
 		return inGameSeconds;
 	}
 	

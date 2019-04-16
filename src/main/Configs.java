@@ -70,7 +70,7 @@ public class Configs {
 	public static final float WATER_HEIGHT = 15f;		// DEFAULT: 15
 	
 	public static Random RANDOM;
-	public static final float MIN_TIME_SCALE = 0.05f;
+	public static final float MIN_TIME_SCALE = 0.01f;
 	
 	static {
 		if(BIOME_COLORS.length != BIOME_HEIGHTS.length) {
