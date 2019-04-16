@@ -75,8 +75,7 @@ public class WaterShader extends ShaderProgram {
 	}
 
 	public void loadFlowRate() {
-		this.waveTime += Timing.getInGameHoursPast() * 0.01f;
-		super.loadFloat(location_waveTime, waveTime);
+		super.loadFloat(location_waveTime, Timing.getInGameSeconds() * 0.003f);
 	}
 
 	public void loadTransformationMatrix(Matrix4f matrix) {
