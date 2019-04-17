@@ -41,7 +41,7 @@ public class BehaviourBiomeSpreader extends BehaviourBlueprint {
 	@Override
 	public void update() {
 		if(!fading)return;
-		spreader.strength += fade * Timing.getInGameHoursPast() * 0.1f;
+		spreader.strength += fade * DisplayManager.getFrameTimeMillis() * 0.01f;
 		if(spreader.strength >= strength) {spreader.strength = strength;
 		fading = false;
 		}

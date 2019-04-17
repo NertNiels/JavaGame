@@ -11,6 +11,7 @@ public class Timing {
 	private static float inGameHours = 0;
 	private static float inGameHoursPast = 0;
 	private static float timeScaler = 3600f/60000f;
+	private static int timeIndex = 0;
 	
 	public static void updateTimer(long millisPast) {
 		inGameSecondsPast = millisPast * timeScaler;
@@ -44,6 +45,20 @@ public class Timing {
 	
 	public static void setTimeScaler(float scaler) {
 		timeScaler = scaler;
+	}
+	
+	public static void setTimeScaleUp() {
+		if(timeIndex + 1 != Configs.TIME_SCALE_TABLE.length) {
+			timeIndex++;
+			timeScaler = Configs.TIME_SCALE_TABLE[timeIndex];
+		}
+	}
+	
+	public static void setTimeScaleDown() {
+		if(timeIndex != 0) {
+			timeIndex--;
+			timeScaler = Configs.TIME_SCALE_TABLE[timeIndex];
+		}
 	}
 	
 }
