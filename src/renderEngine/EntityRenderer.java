@@ -17,6 +17,7 @@ import shaders.StaticShader;
 import textures.ModelTexture;
 import timing.Timing;
 import toolbox.Maths;
+import world.sky.SkyColor;
 
 public class EntityRenderer {
 
@@ -30,7 +31,7 @@ public class EntityRenderer {
 	}
 
 	public void render(Map<Model, ArrayList<Entity>> entities) {
-		shader.loadSkyColor(Timing.getSkyColor().bottomColor.x, Timing.getSkyColor().bottomColor.y, Timing.getSkyColor().bottomColor.z);
+		shader.loadSkyColor(SkyColor.getSkyColor().bottomColor.x, SkyColor.getSkyColor().bottomColor.y, SkyColor.getSkyColor().bottomColor.z);
 		shader.loadDensity(Configs.FOG_DENSITY);
 		shader.loadDistortionTime(((float)Timing.getInGameSeconds() / 100f) % (float)(Math.PI * 2));
 		

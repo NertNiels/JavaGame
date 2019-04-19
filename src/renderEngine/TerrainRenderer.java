@@ -16,6 +16,7 @@ import terrain.Terrain;
 import timing.Timing;
 import toolbox.Maths;
 import world.World;
+import world.sky.SkyColor;
 
 public class TerrainRenderer {
 
@@ -33,7 +34,7 @@ public class TerrainRenderer {
 
 	public void render(ArrayList<Terrain> terrains, World world) {
 
-		shader.loadSkyColor(Timing.getSkyColor().bottomColor.x, Timing.getSkyColor().bottomColor.y, Timing.getSkyColor().bottomColor.z);
+		shader.loadSkyColor(SkyColor.getSkyColor().bottomColor.x, SkyColor.getSkyColor().bottomColor.y, SkyColor.getSkyColor().bottomColor.z);
 		shader.loadDensity(Configs.FOG_DENSITY);
 		shader.loadSize();
 		

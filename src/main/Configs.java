@@ -6,7 +6,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import toolbox.Maths;
-import world.SkyColor;
+import world.sky.SkyColor;
 
 public class Configs {
 
@@ -47,12 +47,12 @@ public class Configs {
 	
 	
 	public static final SkyColor[] SKY_COLORS = new SkyColor[] {
-			new SkyColor(Maths.hex("#262626"), Maths.hex("#262626"), 3),
+			new SkyColor(Maths.hex("#101010"), Maths.hex("#101010"), 3),
 			new SkyColor(Maths.hex("#0099ff"), Maths.hex("#ffff66"), 5),
 			new SkyColor(Maths.hex("#33ccff"), Maths.hex("#ccf2ff"), 8),
 			new SkyColor(Maths.hex("#33ccff"), Maths.hex("#ccf2ff"), 17),
 			new SkyColor(Maths.hex("#33ccff"), Maths.hex("#ffc266"), 21),
-			new SkyColor(Maths.hex("#262626"), Maths.hex("#262626"), 23),
+			new SkyColor(Maths.hex("#101010"), Maths.hex("#101010"), 23),
 			
 	};
 	

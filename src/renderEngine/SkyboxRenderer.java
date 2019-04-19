@@ -12,12 +12,13 @@ import main.Configs;
 import models.RawModel;
 import shaders.SkyboxShader;
 import timing.Timing;
+import world.sky.SkyColor;
 
 public class SkyboxRenderer {
 
-	private static final float SIZE = (Configs.FAR_PLANE);
+	private static final float SIZE = Configs.FAR_PLANE;
 	
-	private static final float[] VERTICES = {        
+	private static final float[] VERTICES_SKYBOX = {        
 		    -SIZE,  SIZE, -SIZE * 0.6f,
 		    -SIZE, -SIZE, -SIZE * 0.6f,
 		    SIZE, -SIZE, -SIZE * 0.6f,
@@ -26,12 +27,21 @@ public class SkyboxRenderer {
 		    -SIZE,  SIZE, -SIZE * 0.6f,
 	};
 	
+	private static final float[] VERTICES_SUN = {
+			1, 0, -1,
+			-1, 0, -1,
+			-1, 0, 1,
+			1, 0, -1,
+			1, 0, 1,
+			-1, 0, 1,
+	};
+	
 	
 	private RawModel cube;
 	private SkyboxShader shader;
 	
 	public SkyboxRenderer(Loader loader, Matrix4f projectionMatrix) {
-		cube = loader.loadToVAO(VERTICES, 3);
+		cube = loader.loadToVAO(VERTICES_SKYBOX, 3);
 		shader = new SkyboxShader();
 		shader.start();
 		shader.loadProjectionMatrix(projectionMatrix);
@@ -42,7 +52,7 @@ public class SkyboxRenderer {
 		shader.start();
 		shader.loadClipPlane(clipPlane);
 		shader.loadViewMatrix(camera, SIZE);
-		shader.loadSkyColors(Timing.getSkyColor().topColor, Timing.getSkyColor().bottomColor);
+		shader.loadSkyColors(SkyColor.getSkyColor().topColor, SkyColor.getSkyColor().bottomColor);
 		GL30.glBindVertexArray(cube.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);

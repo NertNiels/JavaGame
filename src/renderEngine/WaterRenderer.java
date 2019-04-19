@@ -17,6 +17,7 @@ import toolbox.Maths;
 import water.GridSquare;
 import water.WaterFrameBuffers;
 import water.WaterTile;
+import world.sky.SkyColor;
 
 public class WaterRenderer {
 	private WaterShader shader;
@@ -39,7 +40,7 @@ public class WaterRenderer {
 	public void render(ArrayList<WaterTile> waters) {
 		prepareWater();
 		shader.loadFlowRate();
-		shader.loadSkyColor(Timing.getSkyColor().bottomColor.x, Timing.getSkyColor().bottomColor.y, Timing.getSkyColor().bottomColor.z);
+		shader.loadSkyColor(SkyColor.getSkyColor().bottomColor.x, SkyColor.getSkyColor().bottomColor.y, SkyColor.getSkyColor().bottomColor.z);
 		shader.loadDensity(Configs.FOG_DENSITY);
 		for (WaterTile water : waters) {
 			loadModelMatrix(water);

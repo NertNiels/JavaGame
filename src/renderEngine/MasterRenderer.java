@@ -27,6 +27,7 @@ import timing.Timing;
 import water.WaterFrameBuffers;
 import water.WaterTile;
 import world.World;
+import world.sky.SkyColor;
 
 public class MasterRenderer {
 
@@ -162,7 +163,7 @@ public class MasterRenderer {
 	public void prepare() {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glClearColor(Timing.getSkyColor().topColor.x, Timing.getSkyColor().topColor.y, Timing.getSkyColor().topColor.z, 1);
+		GL11.glClearColor(SkyColor.getSkyColor().topColor.x, SkyColor.getSkyColor().topColor.y, SkyColor.getSkyColor().topColor.z, 1);
 
 		GL32.glProvokingVertex(GL32.GL_FIRST_VERTEX_CONVENTION);
 	}
