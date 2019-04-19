@@ -11,6 +11,7 @@ import entities.Camera;
 import main.Configs;
 import models.RawModel;
 import shaders.SkyboxShader;
+import timing.Timing;
 
 public class SkyboxRenderer {
 
@@ -23,41 +24,6 @@ public class SkyboxRenderer {
 		     SIZE, -SIZE, -SIZE * 0.6f,
 		     SIZE,  SIZE, -SIZE * 0.6f,
 		    -SIZE,  SIZE, -SIZE * 0.6f,
-//
-//		    -SIZE, -SIZE,  SIZE,
-//		    -SIZE, -SIZE, -SIZE,
-//		    -SIZE,  SIZE, -SIZE,
-//		    -SIZE,  SIZE, -SIZE,
-//		    -SIZE,  SIZE,  SIZE,
-//		    -SIZE, -SIZE,  SIZE,
-//
-//		     SIZE, -SIZE, -SIZE,
-//		     SIZE, -SIZE,  SIZE,
-//		     SIZE,  SIZE,  SIZE,
-//		     SIZE,  SIZE,  SIZE,
-//		     SIZE,  SIZE, -SIZE,
-//		     SIZE, -SIZE, -SIZE,
-//
-//		    -SIZE, -SIZE,  SIZE,
-//		    -SIZE,  SIZE,  SIZE,
-//		     SIZE,  SIZE,  SIZE,
-//		     SIZE,  SIZE,  SIZE,
-//		     SIZE, -SIZE,  SIZE,
-//		    -SIZE, -SIZE,  SIZE,
-//
-//		    -SIZE,  SIZE, -SIZE,
-//		     SIZE,  SIZE, -SIZE,
-//		     SIZE,  SIZE,  SIZE,
-//		     SIZE,  SIZE,  SIZE,
-//		    -SIZE,  SIZE,  SIZE,
-//		    -SIZE,  SIZE, -SIZE,
-//
-//		    -SIZE, -SIZE, -SIZE,
-//		    -SIZE, -SIZE,  SIZE,
-//		     SIZE, -SIZE, -SIZE,
-//		     SIZE, -SIZE, -SIZE,
-//		    -SIZE, -SIZE,  SIZE,
-//		     SIZE, -SIZE,  SIZE
 	};
 	
 	
@@ -76,7 +42,7 @@ public class SkyboxRenderer {
 		shader.start();
 		shader.loadClipPlane(clipPlane);
 		shader.loadViewMatrix(camera, SIZE);
-		shader.loadSkyColors(Configs.SKY_COLOR_TOP, Configs.SKY_COLOR_BOTTOM);
+		shader.loadSkyColors(Timing.getSkyColor().topColor, Timing.getSkyColor().bottomColor);
 		GL30.glBindVertexArray(cube.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);

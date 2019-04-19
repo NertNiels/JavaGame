@@ -12,6 +12,7 @@ import org.lwjgl.util.vector.Vector3f;
 import main.Configs;
 import models.RawModel;
 import shaders.WaterShader;
+import timing.Timing;
 import toolbox.Maths;
 import water.GridSquare;
 import water.WaterFrameBuffers;
@@ -38,7 +39,7 @@ public class WaterRenderer {
 	public void render(ArrayList<WaterTile> waters) {
 		prepareWater();
 		shader.loadFlowRate();
-		shader.loadSkyColor(Configs.SKY_COLOR_BOTTOM.x, Configs.SKY_COLOR_BOTTOM.y, Configs.SKY_COLOR_BOTTOM.z);
+		shader.loadSkyColor(Timing.getSkyColor().bottomColor.x, Timing.getSkyColor().bottomColor.y, Timing.getSkyColor().bottomColor.z);
 		shader.loadDensity(Configs.FOG_DENSITY);
 		for (WaterTile water : waters) {
 			loadModelMatrix(water);

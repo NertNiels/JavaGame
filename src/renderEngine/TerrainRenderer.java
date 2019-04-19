@@ -13,6 +13,7 @@ import main.Configs;
 import models.RawModel;
 import shaders.TerrainShader;
 import terrain.Terrain;
+import timing.Timing;
 import toolbox.Maths;
 import world.World;
 
@@ -32,7 +33,7 @@ public class TerrainRenderer {
 
 	public void render(ArrayList<Terrain> terrains, World world) {
 
-		shader.loadSkyColor(Configs.SKY_COLOR_BOTTOM.x, Configs.SKY_COLOR_BOTTOM.y, Configs.SKY_COLOR_BOTTOM.z);
+		shader.loadSkyColor(Timing.getSkyColor().bottomColor.x, Timing.getSkyColor().bottomColor.y, Timing.getSkyColor().bottomColor.z);
 		shader.loadDensity(Configs.FOG_DENSITY);
 		shader.loadSize();
 		

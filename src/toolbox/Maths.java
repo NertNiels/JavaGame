@@ -73,4 +73,11 @@ public class Maths {
 		return l1 * p1.y + l2 * p2.y + l3 * p3.y;
 	}
 	
+	public static Vector3f hex(String colorStr) {
+		return new Vector3f(
+				(float)Integer.valueOf( colorStr.substring( 1, 3 ), 16 )/255f,
+				(float)Integer.valueOf( colorStr.substring( 3, 5 ), 16 )/255f,
+				(float)Integer.valueOf( colorStr.substring( 5, 7 ), 16 )/255f);
+	}
+	
 }

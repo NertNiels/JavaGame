@@ -5,6 +5,9 @@ import java.util.Random;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import toolbox.Maths;
+import world.SkyColor;
+
 public class Configs {
 
 	public static final Vector3f[] BIOME_COLORS = new Vector3f[] {
@@ -42,8 +45,17 @@ public class Configs {
 	public static final float FAR_PLANE = 1500;
 	public static final float NEAR_PLANE = 0.1f;
 	
-	public static final Vector3f SKY_COLOR_TOP = new Vector3f(0.52734375f, 0.8046875f, 0.91796875f);
-	public static final Vector3f SKY_COLOR_BOTTOM = new Vector3f(0.91764705882f, 0.90196078431f, 0.41960784313f);
+	
+	public static final SkyColor[] SKY_COLORS = new SkyColor[] {
+			new SkyColor(Maths.hex("#262626"), Maths.hex("#262626"), 3),
+			new SkyColor(Maths.hex("#0099ff"), Maths.hex("#ffff66"), 5),
+			new SkyColor(Maths.hex("#33ccff"), Maths.hex("#ccf2ff"), 8),
+			new SkyColor(Maths.hex("#33ccff"), Maths.hex("#ccf2ff"), 17),
+			new SkyColor(Maths.hex("#33ccff"), Maths.hex("#ffc266"), 21),
+			new SkyColor(Maths.hex("#262626"), Maths.hex("#262626"), 23),
+			
+	};
+	
 	public static float FOG_DENSITY = 0.0015f;
 	public static final float MIN_FOG_DENSITY = 0.0015f;
 	public static final float MAX_FOG_DENSITY = 0.001f;
@@ -80,6 +92,15 @@ public class Configs {
 			1728/600f,
 			3456/600f,
 			6912/600f,
+	};
+	public static final String[] TIME_NAME_TABLE = new String[] {
+			"1 hour/minute",
+			"2 hours/minute",
+			"4 hours/minute",
+			"8 hours/minute",
+			"1 day/minute",
+			"2 days/minute",
+			"4 days/minute"
 	};
 	
 	static {
