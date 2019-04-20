@@ -52,6 +52,7 @@ public class Configs {
 			new SkyColor(Maths.hex("#33ccff"), Maths.hex("#ccf2ff"), 8),
 			new SkyColor(Maths.hex("#33ccff"), Maths.hex("#ccf2ff"), 17),
 			new SkyColor(Maths.hex("#33ccff"), Maths.hex("#ffc266"), 21),
+			new SkyColor(Maths.hex("#20657d"), Maths.hex("#664d28"), 22),
 			new SkyColor(Maths.hex("#101010"), Maths.hex("#101010"), 23),
 			
 	};
