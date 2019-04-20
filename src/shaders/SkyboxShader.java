@@ -19,6 +19,7 @@ public class SkyboxShader extends ShaderProgram {
     private int location_skyTopColor;
     private int location_skyBottomColor;
     private int location_plane;
+    private int location_SIZE;
     
     public SkyboxShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -29,8 +30,17 @@ public class SkyboxShader extends ShaderProgram {
     }
  
     public void loadViewMatrix(Camera camera, float SIZE){
-    	Matrix4f viewMatrix4f = Maths.createViewMatrix(camera);
-		super.loadMatrix(location_viewMatrix, viewMatrix4f);
+    	Matrix4f matrix = new Matrix4f();
+		matrix.setIdentity();
+		
+		Matrix4f.rotate((float)Math.toRadians(camera.getPitch()), new Vector3f(1, 0, 0), matrix, matrix);
+//		Matrix4f.rotate((float)Math.toRadians(camera.getYaw()), new Vector3f(0, 1, 0), matrix, matrix);
+		
+		Vector3f negCamPos = new Vector3f(0, -camera.getPosition().y, 0);
+		Matrix4f.translate(negCamPos, matrix, matrix);
+		
+		super.loadFloat(location_SIZE, SIZE);
+        super.loadMatrix(location_viewMatrix, matrix);
     }
     
     public void loadClipPlane(Vector4f plane) {

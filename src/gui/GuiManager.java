@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import input.ButtonListener;
 import input.MouseManager;
 import main.Configs;
 import renderEngine.Loader;
@@ -15,12 +16,31 @@ public class GuiManager {
 	private ArrayList<View> views;
 	private View cross;
 	
+	private boolean isMouseOnGui = false;
+	
 	public GuiManager(Loader loader) {
 		views = new ArrayList<View>();
 		
 		View but1 = new View(loader.loadTexture("white"), new Vector2f(-0.5f, -0.75f), new Vector2f(0.5f, 0.25f));
 		but1.getTexture().setColor(0.4f, 0.4f, 0.4f, 1);
 		but1.getTexture().setOpacity(0.3f);
+		MouseManager.addLeftButtonListener(new ButtonListener() {
+			
+			@Override
+			public boolean onButtonReleased() {
+				return isMouseOnGui;
+			}
+			
+			@Override
+			public boolean onButtonDown() {
+				return isMouseOnGui;
+			}
+			
+			@Override
+			public boolean onButtonClicked() {
+				return isMouseOnGui;
+			}
+		});
 		but1.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -81,7 +101,8 @@ public class GuiManager {
 	
 	public void update(MasterRenderer renderer) {
 		for(View view:views) {
-			view.mouse(MouseManager.getPositionScaled(), MouseManager.getMouseLeft());
+			boolean mouseOnGui = view.mouse(MouseManager.getPositionScaled(), MouseManager.getMouseLeft());
+			if(!isMouseOnGui) isMouseOnGui = mouseOnGui;
 			renderer.processGui(view);
 		}
 	}

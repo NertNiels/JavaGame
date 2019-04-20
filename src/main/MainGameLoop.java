@@ -67,64 +67,67 @@ public class MainGameLoop {
 		ControllerManager.addListenerA(new ButtonListener() {
 			
 			@Override
-			public void onButtonReleased() {
+			public boolean onButtonReleased() {
+				return false;
 			}
 			
 			@Override
-			public void onButtonDown() {
+			public boolean onButtonDown() {
 				Vector3f newPos = screenPicker.getMiddleOnTerrain();
 				if (newPos != null) {
 					Entity newEntity = EntityLoader.loadEntity(EntityType.OakTree, new Vector2f(newPos.x, newPos.z), 1f);
 					world.addEntity(newEntity);
 				}
+				return true;
 			}
 
 			@Override
-			public void onButtonClicked() {
-				// TODO Auto-generated method stub
-				
+			public boolean onButtonClicked() {
+				return false;
 			}
 		});
 		
 		MouseManager.addLeftButtonListener(new ButtonListener() {
 			@Override
-			public void onButtonReleased() {
-				
+			public boolean onButtonReleased() {
+				return false;
 			}
 			
 			@Override
-			public void onButtonDown() {
-				
+			public boolean onButtonDown() {
+				return false;
 			}
 
 			@Override
-			public void onButtonClicked() {
+			public boolean onButtonClicked() {
 				Vector3f newPos = screenPicker.getMouseOnTerrain();
 				if (newPos != null) {
 					Entity newEntity = EntityLoader.loadEntity(EntityType.OakTree, new Vector2f(newPos.x, newPos.z), 1f);
 					world.addEntity(newEntity);
 				}
+				return false;
 			}
 		});
 		
 		MouseManager.addRightButtonListener(new ButtonListener() {
 			@Override
-			public void onButtonReleased() {
-				
+			public boolean onButtonReleased() {
+				return false;
 			}
 			
 			@Override
-			public void onButtonDown() {
-				
+			public boolean onButtonDown() {
+				return false;
 			}
 
 			@Override
-			public void onButtonClicked() {
+			public boolean onButtonClicked() {
 				Vector3f newPos = screenPicker.getMouseOnTerrain();
 				if (newPos != null) {
 					Entity newEntity = EntityLoader.loadEntity(EntityType.GrassGrassland, new Vector2f(newPos.x, newPos.z), 1f);
 					world.addEntity(newEntity);
 				}
+				return true;
 			}
 		});
 		

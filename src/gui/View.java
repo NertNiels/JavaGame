@@ -52,7 +52,7 @@ public class View {
 		};
 	}
 	
-	public void mouse(Vector2f mousePos, boolean mouseIsDown) {
+	public boolean mouse(Vector2f mousePos, boolean mouseIsDown) {
 		boolean nowHovering = false;
 		if(		mousePos.x >= texture.getTopLeft().x &&
 				mousePos.y >= texture.getTopLeft().y &&
@@ -61,9 +61,11 @@ public class View {
 			if(mouseIsDown) {
 				if(isSelected == false) onClickListener.onSelected(this, mousePos);
 				isSelected = true;
+				return true;
 			} else if(isSelected) {
 				isSelected = false;
 				onClickListener.onClick(this, mousePos);
+				return true;
 			} else {
 				nowHovering = true;
 			}
@@ -72,6 +74,7 @@ public class View {
 		}
 		if(isHovering != nowHovering) onClickListener.onHover(this, mousePos, nowHovering);
 		isHovering = nowHovering;
+		return false;
 	}
 	
 	public OnClickListener getOnClickListener() {

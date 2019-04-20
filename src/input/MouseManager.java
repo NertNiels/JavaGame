@@ -37,7 +37,7 @@ public class MouseManager {
 		leftListeners.add(new ButtonListener() {
 
 			@Override
-			public void onButtonReleased() {
+			public boolean onButtonReleased() {
 				if (DisplayManager.getTime() - leftButtonDown <= 1000) {
 					if (!isDragging) {
 						for (ButtonListener listener : leftListeners) {
@@ -46,23 +46,26 @@ public class MouseManager {
 					}
 					isDragging = false;
 				}
+				return false;
 			}
 
 			@Override
-			public void onButtonDown() {
+			public boolean onButtonDown() {
 				leftButtonDown = DisplayManager.getTime();
+				return false;
 			}
 
 			@Override
-			public void onButtonClicked() {
+			public boolean onButtonClicked() {
 				System.out.println("Left button clicked");
+				return false;
 			}
 		});
 
 		rightListeners.add(new ButtonListener() {
 
 			@Override
-			public void onButtonReleased() {
+			public boolean onButtonReleased() {
 				if (DisplayManager.getTime() - rightButtonDown <= 1000) {
 					if (!isDragging) {
 						for (ButtonListener listener : rightListeners) {
@@ -71,23 +74,26 @@ public class MouseManager {
 					}
 					isDragging = false;
 				}
+				return false;
 			}
 
 			@Override
-			public void onButtonDown() {
+			public boolean onButtonDown() {
 				rightButtonDown = DisplayManager.getTime();
+				return false;
 			}
 
 			@Override
-			public void onButtonClicked() {
+			public boolean onButtonClicked() {
 				System.out.println("Right button clicked");
+				return false;
 			}
 		});
 
 		middleListeners.add(new ButtonListener() {
 
 			@Override
-			public void onButtonReleased() {
+			public boolean onButtonReleased() {
 				if (DisplayManager.getTime() - middleButtonDown <= 1000) {
 					if (!isDragging) {
 						for (ButtonListener listener : middleListeners) {
@@ -96,16 +102,19 @@ public class MouseManager {
 					}
 					isDragging = false;
 				}
+				return false;
 			}
 
 			@Override
-			public void onButtonDown() {
+			public boolean onButtonDown() {
 				middleButtonDown = DisplayManager.getTime();
+				return false;
 			}
 
 			@Override
-			public void onButtonClicked() {
+			public boolean onButtonClicked() {
 				System.out.println("Middle mouse button clicked");
+				return false;
 			}
 		});
 	}
@@ -151,11 +160,11 @@ public class MouseManager {
 		left = change;
 		if (change) {
 			for (ButtonListener listener : leftListeners) {
-				listener.onButtonDown();
+				if(listener.onButtonDown()) break;
 			}
 		} else {
 			for (ButtonListener listener : leftListeners) {
-				listener.onButtonReleased();
+				if(listener.onButtonReleased()) break;
 			}
 		}
 	}
@@ -166,11 +175,11 @@ public class MouseManager {
 		right = change;
 		if (change) {
 			for (ButtonListener listener : rightListeners) {
-				listener.onButtonDown();
+				if(listener.onButtonDown()) break;
 			}
 		} else {
 			for (ButtonListener listener : rightListeners) {
-				listener.onButtonReleased();
+				if(listener.onButtonReleased()) break;
 			}
 		}
 	}
@@ -181,11 +190,11 @@ public class MouseManager {
 		middle = change;
 		if (change) {
 			for (ButtonListener listener : middleListeners) {
-				listener.onButtonDown();
+				if(listener.onButtonDown()) break;
 			}
 		} else {
 			for (ButtonListener listener : middleListeners) {
-				listener.onButtonReleased();
+				if(listener.onButtonReleased()) break;
 			}
 		}
 	}
