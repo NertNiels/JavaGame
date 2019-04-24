@@ -11,6 +11,7 @@ import entities.Camera;
 import main.Configs;
 import models.RawModel;
 import shaders.SkyboxShader;
+import shaders.SunShader;
 import timing.Timing;
 import world.sky.SkyColor;
 
@@ -31,38 +32,53 @@ public class SkyboxRenderer {
 			1, 0, -1,
 			-1, 0, -1,
 			-1, 0, 1,
-			1, 0, -1,
-			1, 0, 1,
 			-1, 0, 1,
+			1, 0, 1,
+			1, 0, -1,
 	};
 	
 	
 	private RawModel cube;
-	private SkyboxShader shader;
+	private RawModel sun;
+	private SkyboxShader shaderSkybox;
+	private SunShader shaderSun;
 	
 	public SkyboxRenderer(Loader loader, Matrix4f projectionMatrix) {
 		cube = loader.loadToVAO(VERTICES_SKYBOX, 3);
-		shader = new SkyboxShader();
-		shader.start();
-		shader.loadProjectionMatrix(projectionMatrix);
-		shader.stop();
+		sun = loader.loadToVAO(VERTICES_SUN, 3);
+		shaderSkybox = new SkyboxShader();
+		shaderSun = new SunShader();
+		shaderSkybox.start();
+		shaderSkybox.loadProjectionMatrix(projectionMatrix);
+		shaderSkybox.stop();
+		shaderSun.start();
+		shaderSun.loadProjectionMatrix(projectionMatrix);
+		shaderSun.stop();
 	}
 	
 	public void render(Camera camera, Vector4f clipPlane) {
-		shader.start();
-		shader.loadClipPlane(clipPlane);
-		shader.loadViewMatrix(camera, SIZE);
-		shader.loadSkyColors(SkyColor.getSkyColor().topColor, SkyColor.getSkyColor().bottomColor);
+		shaderSkybox.start();
+		shaderSkybox.loadClipPlane(clipPlane);
+		shaderSkybox.loadViewMatrix(camera, SIZE);
+		shaderSkybox.loadSkyColors(SkyColor.getSkyColor().topColor, SkyColor.getSkyColor().bottomColor);
 		GL30.glBindVertexArray(cube.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, cube.getVertexCount());
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
-		shader.stop();
+		shaderSkybox.stop();
+		shaderSun.start();
+		shaderSun.loadViewMatrix(camera, SIZE);
+		GL30.glBindVertexArray(sun.getVaoID());
+		GL20.glEnableVertexAttribArray(0);
+		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, sun.getVertexCount());
+		GL20.glDisableVertexAttribArray(0);
+		GL30.glBindVertexArray(0);
+		shaderSun.stop();
 	}
 	
 	public void cleanUp() {
-		shader.cleanUp();
+		shaderSkybox.cleanUp();
 	}
 }
