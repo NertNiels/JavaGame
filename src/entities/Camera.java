@@ -71,8 +71,8 @@ public class Camera {
 		target = Vector3f.add(target, targetVel, null);
 		if(zoom < Configs.MIN_ZOOM) zoom = Configs.MIN_ZOOM;
 		if(zoom > Configs.MAX_ZOOM) zoom = Configs.MAX_ZOOM;
-		if(pitch < 0) pitch = 0;
-		if(pitch > 90) pitch = 90;
+//		if(pitch < 0) pitch = 0;
+//		if(pitch > 90) pitch = 90;
 
 		velPitch *= 0.8f;
 		velYaw *= 0.8f;

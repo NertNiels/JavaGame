@@ -29,12 +29,12 @@ public class SkyboxRenderer {
 	};
 	
 	private static final float[] VERTICES_SUN = {
-			1, 0, -1,
-			-1, 0, -1,
-			-1, 0, 1,
-			-1, 0, 1,
-			1, 0, 1,
-			1, 0, -1,
+			100, -800, -100,
+			-100, -800, -100,
+			-100, -800, 100,
+			-100, -800, 100,
+			100, -800, 100,
+			100, -800, -100,
 	};
 	
 	
@@ -70,6 +70,7 @@ public class SkyboxRenderer {
 		shaderSkybox.stop();
 		shaderSun.start();
 		shaderSun.loadViewMatrix(camera, SIZE);
+		shaderSun.loadTransformationMatrix(Timing.getInGameHours() % 24, SIZE);
 		GL30.glBindVertexArray(sun.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, sun.getVertexCount());
