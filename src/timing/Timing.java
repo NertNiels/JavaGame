@@ -3,6 +3,8 @@ package timing;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
+import input.ButtonListener;
+import input.ControllerManager;
 import main.Configs;
 import toolbox.Maths;
 import world.sky.SkyColor;
@@ -15,6 +17,47 @@ public class Timing {
 	private static float inGameHoursPast = 0;
 	private static float timeScaler = 3600f/60000f;
 	private static int timeIndex = 0;
+	
+	public static void initControls() {
+		ControllerManager.addListenerLeftBumper(new ButtonListener() {
+			
+			@Override
+			public boolean onButtonReleased() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+			@Override
+			public boolean onButtonDown() {
+				setTimeScaleDown();
+				return true;
+			}
+			
+			@Override
+			public boolean onButtonClicked() {
+				return false;
+			}
+		});
+		ControllerManager.addListenerRightBumper(new ButtonListener() {
+			
+			@Override
+			public boolean onButtonReleased() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+			@Override
+			public boolean onButtonDown() {
+				setTimeScaleUp();
+				return true;
+			}
+			
+			@Override
+			public boolean onButtonClicked() {
+				return false;
+			}
+		});
+	}
 	
 	public static void updateTimer(long millisPast) {
 		inGameSecondsPast = millisPast * timeScaler;

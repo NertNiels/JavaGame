@@ -21,8 +21,10 @@ public class ControllerManager {
 	private static ArrayList<ButtonListener> buttonBListeners = new ArrayList<ButtonListener>();
 	private static ArrayList<ButtonListener> buttonXListeners = new ArrayList<ButtonListener>();
 	private static ArrayList<ButtonListener> buttonYListeners = new ArrayList<ButtonListener>();
+	private static ArrayList<ButtonListener> buttonLeftBumpListeners = new ArrayList<ButtonListener>();
+	private static ArrayList<ButtonListener> buttonRightBumpListeners = new ArrayList<ButtonListener>();
 	
-	private static float leftX = 0, leftY = 0, rightX = 0, rightY = 0, a = 0, b = 0, x = 0, y = 0, trigger = 0;
+	private static float leftX = 0, leftY = 0, rightX = 0, rightY = 0, a = 0, b = 0, x = 0, y = 0, trigger = 0, right_bump = 0, left_bump = 0;
 	
 	public static void initControllers(GuiManager guiManager) {
 		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
@@ -59,11 +61,16 @@ public class ControllerManager {
 				else if(id == Identifier.Button._1) onChangeB(data);
 				else if(id == Identifier.Button._2) onChangeX(data);
 				else if(id == Identifier.Button._3) onChangeY(data);
+				else if(id == Identifier.Button._4) {
+					onChangeLeftBumper(data);
+				}
+				else if(id == Identifier.Button._5) onChangeRightBumper(data);
 				else if(id == Identifier.Axis.X) leftX = data;
 				else if(id == Identifier.Axis.Y) leftY = data;
 				else if(id == Identifier.Axis.RX) rightX = data;
 				else if(id == Identifier.Axis.RY) rightY = data;
 				else if(id == Identifier.Axis.Z) trigger = data;
+				else System.out.println("Current input: " + id + ": " + data);
 			}
 		}
 	}
@@ -98,6 +105,13 @@ public class ControllerManager {
 	
 	public static boolean getY() {
 		return y > 0.5f ? true : false;
+	}
+	
+	public static boolean getLeftBumper() {
+		return left_bump > 0.5f ? true : false;
+	}
+	public static boolean getRightBumper() {
+		return right_bump > 0.5f ? true : false;
 	}
 	
 	public static float getTriggerLeft() {
@@ -172,6 +186,34 @@ public class ControllerManager {
 		}
 	}
 	
+	private static void onChangeLeftBumper(float data) {
+		if(left_bump == data) return;
+		left_bump = data;
+		if(getLeftBumper()) {
+			for(ButtonListener b : buttonLeftBumpListeners) {
+				b.onButtonDown();
+			}
+		} else {
+			for(ButtonListener b : buttonLeftBumpListeners) {
+				b.onButtonReleased();
+			}
+		}
+	}
+	
+	private static void onChangeRightBumper(float data) {
+		if(right_bump == data) return;
+		right_bump = data;
+		if(getRightBumper()) {
+			for(ButtonListener b : buttonRightBumpListeners) {
+				b.onButtonDown();
+			}
+		} else {
+			for(ButtonListener b : buttonRightBumpListeners) {
+				b.onButtonReleased();
+			}
+		}
+	}
+	
 	public static void addListenerA(ButtonListener b) {
 		buttonAListeners.add(b);
 	}
@@ -188,6 +230,12 @@ public class ControllerManager {
 		buttonYListeners.add(b);
 	}
 	
+	public static void addListenerLeftBumper(ButtonListener b) {
+		buttonLeftBumpListeners.add(b);
+	}
 	
+	public static void addListenerRightBumper(ButtonListener b) {
+		buttonRightBumpListeners.add(b);
+	}
 
 }

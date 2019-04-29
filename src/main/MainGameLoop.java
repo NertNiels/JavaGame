@@ -22,6 +22,7 @@ import models.io.ModelLoader;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
+import timing.Timing;
 import toolbox.ScreenPicker;
 import world.HeightGenerator;
 import world.World;
@@ -50,6 +51,7 @@ public class MainGameLoop {
 		GuiManager guiManager = new GuiManager(loader);
 
 		ControllerManager.initControllers(guiManager);
+		Timing.initControls();
 		MouseManager.init(renderer, camera, world);
 		ScreenPicker screenPicker = new ScreenPicker(camera,renderer.getProjectionMatrix(), world);
 		
