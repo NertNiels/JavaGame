@@ -84,8 +84,9 @@ public class Configs {
 	
 	public static Random RANDOM;
 	
-	public static final float MIN_TIME_SCALE = 0.01f;
+	public static final float MIN_TIME_SCALE = 0;
 	public static final float[] TIME_SCALE_TABLE = new float[] {
+			0,
 			36f/600f,
 			72f/600f,
 			144f/600f,
@@ -95,6 +96,7 @@ public class Configs {
 			6912/600f,
 	};
 	public static final String[] TIME_NAME_TABLE = new String[] {
+			"paused",
 			"1 hour/minute",
 			"2 hours/minute",
 			"4 hours/minute",

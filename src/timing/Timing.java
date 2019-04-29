@@ -15,7 +15,7 @@ public class Timing {
 	private static float inGameSecondsPast = 0;
 	private static float inGameHours = 7;
 	private static float inGameHoursPast = 0;
-	private static float timeScaler = 3600f/60000f;
+	private static float timeScaler = Configs.TIME_SCALE_TABLE[1];
 	private static int timeIndex = 0;
 	
 	public static void initControls() {

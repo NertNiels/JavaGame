@@ -83,7 +83,7 @@ public class SkyboxRenderer {
 		shaderSun.stop();
 	}
 	
-	public void render(Camera camera, Vector4f clipPlane) {
+	public void renderSkybox(Camera camera, Vector4f clipPlane) {
 		shaderSkybox.start();
 		shaderSkybox.loadClipPlane(clipPlane);
 		shaderSkybox.loadViewMatrix(camera, SIZE);
@@ -92,9 +92,13 @@ public class SkyboxRenderer {
 		GL20.glEnableVertexAttribArray(0);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, cube.getVertexCount());
+		GL13.glActiveTexture(0);
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
 		shaderSkybox.stop();
+	}
+	
+	public void renderSun(Camera camera, Vector4f clipPlane) {
 		shaderSun.start();
 		shaderSun.loadViewMatrix(camera, SIZE);
 		shaderSun.loadTransformationMatrix(Timing.getInGameHours() % 24, SIZE);
@@ -104,6 +108,11 @@ public class SkyboxRenderer {
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
 		shaderSun.stop();
+	}
+	
+	public void render(Camera camera, Vector4f clipPlane) {
+		renderSkybox(camera, clipPlane);
+		renderSun(camera, clipPlane);
 	}
 	
 	public void cleanUp() {
