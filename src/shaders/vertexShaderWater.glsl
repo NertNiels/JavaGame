@@ -6,10 +6,12 @@ in vec2 textureCoords;
 out vec4 pass_clipSpaceReal;
 out vec4 pass_clipSpaceGrid;
 out vec3 pass_toCameraVector;
+out vec4 pass_positionRelativeToCamera;
 out float visibility;
 
 uniform mat4 transformationMatrix;
 uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
 uniform vec3 cameraPos;
 uniform float waveTime;
 uniform vec2 gridCoords;
@@ -35,15 +37,17 @@ vec3 applyDistortion(vec3 vertex) {
 }
 
 void main(void) {
-	vec3 currentPosition = vec3(position.x + (gridCoords.x * SIZE), 10, position.y + (gridCoords.y * SIZE));
+	vec3 currentPosition = vec3(position.x + (gridCoords.x * SIZE), 0, position.y + (gridCoords.y * SIZE));
 
-	pass_clipSpaceGrid = projectionMatrix * vec4(currentPosition, 1.0);
+	pass_positionRelativeToCamera = viewMatrix * transformationMatrix * vec4(currentPosition, 1.0);
+	pass_clipSpaceGrid =  projectionMatrix * pass_positionRelativeToCamera;
+
 
 	currentPosition = applyDistortion(currentPosition);
 
 	pass_toCameraVector = normalize(cameraPos - currentPosition);
 
-	pass_clipSpaceReal = projectionMatrix * vec4(currentPosition, 1.0);
+	pass_clipSpaceReal = projectionMatrix * viewMatrix * transformationMatrix * vec4(currentPosition, 1.0);
 
 	gl_Position = pass_clipSpaceReal;
 }

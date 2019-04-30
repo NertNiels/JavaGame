@@ -6,12 +6,14 @@ const float minBlueness = 0.4;
 const float maxBlueness = 0.75;
 const float gradient = 15;
 const float frenselReflective = 0.9;
+const float edgeSoftness = 1;
 
 out vec4 out_Color;
 
 in vec4 pass_clipSpaceGrid;
 in vec4 pass_clipSpaceReal;
 in vec3 pass_toCameraVector;
+in vec4 pass_positionRelativeToCamera;
 
 uniform sampler2D reflectionTexture;
 uniform sampler2D refractionTexture;
@@ -58,6 +60,13 @@ vec4 applyDepthColor(vec4 refractColor, float waterDepth) {
 	return mix(refractColor, waterColor, colorFactor);
 }
 
+float calculateVisibility(vec3 toCameraVector) {
+	float distance = length(toCameraVector);
+	float visibility = exp(-pow((distance * density), gradient));
+	visibility = clamp(visibility, 0.0, 1.0);
+	return visibility;
+}
+
 void main(void) {
 
 	vec2 texCoordsReal = clipSpaceToTexCoords(pass_clipSpaceReal);
@@ -77,7 +86,8 @@ void main(void) {
 	finalColor = finalColor;
 
 	out_Color = finalColor;
-	out_Color = waterColor;
+	out_Color.a = clamp(waterDepth / edgeSoftness, 0., 1.);
+	out_Color = mix(texture(skyBoxTexture, texCoordsGrid), out_Color, calculateVisibility(pass_positionRelativeToCamera.xyz));
 
 
 }
