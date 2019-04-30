@@ -70,10 +70,7 @@ public class MasterRenderer {
 
 	public void render(Light sun, Camera camera, World world) {
 		prepare();
-		GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
-		
 		skyBoxFbo.bindFrameBuffer();
-		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		skyboxRenderer.render(camera, new Vector4f(0, -1, 0, 10000000));
 		skyBoxFbo.unbindFrameBuffer();
 		
