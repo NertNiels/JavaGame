@@ -70,7 +70,7 @@ public class HeightGenerator {
 		for(int y = 0; y < worldHeight; y++) {
 		    for(int x = 0; x < worldWidth; x++) {
 		    	worldMap[x][y] = Maths.inverseLerp(minNoiseHeight, maxNoiseHeight, worldMap[x][y]);
-		    	worldMap[x][y] *= getFallOffAt(x, y);
+		    	worldMap[x][y] *= getFallOffAt2(x, y);
 		    }
 		}
 	}
@@ -95,6 +95,16 @@ public class HeightGenerator {
 		
 		float v = Maths.eveluate(Configs.FALLOFF_A, Configs.FALLOFF_B, x);
 		v += Maths.eveluate(Configs.FALLOFF_A, Configs.FALLOFF_B, y);
+		return 1 - Maths.clamp(v, 0, 1);
+	}
+	
+	private float getFallOffAt2(float i, float j) {
+		float x = Math.abs(i / (float)worldWidth * 2 - 1);
+		float y = Math.abs(j / (float)worldHeight * 2 - 1);
+		float distance = (float)Math.sqrt((double)(x * x + y * y));
+		distance = Maths.clamp(distance, 0, 1);
+		
+		float v = Maths.eveluate(Configs.FALLOFF_A, Configs.FALLOFF_B, distance);
 		return 1 - Maths.clamp(v, 0, 1);
 	}
 	
