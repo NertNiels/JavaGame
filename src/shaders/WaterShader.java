@@ -11,8 +11,8 @@ import toolbox.Maths;
 public class WaterShader extends ShaderProgram {
 
 	private static final String VERTEX_FILE = "/shaders/vertexShaderWater.glsl";
-	private static final String FRAGMENT_FILE = "/shaders/fragmentShaderWater.glsl";
-	private static final String GEOMETRY_FILE = "/shaders/geometryShaderWater.glsl";
+	private static final String FRAGMENT_FILE = "/shaders/fragmentShaderWater2.glsl";
+//	private static final String GEOMETRY_FILE = "/shaders/geometryShaderWater.glsl";
 
 	private int location_transformationMatrix;
 	private int location_projectionMatrix;
@@ -30,7 +30,7 @@ public class WaterShader extends ShaderProgram {
 	private float waveTime = 0;
 
 	public WaterShader() {
-		super(VERTEX_FILE, FRAGMENT_FILE, GEOMETRY_FILE);
+		super(VERTEX_FILE, FRAGMENT_FILE);
 	}
 
 	@Override

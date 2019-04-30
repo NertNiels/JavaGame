@@ -23,6 +23,7 @@ float smoothlystep(float edge0, float edge1, float x) {
   x = clamp((x - edge0) / (edge1 - edge0), 0.0, 1.0);
   return x * x * (3 - 2 * x);
 }
+
 float toLinearDepth(float zDepth) {
 	float near = 0.1;
 	float far = 1000;
