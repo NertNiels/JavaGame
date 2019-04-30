@@ -74,6 +74,7 @@ public class MasterRenderer {
 		skyboxRenderer.render(camera, new Vector4f(0, -1, 0, 10000000));
 		skyBoxFbo.unbindFrameBuffer();
 		
+		GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 		fbos.bindReflectionFrameBuffer();
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		camera.applyWater(Configs.WATER_HEIGHT);
