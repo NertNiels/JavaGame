@@ -93,7 +93,7 @@ public class MasterRenderer {
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 		waterShader.start();
 		waterShader.loadViewMatrix(camera);
-		waterRenderer.render(waters);
+		waterRenderer.render(waters, sun);
 		waterShader.stop();
 		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 		

@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
+import entities.Light;
 import timing.Timing;
 import toolbox.Maths;
 
@@ -26,8 +27,9 @@ public class WaterShader extends ShaderProgram {
 	private int location_density;
 	private int location_gridCoords;
 	private int location_skyBoxTexture;
-
-	private float waveTime = 0;
+	private int location_lightPosition;
+	private int location_lightColor;
+	private int location_lightBias;
 
 	public WaterShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -36,7 +38,7 @@ public class WaterShader extends ShaderProgram {
 	@Override
 	protected void bindAttributes() {
 		super.bindAttribute(0, "position");
-		super.bindAttribute(1, "textureCoords");
+		super.bindAttribute(1, "indicators");
 	}
 
 	@Override
@@ -53,6 +55,11 @@ public class WaterShader extends ShaderProgram {
 		location_density = super.getUniformLocation("density");
 		location_gridCoords = super.getUniformLocation("gridCoords");
 		location_skyBoxTexture = super.getUniformLocation("skyBoxTexture");
+
+		location_lightPosition = super.getUniformLocation("lightPosition");
+		location_lightColor = super.getUniformLocation("lightColor");
+		location_lightBias = super.getUniformLocation("lightBias");
+		
 	}
 
 	public void connectTextureUnits() {
@@ -90,6 +97,12 @@ public class WaterShader extends ShaderProgram {
 		Matrix4f viewMatrix4f = Maths.createViewMatrix(camera);
 		super.loadMatrix(location_viewMatrix, viewMatrix4f);
 		super.loadVector(location_cameraPosition, camera.getPosition());
+	}
+	
+	public void loadLight(Light light) {
+		super.loadVector(location_lightPosition, light.getPostition());
+		super.loadVector(location_lightColor, light.getColor());
+		super.loadVector(location_lightBias, light.getBias());
 	}
 
 }

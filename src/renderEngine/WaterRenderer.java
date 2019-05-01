@@ -9,12 +9,14 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
+import entities.Light;
 import main.Configs;
 import models.RawModel;
 import shaders.WaterShader;
 import timing.Timing;
 import toolbox.Maths;
 import water.GridSquare;
+import water.GridSquare2;
 import water.WaterFrameBuffers;
 import water.WaterTile;
 import world.sky.SkyColor;
@@ -34,18 +36,19 @@ public class WaterRenderer {
 		shader.connectTextureUnits();
 		shader.loadProjectionMatrix(projectionMatrix);
 		shader.stop();
-		this.tile = GridSquare.generatePlane(loader, Configs.VERTEX_COUNT, Configs.SIZE);
+		this.tile = GridSquare2.generatePlane(loader, Configs.VERTEX_COUNT, Configs.SIZE);
 	}
 
-	public void render(ArrayList<WaterTile> waters) {
+	public void render(ArrayList<WaterTile> waters, Light light) {
 		prepareWater();
 		shader.loadFlowRate();
 		shader.loadSkyColor(SkyColor.getSkyColor().bottomColor.x, SkyColor.getSkyColor().bottomColor.y, SkyColor.getSkyColor().bottomColor.z);
+		shader.loadLight(light);
 		shader.loadDensity(Configs.FOG_DENSITY);
 		for (WaterTile water : waters) {
 			loadModelMatrix(water);
 			shader.loadGridCoords(water.getGridCoords());
-			GL11.glDrawElements(GL11.GL_TRIANGLES, tile.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, tile.getVertexCount());
 		}
 		unbindWater();
 	}

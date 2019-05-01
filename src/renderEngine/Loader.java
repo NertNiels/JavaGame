@@ -109,16 +109,27 @@ public class Loader {
 
 	public RawModel loadToVAO(water.GridSquare gridSquare) {
 		float[] positions = gridSquare.getVertexArray();
-		float[] textureCoords = gridSquare.getTextureCoords();
 		int[] indices = gridSquare.getIndexArray();
+		byte[] indicators = gridSquare.getIndicatorArray();
 
 		int vaoID = createVAO();
 		bindIndicesBuffer(indices);
 
 		storeDataInAttributeList(0, 2, positions);
-		storeDataInAttributeList(1, 2, textureCoords);
+		storeDataInAttributeList(1, 4, indicators);
+		
 		unbindVAO();
 		return new RawModel(vaoID, indices.length);
+	}
+	
+	public RawModel loadToVAO(float[] positions, byte[] indicators) {
+		int vaoID = createVAO();
+
+		storeDataInAttributeList(0, 2, positions);
+		storeDataInAttributeList(1, 4, indicators);
+		
+		unbindVAO();
+		return new RawModel(vaoID, positions.length/2);
 	}
 
 	public int loadTexture(String fileName) {
@@ -192,6 +203,16 @@ public class Loader {
 		GL20.glVertexAttribPointer(attrNumber, coordSize, GL11.GL_FLOAT, false, 0, 0);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 	}
+	
+	private void storeDataInAttributeList(int attrNumber, int coordSize, byte[] data) {
+		int vboID = GL15.glGenBuffers();
+		vbos.add(vboID);
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
+		ByteBuffer buffer = storeDataInByteBuffer(data);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
+		GL20.glVertexAttribPointer(attrNumber, coordSize, GL11.GL_BYTE, false, 0, 0);
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+	}
 
 	public int loadCubeMap(String[] textureFiles) {
 		int texID = GL11.glGenTextures();
@@ -253,6 +274,10 @@ public class Loader {
 
 	private FloatBuffer storeDataInFloatBuffer(float[] data) {
 		return (FloatBuffer) BufferUtils.createFloatBuffer(data.length).put(data).flip();
+	}
+	
+	private ByteBuffer storeDataInByteBuffer(byte[] data) {
+		return (ByteBuffer) BufferUtils.createByteBuffer(data.length).put(data).flip();
 	}
 
 }

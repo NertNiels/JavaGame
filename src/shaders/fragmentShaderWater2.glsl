@@ -1,11 +1,11 @@
 #version 400 core
 
-const vec4 waterColor = vec4(0.0, 0.5, 0.7, 1.0);
+const vec4 waterColor = vec4(0.604, 0.867, 0.851, 1);
 const float colorDepth = 15;
 const float minBlueness = 0.4;
 const float maxBlueness = 0.75;
 const float gradient = 15;
-const float frenselReflective = 0.9;
+const float frenselReflective = 0.5;
 const float edgeSoftness = 1;
 
 out vec4 out_Color;
@@ -14,6 +14,9 @@ in vec4 pass_clipSpaceGrid;
 in vec4 pass_clipSpaceReal;
 in vec3 pass_toCameraVector;
 in vec4 pass_positionRelativeToCamera;
+flat in vec3 pass_normal;
+in vec4 pass_specular;
+in vec4 pass_diffuse;
 
 uniform sampler2D reflectionTexture;
 uniform sampler2D refractionTexture;
@@ -82,12 +85,11 @@ void main(void) {
 	refractColor = applyDepthColor(refractColor, waterDepth);
 	reflectColor = mix(reflectColor, waterColor, minBlueness);
 
-	vec4 finalColor = mix(reflectColor, refractColor, frensel(vec3(0, 1, 0), pass_toCameraVector));
-	finalColor = finalColor;
+	vec4 finalColor = mix(reflectColor, refractColor, frensel(pass_normal, pass_toCameraVector));
+	finalColor = finalColor * pass_diffuse + pass_specular;
 
 	out_Color = finalColor;
 	out_Color.a = clamp(waterDepth / edgeSoftness, 0., 1.);
 	out_Color = mix(texture(skyBoxTexture, texCoordsGrid), out_Color, calculateVisibility(pass_positionRelativeToCamera.xyz));
-
 
 }

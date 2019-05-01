@@ -6,27 +6,25 @@ import renderEngine.Loader;
 public class GridSquare {
 
 	private float[] vertexArray;
-	private float[] textureCoords;
 	private int[] indexArray;
+	private byte[] indicatorArray;
 	
-	public GridSquare(float[] vertexArray, float[] textureCoords, int[] indexArray) {
+	public GridSquare(float[] vertexArray, int[] indexArray, byte[] indicatorArray) {
 		this.vertexArray = vertexArray;
-		this.textureCoords = textureCoords;
 		this.indexArray = indexArray;
+		this.indicatorArray = indicatorArray;
 	}
 	
 	public static RawModel generatePlane(Loader loader, int vertexCount, int size){
 		int count = vertexCount * vertexCount;
 		float[] vertices = new float[count * 2];
-		float[] textureCoords = new float[count * 2];
 		int[] indices = new int[6*(vertexCount-1)*(vertexCount-1)];
+		byte[] indicators = new byte[8*(vertexCount-1)*(vertexCount-1)];
 		int vertexPointer = 0;
 		for(int i=0;i<vertexCount;i++){
 			for(int j=0;j<vertexCount;j++){
 				vertices[vertexPointer*2] = (float)j/((float)vertexCount - 1) * size;
 				vertices[vertexPointer*2+1] = (float)i/((float)vertexCount - 1) * size;
-				textureCoords[vertexPointer*2] = (float)i/((float)vertexCount - 1);
-				textureCoords[vertexPointer*2+1] = (float)j/((float)vertexCount - 1);
 				vertexPointer++;
 			}
 		}
@@ -43,10 +41,11 @@ public class GridSquare {
 				indices[pointer++] = topRight;
 				indices[pointer++] = bottomLeft;
 				indices[pointer++] = bottomRight;
+				
 			}
 		}
 		
-		GridSquare gridSquare = new GridSquare(vertices, textureCoords, indices);
+		GridSquare gridSquare = new GridSquare(vertices, indices, indicators);
 		return loader.loadToVAO(gridSquare);
 	}
 	
@@ -58,8 +57,8 @@ public class GridSquare {
 		return indexArray;
 	}
 	
-	public float[] getTextureCoords() {
-		return textureCoords;
+	public byte[] getIndicatorArray() {
+		return indicatorArray;
 	}
 	
 }
