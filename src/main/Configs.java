@@ -54,8 +54,10 @@ public class Configs {
 			new SkyColor(Maths.hex("#33ccff"), Maths.hex("#ffc266"), 21),
 			new SkyColor(Maths.hex("#20657d"), Maths.hex("#664d28"), 22),
 			new SkyColor(Maths.hex("#101010"), Maths.hex("#101010"), 23),
-			
 	};
+	public static final Vector3f SUN_COLOR = new Vector3f(1, 1, 0);
+	public static final Vector2f SUN_BIAS = new Vector2f(0.3f, 0.8f);
+	public static final Vector3f SUN_LIGHT_COLOR = new Vector3f(0.9f, 0.9f, 0.9f);
 	
 	public static float FOG_DENSITY = 0.0015f;
 	public static final float MIN_FOG_DENSITY = 0.0015f;

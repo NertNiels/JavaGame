@@ -9,8 +9,8 @@ out vec3 pass_toCameraVector;
 out vec4 pass_positionRelativeToCamera;
 flat out vec3 pass_normal;
 out float visibility;
-out vec4 pass_specular;
-out vec4 pass_diffuse;
+flat out vec4 pass_specular;
+flat out vec4 pass_diffuse;
 
 
 uniform mat4 transformationMatrix;
@@ -86,7 +86,8 @@ void main(void) {
 	gl_Position = pass_clipSpaceReal;
 
 	vec3 lightDirection = gl_Position.xyz - lightPosition;
-	vec3 toLightVector = normalize(lightDirection);
+	vec3 toLightVector = -normalize(lightDirection);
 	pass_specular = calculateSpecularLighting(pass_toCameraVector, toLightVector, pass_normal);
 	pass_diffuse = calculateDiffuseLighting(toLightVector, pass_normal);
+
 }

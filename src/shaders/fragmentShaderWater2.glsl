@@ -15,8 +15,8 @@ in vec4 pass_clipSpaceReal;
 in vec3 pass_toCameraVector;
 in vec4 pass_positionRelativeToCamera;
 flat in vec3 pass_normal;
-in vec4 pass_specular;
-in vec4 pass_diffuse;
+flat in vec4 pass_specular;
+flat in vec4 pass_diffuse;
 
 uniform sampler2D reflectionTexture;
 uniform sampler2D refractionTexture;

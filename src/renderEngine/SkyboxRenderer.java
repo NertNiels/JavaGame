@@ -102,6 +102,7 @@ public class SkyboxRenderer {
 		shaderSun.start();
 		shaderSun.loadViewMatrix(camera, SIZE);
 		shaderSun.loadTransformationMatrix(Timing.getInGameHours() % 24, SIZE);
+		shaderSun.loadSunColor(Configs.SUN_COLOR);
 		GL30.glBindVertexArray(sun.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, sun.getVertexCount());

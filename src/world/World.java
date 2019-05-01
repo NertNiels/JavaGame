@@ -6,10 +6,12 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Entity;
+import entities.Light;
 import main.Configs;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import terrain.Terrain;
+import timing.Timing;
 import water.WaterTile;
 
 public class World {
@@ -25,6 +27,8 @@ public class World {
 	private float planeWidth, planeHeight;
 	private int currentGridX, currentGridZ;
 	
+	private Light sun;
+	
 	public static World world;
 
 	private World(HeightGenerator heightGenerator, Loader loader) {
@@ -35,6 +39,18 @@ public class World {
 		entities = new ArrayList<Entity>();
 		playerPosition = new Vector3f();
 		world = this;
+		sun = new Light(new Vector3f(), Configs.SUN_LIGHT_COLOR, Configs.SUN_BIAS);
+	}
+	
+	private World(HeightGenerator heightGenerator, Loader loader, Light sun) {
+		this.heightGenerator = heightGenerator;
+		biomeManager = new BiomeManager(loader);
+		loadedTerrains = new ArrayList<Terrain>();
+		waterTiles = new ArrayList<WaterTile>();
+		entities = new ArrayList<Entity>();
+		playerPosition = new Vector3f();
+		world = this;
+		this.sun = sun;
 	}
 
 	public void update(Loader loader) {
@@ -49,6 +65,16 @@ public class World {
 			entities.get(i).update();
 		}
 		biomeTexture = biomeManager.getTexture(loader);
+		
+		calculateSunPosition();
+	}
+	
+	private void calculateSunPosition() {
+		double hourOfDay = Timing.getInGameHours()%24;
+		double currentAngle = -(hourOfDay/24d*360)-90;
+		double y = 10000 * Math.sin(Math.toRadians(currentAngle));
+		double z = 10000 * Math.cos(Math.toRadians(currentAngle));
+		sun.setPostition(new Vector3f(0, (float)y, (float)z));
 	}
 	
 	public void prepareWorld(MasterRenderer renderer, Loader loader) {
@@ -214,6 +240,10 @@ public class World {
 			if(distance < range) sum++;
 		}
 		return sum;
+	}
+	
+	public Light getSun() {
+		return sun;
 	}
 	
 

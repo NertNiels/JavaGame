@@ -36,8 +36,6 @@ public class MainGameLoop {
 
 		loader = new Loader();
 
-		Light light = new Light(new Vector3f(0, 200000, 0), new Vector3f(0.9f, 0.9f, 0.9f));
-
 		Camera camera = new Camera(Configs.SIZE / 2, 100, Configs.SIZE / 2);
 
 		HeightGenerator heightGenerator = new HeightGenerator(Configs.SCALE, Configs.SEED, Configs.OCTAVES,
@@ -141,7 +139,7 @@ public class MainGameLoop {
 			camera.update(world);
 			world.prepareWorld(renderer, loader);
 			guiManager.update(renderer);
-			renderer.render(light, camera, world);
+			renderer.render(world.getSun(), camera, world);
 			DisplayManager.updateDisplay();
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || ControllerManager.getB())
 				break;

@@ -16,6 +16,7 @@ public class SunShader extends ShaderProgram {
     private int location_viewMatrix;
     private int location_plane;
     private int location_transformationMatrix;
+    private int location_sunColor;
     
     public SunShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -26,7 +27,6 @@ public class SunShader extends ShaderProgram {
     }
     
     public void loadTransformationMatrix(float hourOfDay, float SIZE) {
-    	double rotation = (hourOfDay / 24f * Math.PI * 2);
     	Matrix4f transformationMatrix = Maths.createTransformationmatrix(new Vector3f(0, 0, 0), hourOfDay/24f*360,
 				0, 0, 1);
     	super.loadMatrix(location_transformationMatrix, transformationMatrix);
@@ -47,6 +47,10 @@ public class SunShader extends ShaderProgram {
     public void loadClipPlane(Vector4f plane) {
 		super.loadVector(location_plane, plane);
 	}
+    
+    public void loadSunColor(Vector3f color) {
+    	super.loadVector(location_sunColor, color);
+    }
      
     @Override
     protected void getAllUniformLocations() {
@@ -54,6 +58,7 @@ public class SunShader extends ShaderProgram {
         location_viewMatrix = super.getUniformLocation("viewMatrix");
         location_plane = super.getUniformLocation("plane");
         location_transformationMatrix = super.getUniformLocation("transformationMatrix");
+        location_sunColor = super.getUniformLocation("sunColor");
     }
  
     @Override
