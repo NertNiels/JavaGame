@@ -75,7 +75,7 @@ public class MainGameLoop {
 			public boolean onButtonDown() {
 				Vector3f newPos = screenPicker.getMiddleOnTerrain();
 				if (newPos != null) {
-					Entity newEntity = EntityLoader.loadEntity(EntityType.OakTree, new Vector2f(newPos.x, newPos.z), 1f);
+					Entity newEntity = EntityLoader.loadEntity(EntityType.GrassGrassland, new Vector2f(newPos.x, newPos.z), 1f);
 					world.addEntity(newEntity);
 				}
 				return true;
