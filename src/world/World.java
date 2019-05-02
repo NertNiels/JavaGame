@@ -95,10 +95,9 @@ public class World {
 		for(int i = -1; i < 2; i++) {
 			for(int j = -1; j < 2; j++) {
 				loadTerrainAt(gridX + i, gridZ + j, loader);
-//				loadWaterAt(gridX + i, gridZ + j, loader);
+				loadWaterAt(gridX + i, gridZ + j, loader);
 			}
 		}
-		loadWaterAt(0, 0, loader);
 	}
 	
 	private void loadTerrains(int gridX, int gridZ, Loader loader) {
@@ -129,15 +128,15 @@ public class World {
 				continue;
 			loadedTerrains.get(t).cleanUp();
 			loadedTerrains.remove(t);
-//			waterTiles.remove(t);
+			waterTiles.remove(t);
 			t--;
 		}
 		
 		for(Vector2f gridPos:toBeLoaded) {
 			Terrain newTerrain = new Terrain((int)gridPos.x, (int)gridPos.y, loader, heightGenerator);
 			loadedTerrains.add(newTerrain);
-//			WaterTile newWaterTile = new WaterTile((int)gridPos.x, (int)gridPos.y, Configs.WATER_HEIGHT, loader);
-//			waterTiles.add(newWaterTile);
+			WaterTile newWaterTile = new WaterTile((int)gridPos.x, (int)gridPos.y, Configs.WATER_HEIGHT, loader);
+			waterTiles.add(newWaterTile);
 		}
 	}
 
