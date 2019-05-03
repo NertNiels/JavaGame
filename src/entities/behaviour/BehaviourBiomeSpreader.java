@@ -2,7 +2,6 @@ package entities.behaviour;
 
 import entities.Entity;
 import renderEngine.DisplayManager;
-import timing.Timing;
 import world.BiomeManager;
 import world.BiomeSpreader;
 import world.BiomeType;

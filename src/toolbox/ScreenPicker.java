@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import entities.Camera;
+import entities.camera.Camera;
 import input.MouseManager;
 import main.Configs;
 import terrain.Terrain;

@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector4f;
 
-import entities.Camera;
+import entities.camera.Camera;
 import main.Configs;
 import models.RawModel;
 import shaders.SkyboxShader;

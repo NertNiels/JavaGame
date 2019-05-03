@@ -12,9 +12,9 @@ import org.lwjgl.opengl.GL32;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector4f;
 
-import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import entities.camera.Camera;
 import gui.View;
 import main.Configs;
 import models.Model;
@@ -23,7 +23,6 @@ import shaders.StaticShader;
 import shaders.TerrainShader;
 import shaders.WaterShader;
 import terrain.Terrain;
-import timing.Timing;
 import water.WaterFrameBuffers;
 import water.WaterTile;
 import world.World;

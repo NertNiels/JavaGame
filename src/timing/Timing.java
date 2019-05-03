@@ -1,13 +1,10 @@
 package timing;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector3f;
 
 import input.ButtonListener;
 import input.ControllerManager;
 import main.Configs;
-import toolbox.Maths;
-import world.sky.SkyColor;
 
 public class Timing {
 

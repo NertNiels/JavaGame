@@ -1,4 +1,4 @@
-package entities;
+package entities.camera;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -11,13 +11,10 @@ import renderEngine.DisplayManager;
 import toolbox.Maths;
 import world.World;
 
-public class Camera {
+public class CameraThirdPerson extends Camera {
 
-	private Vector3f position = new Vector3f();
 	private Vector3f target = new Vector3f();
 	private Vector3f targetVel = new Vector3f();
-	private float pitch = 20;
-	private float yaw;
 
 	private float velPitch;
 	private float velYaw;
@@ -27,10 +24,10 @@ public class Camera {
 
 	private float zoom = 500;
 
-	public Camera() {
-	}
+	public CameraThirdPerson() {}
 
-	public Camera(float x, float y, float z) {
+	public CameraThirdPerson(float x, float y, float z) {
+		super();
 		this.target.x = x;
 		this.position.y = y;
 		this.target.z = z;
@@ -71,8 +68,8 @@ public class Camera {
 		target = Vector3f.add(target, targetVel, null);
 		if(zoom < Configs.MIN_ZOOM) zoom = Configs.MIN_ZOOM;
 		if(zoom > Configs.MAX_ZOOM) zoom = Configs.MAX_ZOOM;
-//		if(pitch < 0) pitch = 0;
-//		if(pitch > 90) pitch = 90;
+		if(pitch < 0) pitch = 0;
+		if(pitch > 90) pitch = 90;
 
 		velPitch *= 0.8f;
 		velYaw *= 0.8f;
@@ -121,11 +118,6 @@ public class Camera {
 
 		position.x = (horizontalDistance * (float) Math.sin(Math.toRadians(-yaw))) + target.x;
 		position.z = (horizontalDistance * (float) Math.cos(Math.toRadians(-yaw))) + target.z;
-	}
-	
-	public void applyWater(float waterHeight) {
-		position.y -= 2 * (position.y - waterHeight);
-		pitch = -pitch;
 	}
 	
 	public void calculateMovement(float dX, float dZ, float multiplier) {

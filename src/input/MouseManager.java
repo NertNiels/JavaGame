@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
-import entities.Camera;
+import entities.camera.Camera;
 import main.Configs;
 import renderEngine.DisplayManager;
 import renderEngine.MasterRenderer;
