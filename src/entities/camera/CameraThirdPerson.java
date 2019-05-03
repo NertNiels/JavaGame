@@ -31,7 +31,7 @@ public class CameraThirdPerson extends Camera {
 		this.target.x = x;
 		this.position.y = y;
 		this.target.z = z;
-
+		pitch =  20;
 	}
 
 	public Vector3f getPosition() {

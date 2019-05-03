@@ -7,7 +7,7 @@ import world.World;
 public abstract class Camera {
 	
 	protected Vector3f position;
-	protected float pitch = 20;
+	protected float pitch;
 	protected float yaw;
 	
 	protected Camera() {

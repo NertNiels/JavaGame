@@ -11,6 +11,7 @@ import entities.Entity;
 import entities.EntityLoader;
 import entities.EntityType;
 import entities.camera.Camera;
+import entities.camera.CameraFirstPerson;
 import entities.camera.CameraThirdPerson;
 import gui.GuiManager;
 import input.ButtonListener;
@@ -37,6 +38,8 @@ public class MainGameLoop {
 		loader = new Loader();
 
 		Camera camera = new CameraThirdPerson(Configs.SIZE / 2, 100, Configs.SIZE / 2);
+		camera = new CameraFirstPerson(Configs.SIZE / 2, 100, Configs.SIZE / 2);
+
 
 		HeightGenerator heightGenerator = new HeightGenerator(Configs.SCALE, Configs.SEED, Configs.OCTAVES,
 				Configs.PERSISTANCE, Configs.LACUNARITY, Configs.OFFSET);
