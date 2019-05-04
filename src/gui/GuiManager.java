@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import entities.camera.Camera;
+import entities.camera.CameraFirstPerson;
 import input.ButtonListener;
 import input.MouseManager;
 import main.Configs;
@@ -18,7 +20,7 @@ public class GuiManager {
 	
 	private boolean isMouseOnGui = false;
 	
-	public GuiManager(Loader loader) {
+	public GuiManager(Loader loader, Camera camera) {
 		views = new ArrayList<View>();
 		
 		View but1 = new View(loader.loadTexture("white"), new Vector2f(-0.5f, -0.75f), new Vector2f(0.5f, 0.25f));
@@ -97,6 +99,10 @@ public class GuiManager {
 		cross = new View(loader.loadTexture("cross"), new Vector2f(0, 0), new Vector2f(10f / Configs.SCREEN_WIDTH, 10f / Configs.SCREEN_HEIGHT));
 		cross.getTexture().setOpacity(0);
 		views.add(cross);
+		
+		if(camera instanceof CameraFirstPerson) {
+			cross.getTexture().setOpacity(1);
+		}
 	}
 	
 	public void update(MasterRenderer renderer) {

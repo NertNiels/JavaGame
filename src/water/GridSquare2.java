@@ -27,12 +27,26 @@ public class GridSquare2 {
 	}
 	
 	private static void storeGridSquare(int col, int row, float[] vertices, byte[] indicators, float gridSquareSize) {
-		Vector2f[] corners = getCornerPositions(col, row, gridSquareSize);
-		storeTriangleLeft(corners, vertices, indicators);
-		storeTriangleRight(corners, vertices, indicators);
+		int v1 = col % 2;
+		int v2 = row % 2;
+		int v3 = (v1 + v2) % 2;
+		if(v3 == 0) storeGridSquare1(col, row, vertices, indicators, gridSquareSize);
+		else storeGridSquare2(col, row, vertices, indicators, gridSquareSize);
 	}
 	
-	private static void storeTriangleLeft(Vector2f[] corners, float[] vertices, byte[] indicators) {
+	private static void storeGridSquare1(int col, int row, float[] vertices, byte[] indicators, float gridSquareSize) {
+		Vector2f[] corners = getCornerPositions(col, row, gridSquareSize);
+		storeTriangleLeft1(corners, vertices, indicators);
+		storeTriangleRight1(corners, vertices, indicators);
+	}
+	
+	private static void storeGridSquare2(int col, int row, float[] vertices, byte[] indicators, float gridSquareSize) {
+		Vector2f[] corners = getCornerPositions(col, row, gridSquareSize);
+		storeTriangleLeft2(corners, vertices, indicators);
+		storeTriangleRight2(corners, vertices, indicators);
+	}
+	
+	private static void storeTriangleLeft1(Vector2f[] corners, float[] vertices, byte[] indicators) {
 		vertices[i*2] = corners[0].x;
 		vertices[i*2+1] = corners[0].y;
 		indicators[i*4] = (byte)(corners[1].x - corners[0].x);
@@ -48,7 +62,7 @@ public class GridSquare2 {
 		i++;
 	}
 	
-	private static void storeTriangleRight(Vector2f[] corners, float[] vertices, byte[] indicators) {
+	private static void storeTriangleRight1(Vector2f[] corners, float[] vertices, byte[] indicators) {
 		vertices[i*2] = corners[3].x;
 		vertices[i*2+1] = corners[3].y;
 		indicators[i*4] = (byte)(corners[2].x - corners[3].x);
@@ -61,6 +75,38 @@ public class GridSquare2 {
 		i++;
 		vertices[i*2] = corners[1].x;
 		vertices[i*2+1] = corners[1].y;
+		i++;
+	}
+	
+	private static void storeTriangleLeft2(Vector2f[] corners, float[] vertices, byte[] indicators) {
+		vertices[i*2] = corners[0].x;
+		vertices[i*2+1] = corners[0].y;
+		indicators[i*4] = (byte)(corners[1].x - corners[0].x);
+		indicators[i*4+1] = (byte)(corners[1].y - corners[0].y);
+		indicators[i*4+2] = (byte)(corners[3].x - corners[0].x);
+		indicators[i*4+3] = (byte)(corners[3].y - corners[0].y);
+		i++;
+		vertices[i*2] = corners[1].x;
+		vertices[i*2+1] = corners[1].y;
+		i++;
+		vertices[i*2] = corners[3].x;
+		vertices[i*2+1] = corners[3].y;
+		i++;
+	}
+	
+	private static void storeTriangleRight2(Vector2f[] corners, float[] vertices, byte[] indicators) {
+		vertices[i*2] = corners[3].x;
+		vertices[i*2+1] = corners[3].y;
+		indicators[i*4] = (byte)(corners[2].x - corners[3].x);
+		indicators[i*4+1] = (byte)(corners[2].y - corners[3].y);
+		indicators[i*4+2] = (byte)(corners[0].x - corners[3].x);
+		indicators[i*4+3] = (byte)(corners[0].y - corners[3].y);
+		i++;
+		vertices[i*2] = corners[2].x;
+		vertices[i*2+1] = corners[2].y;
+		i++;
+		vertices[i*2] = corners[0].x;
+		vertices[i*2+1] = corners[0].y;
 		i++;
 	}
 	

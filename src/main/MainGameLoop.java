@@ -49,7 +49,7 @@ public class MainGameLoop {
 
 		MasterRenderer renderer = new MasterRenderer(loader);
 
-		GuiManager guiManager = new GuiManager(loader);
+		GuiManager guiManager = new GuiManager(loader, camera);
 
 		ControllerManager.initControllers(guiManager);
 		Timing.initControls();
@@ -149,7 +149,7 @@ public class MainGameLoop {
 		}
 
 		loader.cleanUp();
-
+		MouseManager.destroy();
 		DisplayManager.closeDisplay();
 	}
 

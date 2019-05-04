@@ -1,11 +1,14 @@
 package entities.camera;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import input.ControllerManager;
 import input.MouseManager;
+import main.Configs;
 import renderEngine.DisplayManager;
+import toolbox.Maths;
 import world.World;
 
 public class CameraFirstPerson extends Camera {
@@ -20,6 +23,9 @@ public class CameraFirstPerson extends Camera {
 		position.y = y;
 		position.z = z;
 		pitch = 0;
+		MouseManager.setMouseVisible(false);
+		MouseManager.setMouseStickToPosition(true, new Vector2f(Configs.SCREEN_WIDTH/2f, Configs.SCREEN_HEIGHT/2f));
+
 	}
 	
 	@Override
@@ -27,16 +33,17 @@ public class CameraFirstPerson extends Camera {
 		float mouseDX = MouseManager.getDelta().x;
 		float mouseDY = MouseManager.getDelta().y;
 		
-		targetVel.y += -ControllerManager.getTrigger() * 20;
+		targetVel.y += -ControllerManager.getTrigger();
 		calculateTargetPitch(-ControllerManager.getRightJoystickY() * 375 * DisplayManager.getFrameTimeSeconds() * 5);
 		calculateTargetYaw(ControllerManager.getRightJoystickX() * 375 * DisplayManager.getFrameTimeSeconds() * 5);
 		calculateTargetPitch(mouseDY * 3);
 		calculateTargetYaw(mouseDX * 3);
 		
-		calculateMovementWASD(-ControllerManager.getLeftJoystickX(), ControllerManager.getLeftJoystickY(), 0.4f);
+		calculateMovementWASD(-ControllerManager.getLeftJoystickX(), ControllerManager.getLeftJoystickY(), 0.6f);
 		
 		pitch -= velPitch;
 		yaw += velYaw;
+		pitch = Maths.clamp(pitch, -90, 90);
 		velPitch = 0;
 		velYaw = 0;
 		manageWASD();
@@ -72,13 +79,17 @@ public class CameraFirstPerson extends Camera {
 	
 	private void manageWASD() {
 		float dX = 0;
-		float dY = 0;
+		float dZ = 0;
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_W)) dY = -1;
+		if(Keyboard.isKeyDown(Keyboard.KEY_W)) dZ = -1;
 		if(Keyboard.isKeyDown(Keyboard.KEY_A)) dX = 1;
-		if(Keyboard.isKeyDown(Keyboard.KEY_S)) dY = 1;
+		if(Keyboard.isKeyDown(Keyboard.KEY_S)) dZ = 1;
 		if(Keyboard.isKeyDown(Keyboard.KEY_D)) dX = -1;
-		calculateMovementWASD(dX, dY, 0.5f);
+		calculateMovementWASD(dX, dZ, 0.6f);
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) position.y += 1;
+		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) position.y -= 1;
+		
 		
 	}
 

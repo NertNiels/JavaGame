@@ -2,6 +2,7 @@ package input;
 
 import java.util.ArrayList;
 
+import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -16,6 +17,8 @@ public class MouseManager {
 	private static Vector2f mousePos;
 	private static Vector2f mouseDelta;
 	private static Vector2f mousePosScaled;
+	private static Vector2f stickPosition;
+
 	private static boolean left = false;
 	private static boolean right = false;
 	private static boolean middle = false;
@@ -33,6 +36,13 @@ public class MouseManager {
 	public static void init(MasterRenderer renderer, Camera camera, World world) {
 		mousePos = new Vector2f();
 		mousePosScaled = new Vector2f();
+		
+		try {
+			Mouse.create();
+		} catch (LWJGLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		leftListeners.add(new ButtonListener() {
 
@@ -128,6 +138,8 @@ public class MouseManager {
 		onChangeLeft(Mouse.isButtonDown(0));
 		onChangeRight(Mouse.isButtonDown(1));
 		onChangeMiddle(Mouse.isButtonDown(2));
+		
+		if(stickPosition != null) Mouse.setCursorPosition((int)stickPosition.x, (int)stickPosition.y);
 	}
 
 	public static Vector2f getPosition() {
@@ -209,6 +221,22 @@ public class MouseManager {
 
 	public static void addMiddleButtonListener(ButtonListener listener) {
 		middleListeners.add(listener);
+	}
+	
+	public static void setMouseVisible(boolean b) {
+		Mouse.setGrabbed(!b);
+	}
+	
+	public static void setMouseStickToPosition(boolean b, Vector2f position) {
+		if(b) {
+			stickPosition = position;
+			return;
+		}
+		stickPosition = null;
+	}
+	
+	public static void destroy() {
+		Mouse.destroy();
 	}
 
 }
