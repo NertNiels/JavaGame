@@ -20,6 +20,10 @@ public abstract class Camera {
 		return position;
 	}
 	
+	public void setPosition(Vector3f position) {
+		this.position = position;
+	}
+	
 	public float getPitch() {
 		return pitch;
 	}
@@ -31,5 +35,12 @@ public abstract class Camera {
 	public void applyWater(float waterHeight) {
 		position.y -= 2 * (position.y - waterHeight);
 		pitch = -pitch;
+	}
+
+	public void inceasePosition(Vector3f delta) {
+		this.position.x += delta.x;
+		this.position.y += delta.y;
+		this.position.z += delta.z;
+		
 	}
 }

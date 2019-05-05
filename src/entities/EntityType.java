@@ -3,7 +3,8 @@ package entities;
 public enum EntityType {
 
 	OakTree("tree_oak"),
-	GrassGrassland("grass_grassland");
+	GrassGrassland("grass_grassland"),
+	Player("player");
 	
 	String entityFile;
 	

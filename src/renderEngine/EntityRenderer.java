@@ -36,6 +36,7 @@ public class EntityRenderer {
 		shader.loadDistortionTime(((float)Timing.getInGameSeconds() / 100f) % (float)(Math.PI * 2));
 		
 		for (Model model : entities.keySet()) {
+			if(model == null) continue;
 			prepareModel(model);
 			ArrayList<Entity> batch = entities.get(model);
 			for (Entity entity : batch) {

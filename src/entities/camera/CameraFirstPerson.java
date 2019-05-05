@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 import input.ControllerManager;
 import input.MouseManager;
 import main.Configs;
+import main.MainGameLoop;
 import renderEngine.DisplayManager;
 import toolbox.Maths;
 import world.World;
@@ -48,12 +49,11 @@ public class CameraFirstPerson extends Camera {
 		velYaw = 0;
 		manageWASD();
 		calculatePosition();
+		
 	}
 	
 	private void calculatePosition() {
-		position.x += targetVel.x;
-		position.y += targetVel.y;
-		position.z += targetVel.z;
+		MainGameLoop.localPlayer.increasePosition(targetVel);
 		targetVel = new Vector3f();
 	}
 	
@@ -87,8 +87,8 @@ public class CameraFirstPerson extends Camera {
 		if(Keyboard.isKeyDown(Keyboard.KEY_D)) dX = -1;
 		calculateMovementWASD(dX, dZ, 0.6f);
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) position.y += 1;
-		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) position.y -= 1;
+		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) targetVel.y += 1;
+		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) targetVel.y -= 1;
 		
 		
 	}

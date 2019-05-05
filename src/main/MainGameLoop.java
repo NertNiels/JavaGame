@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.Vector3f;
 import entities.Entity;
 import entities.EntityLoader;
 import entities.EntityType;
+import entities.Player;
 import entities.camera.Camera;
 import entities.camera.CameraFirstPerson;
 import entities.camera.CameraThirdPerson;
@@ -31,6 +32,7 @@ import world.World;
 public class MainGameLoop {
 	
 	public static Loader loader;
+	public static Player localPlayer;
 
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
@@ -89,6 +91,8 @@ public class MainGameLoop {
 				return false;
 			}
 		});
+		
+		localPlayer = new Player(world, new Vector2f(Configs.SIZE/2f, Configs.SIZE/2f), camera);
 		
 		MouseManager.addLeftButtonListener(new ButtonListener() {
 			@Override

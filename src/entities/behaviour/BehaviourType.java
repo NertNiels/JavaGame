@@ -5,5 +5,6 @@ public enum BehaviourType {
 	BiomeSpreader,
 	EntityWind,
 	Grow, Breath,
+	RigidBody,
 	
 }

@@ -108,6 +108,8 @@ public class Configs {
 			"4 days/minute"
 	};
 	
+	public static final float PLAYER_HEIGHT = 5f;
+	
 	static {
 		if(BIOME_COLORS.length != BIOME_HEIGHTS.length) {
 			throw new IllegalArgumentException("BIOME_COLORS and BIOME_HEIGHTS aren't the same length.");

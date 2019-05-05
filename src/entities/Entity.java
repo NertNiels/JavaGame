@@ -58,6 +58,12 @@ public class Entity {
 		this.position.y += dy;
 		this.position.z += dz;
 	}
+	
+	public void increasePosition(Vector3f delta) {
+		this.position.x += delta.x;
+		this.position.y += delta.y;
+		this.position.z += delta.z;
+	}
 
 	public void increaseRotation(float dx, float dy, float dz) {
 		this.rotX += dx;
